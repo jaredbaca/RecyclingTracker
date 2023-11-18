@@ -17,11 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.bu.recyclingtracker.RecyclableItemViewModel
-import edu.bu.recyclingtracker.ui.screens.icons
-//import edu.bu.recyclingtracker.ui.screens.recyclables
+import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 @Composable
-fun ItemGrid(icons:List<Int>, title:String, recyclableItems:List<String>) {
+fun ItemGrid(icons:List<Int>, title:String, recyclableItems:List<String>, viewModel: LogRecyclablesViewModel) {
+
+    val uiState = viewModel.uiState
+
     Column {
         Text(
             text = title,
@@ -33,20 +35,13 @@ fun ItemGrid(icons:List<Int>, title:String, recyclableItems:List<String>) {
         )
         LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
             items(icons.size) { index ->
-//                    selectedState = model.itemList.contains(recyclables[index])
 
                 ItemCard(image = icons[index],
                     selected = false,
                     name = recyclableItems[index],
-                    itemViewModel = RecyclableItemViewModel(
-                        name = recyclableItems[index]
-                    ),
-//                            itemSelected = {
-//                                model.addItem(it)
-//                                model.onEvent(
-//                                    UserDataUiEvents.itemSelected(it)
-//                                )
-//                            }
+                    itemUiState = uiState.value.itemCounts.value[index],
+                    viewModel,
+                    index
                 )
             }
         }

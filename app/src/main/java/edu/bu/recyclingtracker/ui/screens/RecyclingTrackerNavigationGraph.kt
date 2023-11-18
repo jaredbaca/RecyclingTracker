@@ -10,24 +10,24 @@ import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecyclingTrackerNavigationGraph(model: LogRecyclablesViewModel = viewModel()) {
+fun RecyclingTrackerNavigationGraph(recyclablesViewModel: LogRecyclablesViewModel = viewModel()) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.HOME_SCREEN) {
-        composable(Routes.LOG_RECYCLABLES_SCREEN) {
-            LogRecyclablesScreen(model)
-        }
+//        composable(Routes.LOG_RECYCLABLES_SCREEN) {
+//            LogRecyclablesScreen(recyclablesViewModel)
+//        }
 
         composable(Routes.LOGIN_SCREEN) {
             LoginScreen()
         }
 
         composable(Routes.HOME_SCREEN) {
-            HomeScreen(navController)
+            HomeScreen(navController, recyclablesViewModel)
         }
 
         composable(Routes.BIN_SUMMARY_SCREEN) {
-            BinSummaryScreen(navController)
+            BinSummaryScreen(navController, recyclablesViewModel)
         }
 
         composable(Routes.STATS_SCREEN) {

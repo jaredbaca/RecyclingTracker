@@ -17,22 +17,51 @@ data class count(
 
 class LogRecyclablesViewModel : ViewModel() {
 
-    val uiState = mutableStateOf(RecyclingPageUiState())
+    data class RecyclingPageUiState(
+        var itemCounts: State<List<RecyclingItemUiState>> = mutableStateOf( listOf())
+    )
 
-    var _count by mutableStateOf(count(recyclables.associateWith { 0 }.toMutableMap()))
+    var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
 
-    fun updateCount(newCount: count) {
-        _count.items = newCount.items
+    fun getItemNames() : MutableList<String> {
+        var itemNames: MutableList<String> = mutableListOf()
+        uiState.value.itemCounts.value.forEach { itemNames.add(it.name) }
+        return itemNames
     }
+
+    fun incrementCount(itemName:String) {
+        //Add exception here
+        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach {
+            if(it.name == itemName)
+                it.quantity = it.quantity+1
+        }
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf( newItemCounts)
+
+        )
+    }
+
+    fun decrementCount(itemName:String) {
+        //Add exception here
+        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach {
+            if(it.name == itemName && it.quantity > 0)
+                it.quantity = it.quantity-1
+        }
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf( newItemCounts)
+        )
+    }
+
+//    var _count by mutableStateOf(count(recyclables.associateWith { 0 }.toMutableMap()))
+
+//    fun updateCount(newCount: count) {
+//        _count.items = newCount.items
+//    }
 
 //    val selectedItems = mutableListOf<String>()
     var itemList: MutableList<String> = mutableListOf()
-
-    data class RecyclingPageUiState(
-//        var selectedItems: List<String> = listOf(),
-//        val selectedItem: String = "",
-        var itemCounts: MutableList<RecyclingItemUiState> = mutableListOf()
-    )
 
     var testString by mutableStateOf("test")
 

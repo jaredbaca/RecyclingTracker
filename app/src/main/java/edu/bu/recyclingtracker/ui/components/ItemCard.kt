@@ -40,15 +40,15 @@ import edu.bu.recyclingtracker.RecyclableItemViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import edu.bu.recyclingtracker.data.UserDataUiEvents
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
-import edu.bu.recyclingtracker.ui.screens.viewModel
+//import edu.bu.recyclingtracker.ui.screens.viewModel
 
 @Composable
-
 fun ItemCard(image:Int,
              selected:Boolean,
              name:String,
-             itemViewModel:RecyclableItemViewModel,
-//             itemSelected: (name:String) -> Unit
+             itemUiState: RecyclingItemUiState,
+             viewModel: LogRecyclablesViewModel,
+             index: Int
              )
 {
     Column(
@@ -73,7 +73,7 @@ fun ItemCard(image:Int,
                     .fillMaxSize()
                     .border(
                         width = 1.dp,
-                        color = if (itemViewModel.itemInfo.value.quantity > 0) Color.Green else Color.Transparent,
+                        color = if (itemUiState.quantity > 0) Color.Green else Color.Transparent,
                         shape = RoundedCornerShape(8.dp),
                     )
 
@@ -83,8 +83,8 @@ fun ItemCard(image:Int,
                         .fillMaxSize()
 //                    .padding(16.dp)
                         .clickable {
-                            itemViewModel.incrementCount()
-                            Log.d("itemCount", itemViewModel.itemInfo.toString())
+                            viewModel.incrementCount(name)
+                            Log.d("itemCount", viewModel.uiState.value.itemCounts.value[index].toString())
                         }
                     ,
                     painter = painterResource(id = image),
@@ -93,7 +93,10 @@ fun ItemCard(image:Int,
             }
         }
         Text(text = name)
-        Counter(itemViewModel = itemViewModel, visible = itemViewModel.itemInfo.value.quantity>0)
+        Counter(viewModel = viewModel,
+            itemUiState,
+            visible = viewModel.uiState.value.itemCounts.value[index].quantity > 0,
+            name, index)
     }
 }
 

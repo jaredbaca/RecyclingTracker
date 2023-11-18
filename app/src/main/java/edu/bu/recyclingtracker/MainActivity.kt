@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
-import edu.bu.recyclingtracker.ui.screens.LogRecyclablesScreen
+//import edu.bu.recyclingtracker.ui.screens.LogRecyclablesScreen
 import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
 import edu.bu.recyclingtracker.ui.theme.RecyclingTrackerTheme
 
@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun RecyclingTrackerApp() {
+
     RecyclingTrackerNavigationGraph()
 }
 

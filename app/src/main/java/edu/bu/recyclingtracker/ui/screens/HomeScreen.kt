@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.bu.recyclingtracker.RecyclableItemViewModel
+import edu.bu.recyclingtracker.data.icons
 import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
@@ -31,7 +32,7 @@ import edu.bu.recyclingtracker.ui.components.bottomNavBar2
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
     Scaffold(
         topBar = {
             AppToolbar(toolbarTitle = "Home")
@@ -51,7 +52,7 @@ fun HomeScreen(navController: NavController) {
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                ItemGrid(icons, "Plastics", recyclables)
+                ItemGrid(icons, "Plastics", viewModel.getItemNames(), viewModel)
             }
         }
     }

@@ -1,5 +1,6 @@
 package edu.bu.recyclingtracker.ui.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,13 +19,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.data.recyclables
+import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.ItemGrid
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BinSummaryScreen(navController: NavController) {
+fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
 
     Scaffold(
         topBar = {
@@ -41,10 +45,31 @@ fun BinSummaryScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            Text(
-                text = "Bin Summary Screen",
-                fontSize = 24.sp
-            )
+            Column {
+                Row {
+                    Text(
+                        text = "Bin Summary Screen",
+                        fontSize = 24.sp
+                    )
+                }
+
+                val dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy")
+
+
+                Row {
+                    Text(text = dateFormat.format(Date()))
+                }
+
+                viewModel.uiState.value.itemCounts.value.forEach {
+                    if(it.quantity > 0) {
+                        Row {
+                            Text(text = "${it.name}: ${it.quantity}")
+                        }
+                    }
+                }
+
+            }
+
         }
     }
 }

@@ -10,7 +10,7 @@ import edu.bu.recyclingtracker.R
 //)
 
 val recyclables = mutableStateOf( listOf(
-   RecyclingItemUiState("Aluminum Can"),
+    RecyclingItemUiState("Aluminum Can"),
     RecyclingItemUiState("Glass Bottle"),
     RecyclingItemUiState("Plastic Bottle")
 ))

@@ -9,6 +9,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import edu.bu.recyclingtracker.data.recyclables
 
 data class count(
@@ -21,7 +22,22 @@ class LogRecyclablesViewModel : ViewModel() {
         var itemCounts: State<List<RecyclingItemUiState>> = mutableStateOf( listOf())
     )
 
+    /* TODO add immutable state and get method */
     var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
+
+    var totals: MutableMap<String, Int> = getItemNames().associateWith { 0 }.toMutableMap()
+
+    fun updateTotals() {
+        uiState.value.itemCounts.value.forEach {
+            totals[it.name] = totals[it.name]!! + it.quantity
+        }
+    }
+
+    fun resetCounts() {
+        uiState.value.itemCounts.value.forEach {
+            it.quantity = 0
+        }
+    }
 
     fun getItemNames() : MutableList<String> {
         var itemNames: MutableList<String> = mutableListOf()
@@ -54,39 +70,9 @@ class LogRecyclablesViewModel : ViewModel() {
         )
     }
 
-//    var _count by mutableStateOf(count(recyclables.associateWith { 0 }.toMutableMap()))
+//    var itemList: MutableList<String> = mutableListOf()
 
-//    fun updateCount(newCount: count) {
-//        _count.items = newCount.items
-//    }
-
-//    val selectedItems = mutableListOf<String>()
-    var itemList: MutableList<String> = mutableListOf()
-
-    var testString by mutableStateOf("test")
-
-    fun updateTestString(newString: String) {
-        testString = newString
-    }
-
-
-    fun addItem(item: String) {
-        itemList.add(item)
-    }
-
-//    fun getSelectedItems(): List<String> {
-//        return uiState.value.selectedItems
-//    }
-
-
-//    fun onEvent(event: UserDataUiEvents) {
-//        when(event) {
-//            is UserDataUiEvents.itemSelected -> {
-//                uiState.value = uiState.value.copy(
-//                    selectedItems = itemList
-//                )
-//                Log.d("TAG", getSelectedItems().toString())
-//            }
-//        }
+//    fun addItem(item: String) {
+//        itemList.add(item)
 //    }
 }

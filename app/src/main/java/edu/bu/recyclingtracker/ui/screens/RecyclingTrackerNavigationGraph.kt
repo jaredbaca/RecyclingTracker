@@ -31,7 +31,7 @@ fun RecyclingTrackerNavigationGraph(recyclablesViewModel: LogRecyclablesViewMode
         }
 
         composable(Routes.STATS_SCREEN) {
-            StatsScreen(navController)
+            StatsScreen(navController, recyclablesViewModel)
         }
 
     }

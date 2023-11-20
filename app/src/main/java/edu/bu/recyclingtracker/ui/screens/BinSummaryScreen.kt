@@ -43,7 +43,12 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
         } ,
                 
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {
+                viewModel.updateTotals()
+                viewModel.resetCounts()
+                navController.navigate(Routes.HOME_SCREEN)
+            })
+            {
                 Icon(imageVector = Icons.Default.Upload, contentDescription = null)
             }
         }

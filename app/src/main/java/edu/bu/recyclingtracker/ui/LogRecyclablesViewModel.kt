@@ -10,13 +10,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
+import edu.bu.recyclingtracker.data.RecyclingTrackerDao
+import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.recyclables
 
 data class count(
     var items: MutableMap<String, Int>
 )
 
-class LogRecyclablesViewModel : ViewModel() {
+class LogRecyclablesViewModel() : ViewModel() {
 
     data class RecyclingPageUiState(
         var itemCounts: State<List<RecyclingItemUiState>> = mutableStateOf( listOf())
@@ -31,6 +33,10 @@ class LogRecyclablesViewModel : ViewModel() {
         uiState.value.itemCounts.value.forEach {
             totals[it.name] = totals[it.name]!! + it.quantity
         }
+    }
+
+    fun addBin() {
+
     }
 
     fun resetCounts() {

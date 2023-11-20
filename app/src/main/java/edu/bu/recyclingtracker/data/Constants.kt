@@ -20,3 +20,5 @@ val icons = listOf(
     R.drawable.glass_bottle,
     R.drawable.plastic_bottle,
 )
+
+const val CURRENT_USER = "Jared Baca"

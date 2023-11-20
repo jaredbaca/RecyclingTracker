@@ -16,7 +16,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
 
     fun addEntry(entry: Entry) {
         try {
-            firestore.collection("users/jared/bins").add(entry)
+            firestore.collection("users/${CURRENT_USER}/entries").add(entry)
         } catch (e: Exception) {
             Log.w("Firestore", "Error adding user to db")
         }

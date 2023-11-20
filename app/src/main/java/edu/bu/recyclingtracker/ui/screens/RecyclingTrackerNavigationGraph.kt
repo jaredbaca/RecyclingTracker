@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

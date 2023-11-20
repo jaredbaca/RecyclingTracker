@@ -6,7 +6,7 @@ class RecyclingTrackerRepository(private val recyclingDao: RecyclingTrackerDao) 
         recyclingDao.addUser(user)
     }
 
-    fun addBin(bin: Bin) {
-        recyclingDao.addBin(bin)
+    fun addEntry(entry: Entry) {
+        recyclingDao.addEntry(entry)
     }
 }

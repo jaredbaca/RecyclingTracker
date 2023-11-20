@@ -1,5 +1,6 @@
 package edu.bu.recyclingtracker.ui
 
+import android.app.Application
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
@@ -10,15 +11,19 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerDao
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.recyclables
+import java.util.Date
 
 data class count(
     var items: MutableMap<String, Int>
 )
 
-class LogRecyclablesViewModel() : ViewModel() {
+class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository) : ViewModel() {
 
     data class RecyclingPageUiState(
         var itemCounts: State<List<RecyclingItemUiState>> = mutableStateOf( listOf())
@@ -35,8 +40,8 @@ class LogRecyclablesViewModel() : ViewModel() {
         }
     }
 
-    fun addBin() {
-
+    fun addEntryFromCurrentBin() {
+        repository.addEntry(Entry(Date(), uiState.value.itemCounts.value.associate { it.name to it.quantity}.toMutableMap()))
     }
 
     fun resetCounts() {

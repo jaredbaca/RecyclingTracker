@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "880775823890",
+    "project_id": "recyclingtracker-9e56b",
+    "storage_bucket": "recyclingtracker-9e56b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880775823890:android:2ba2c8a9572adf75dececb",
+        "android_client_info": {
+          "package_name": "edu.bu.recyclingtracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASIzcg0-25m9TEdIDl13NfLK0nn-KHLTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,6 +22,8 @@ import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 //import edu.bu.recyclingtracker.ui.screens.LogRecyclablesScreen
 import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
 import edu.bu.recyclingtracker.ui.theme.RecyclingTrackerTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +48,14 @@ fun RecyclingTrackerApp() {
     //Instantiating Firestore DB
     val db = Firebase.firestore
 
-    //Using emulator for testing mode
-    db.useEmulator("10.0.2.2", 8080)
     db.firestoreSettings = firestoreSettings {
         isPersistenceEnabled = false
     }
+
+    //Using emulator for testing mode
+//    db.useEmulator("10.0.2.2", 8080)
+
+
 
     //Create Repository object
     var recyclingTrackerRepository = RecyclingTrackerRepository(RecyclingTrackerDao((db)))
@@ -66,6 +71,8 @@ fun RecyclingTrackerApp() {
 
     //Create view model here so that it can utilize the repository
     val recyclablesViewModel: LogRecyclablesViewModel = viewModel {LogRecyclablesViewModel(recyclingTrackerRepository)}
+
+
 
     RecyclingTrackerNavigationGraph(recyclablesViewModel)
 }

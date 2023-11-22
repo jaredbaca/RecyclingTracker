@@ -38,6 +38,7 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
 
     var totals: MutableMap<String, Int> = getItemNames().associateWith { 0 }.toMutableMap()
 
+    //Updates totals from ViewModel (not DB). Unnecessary once DB is implemented
     fun updateTotals() {
         uiState.value.itemCounts.value.forEach {
             totals[it.name] = totals[it.name]!! + it.quantity
@@ -47,17 +48,17 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
 //    If DB objects store a map
     suspend fun addEntryFromCurrentBin() {
 
-//        var totals = repository.getTotals()
-//        Log.d("checking totals", totals.toString())
-
+        //Get current counts from uiState
         var updates = uiState.value.itemCounts.value.associate { it.name to it.quantity}
             .toMutableMap()
 
-        // Currently returning empty, need to make this async
+        //Retrieve current totals from DB
         var currentTotals = repository.getTotals()
 
+        //Add the current count to current totals
         repository.updateTotals(currentTotals, updates)
 
+        //Replace totals
         repository.addEntry(Entry(Date(),
             updates)
         )
@@ -98,7 +99,6 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         }
         uiState.value = uiState.value.copy(
             itemCounts = mutableStateOf( newItemCounts)
-
         )
     }
 
@@ -113,10 +113,4 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             itemCounts = mutableStateOf( newItemCounts)
         )
     }
-
-//    var itemList: MutableList<String> = mutableListOf()
-
-//    fun addItem(item: String) {
-//        itemList.add(item)
-//    }
 }

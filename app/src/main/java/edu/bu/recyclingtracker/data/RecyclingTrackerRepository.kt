@@ -14,7 +14,7 @@ class RecyclingTrackerRepository(private val recyclingDao: RecyclingTrackerDao) 
         return recyclingDao.getTotals()
     }
 
-    fun updateTotals(currentTotals: Map<String, Any>, updates: Map<String, Any>) {
+    suspend fun updateTotals(currentTotals: Map<String, Any>, updates: Map<String, Any>) {
         recyclingDao.updateTotals(currentTotals, updates)
     }
 }

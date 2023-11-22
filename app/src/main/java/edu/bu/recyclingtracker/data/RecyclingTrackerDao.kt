@@ -33,7 +33,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
         }
     }
 
-    fun updateTotals(currentTotals: Map<String, Any>, updates: Map<String, Any>) {
+    suspend fun updateTotals(currentTotals: Map<String, Any>, updates: Map<String, Any>) = suspendCoroutine { continuation ->
         try {
             var newTotals = currentTotals.toMutableMap()
             Log.d(TAG, currentTotals.keys.toString())
@@ -46,8 +46,10 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
                     updates[key].toString().toDouble())
             }
             firestore.collection("users/${CURRENT_USER}/totals").document("totals").set(newTotals)
+            continuation.resume(Unit)
         } catch (e: Exception) {
             Log.w("Firestore", "Error updating totals")
+            continuation.resume(Unit)
         }
     }
 

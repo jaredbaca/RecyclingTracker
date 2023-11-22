@@ -77,7 +77,7 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         return repository.getTotals()
     }
 
-    fun resetCounts() {
+    suspend fun resetCounts() {
         uiState.value.itemCounts.value.forEach {
             it.quantity = 0
         }

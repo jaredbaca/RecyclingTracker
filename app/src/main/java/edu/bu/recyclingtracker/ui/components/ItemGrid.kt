@@ -11,16 +11,19 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.bu.recyclingtracker.RecyclableItemViewModel
+import edu.bu.recyclingtracker.data.RecyclingItemUiState
+import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 @Composable
-fun ItemGrid(icons:List<Int>, title:String, recyclableItems:List<String>, viewModel: LogRecyclablesViewModel) {
+fun ItemGrid(title:String, recyclableItems:State<List<RecyclingItemUiState>>, viewModel: LogRecyclablesViewModel) {
 
     val uiState = viewModel.uiState
 
@@ -34,11 +37,12 @@ fun ItemGrid(icons:List<Int>, title:String, recyclableItems:List<String>, viewMo
 
         )
         LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
-            items(icons.size) { index ->
+            items(recyclableItems.value.size) { index ->
 
-                ItemCard(image = icons[index],
+                ItemCard(
+//                    image = recyclableItems.value[index].icon,
                     selected = false,
-                    name = recyclableItems[index],
+                    name = recyclableItems.value[index].name,
                     itemUiState = uiState.value.itemCounts.value[index],
                     viewModel,
                     index

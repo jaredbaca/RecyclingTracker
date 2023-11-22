@@ -52,7 +52,7 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                ItemGrid(icons, "Plastics", viewModel.getItemNames(), viewModel)
+                ItemGrid( "Plastics", recyclables, viewModel)
             }
         }
     }

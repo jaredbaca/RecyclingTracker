@@ -43,7 +43,8 @@ import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 //import edu.bu.recyclingtracker.ui.screens.viewModel
 
 @Composable
-fun ItemCard(image:Int,
+fun ItemCard(
+//            image:Int?,
              selected:Boolean,
              name:String,
              itemUiState: RecyclingItemUiState,
@@ -78,21 +79,25 @@ fun ItemCard(image:Int,
                     )
 
             ) {
-                Image(
-                    modifier = Modifier
-                        .fillMaxSize()
-//                    .padding(16.dp)
-                        .clickable {
-                            viewModel.incrementCount(name)
-                            Log.d("itemCount", viewModel.uiState.value.itemCounts.value[index].toString())
-                        }
-                    ,
-                    painter = painterResource(id = image),
-                    contentDescription = "Box Icon",
-                )
+                if(itemUiState.icon != null) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            //                    .padding(16.dp)
+                            .clickable {
+                                viewModel.incrementCount(name)
+                                Log.d(
+                                    "itemCount",
+                                    viewModel.uiState.value.itemCounts.value[index].toString()
+                                )
+                            },
+                        painter = painterResource(id = itemUiState.icon!!),
+                        contentDescription = "Box Icon",
+                    )
+                }
             }
         }
-        Text(text = name)
+        Text(text = itemUiState.name)
         Counter(viewModel = viewModel,
             itemUiState,
             visible = viewModel.uiState.value.itemCounts.value[index].quantity > 0,

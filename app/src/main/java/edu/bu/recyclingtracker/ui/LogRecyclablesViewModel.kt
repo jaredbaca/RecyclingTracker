@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import edu.bu.recyclingtracker.data.UserDataUiEvents
 import android.util.Log
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -17,6 +18,9 @@ import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerDao
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.recyclables
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.util.Date
 
 data class count(
@@ -40,8 +44,37 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         }
     }
 
-    fun addEntryFromCurrentBin() {
-        repository.addEntry(Entry(Date(), uiState.value.itemCounts.value.associate { it.name to it.quantity}.toMutableMap()))
+//    If DB objects store a map
+    suspend fun addEntryFromCurrentBin() {
+
+//        var totals = repository.getTotals()
+//        Log.d("checking totals", totals.toString())
+
+        var updates = uiState.value.itemCounts.value.associate { it.name to it.quantity}
+            .toMutableMap()
+
+        // Currently returning empty, need to make this async
+        var currentTotals = repository.getTotals()
+
+        repository.updateTotals(currentTotals, updates)
+
+        repository.addEntry(Entry(Date(),
+            updates)
+        )
+    }
+
+//    //If DB objects store only fields
+//    fun addEntryFromCurrentBin() {
+//        val itemCountsMap = uiState.value.itemCounts.value.associate { it.name to it.quantity}.toMutableMap()
+//        repository.addEntry(Entry(Date(),
+//            aluminumCan = itemCountsMap["Aluminum Can"]!!,
+//            glassBottle = itemCountsMap["Glass Bottle"]!!,
+//            plasticBottle = itemCountsMap["Plastic Bottle"]!!
+//        ))
+//    }
+
+    suspend fun getTotalsFromDB() : Map<String, Any>{
+        return repository.getTotals()
     }
 
     fun resetCounts() {

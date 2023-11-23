@@ -34,13 +34,13 @@ fun ItemGrid(title:String, recyclableItems:State<List<RecyclingItemUiState>>, vi
 
         )
         LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
-            items(recyclableItems.value.size-1) { index ->
+            items(recyclableItems.value.size) { index ->
 
                 ItemCard(
 //                    image = recyclableItems.value[index].icon,
                     selected = false,
                     name = recyclableItems.value[index].name,
-                    itemUiState = viewModel.uiState.value.itemCounts.value.random() ?: RecyclingItemUiState("empty"),
+                    itemUiState = viewModel.uiState.value.itemCounts.value.find { it.name == recyclableItems.value[index].name } ?: RecyclingItemUiState("empty", "default category"),
                     viewModel,
                     index
                 )

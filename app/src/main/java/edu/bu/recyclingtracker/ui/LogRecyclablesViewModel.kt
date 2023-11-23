@@ -6,7 +6,7 @@ import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import androidx.compose.runtime.State
 import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
-import edu.bu.recyclingtracker.data.plastics
+import edu.bu.recyclingtracker.data.recyclables
 import java.util.Date
 
 data class count(
@@ -20,7 +20,7 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
     )
 
     /* TODO add immutable state and get method */
-    var uiState = mutableStateOf(RecyclingPageUiState(plastics))
+    var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
 
     var totals: MutableMap<String, Int> = getItemNames().associateWith { 0 }.toMutableMap()
 

@@ -9,13 +9,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import edu.bu.recyclingtracker.data.cardboard
-import edu.bu.recyclingtracker.data.glass
-import edu.bu.recyclingtracker.data.metals
 import edu.bu.recyclingtracker.data.navItems
-import edu.bu.recyclingtracker.data.plastics
+import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.ItemGrid
@@ -44,10 +42,10 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-//                ItemGrid( "Plastics", recyclableItems = plastics, viewModel)
-                ItemGrid( "Metals", metals, viewModel)
-//                ItemGrid( "Glass", recyclableItems = glass, viewModel)
-//                ItemGrid( "Cardboard", recyclableItems = cardboard, viewModel)
+                ItemGrid( "Plastics", recyclableItems = mutableStateOf(recyclables.value.filter{it.category == "Plastic"}), viewModel)
+                ItemGrid( "Metals", recyclableItems = mutableStateOf(recyclables.value.filter{it.category == "Metal"}), viewModel)
+                ItemGrid( "Glass", recyclableItems = mutableStateOf(recyclables.value.filter{it.category == "Glass"}), viewModel)
+                ItemGrid( "Cardboard", recyclableItems = mutableStateOf(recyclables.value.filter{it.category == "Cardboard"}), viewModel)
             }
         }
     }

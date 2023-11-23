@@ -17,18 +17,18 @@ import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 @Composable
 fun Counter(viewModel: LogRecyclablesViewModel,
             itemUiState: RecyclingItemUiState,
-            visible:Boolean,
+//            visible:Boolean,
             name: String,
             index: Int
 ) {
 
-    if(visible) {
+    if(itemUiState.quantity > 0) {
         Row(verticalAlignment = Alignment.CenterVertically) {
 
             IconButton(onClick = {viewModel.decrementCount(name)}) {
                 Icon(imageVector = Icons.Default.RemoveCircle, contentDescription = "")
             }
-            Text(text = viewModel.uiState.value.itemCounts.value[index].quantity.toString(),
+            Text(text = itemUiState.quantity.toString(),
                 textAlign = TextAlign.Center
             )
             IconButton(onClick = {viewModel.incrementCount(name)}) {

@@ -9,11 +9,27 @@ import edu.bu.recyclingtracker.R
 //    "Plastic Bottle"
 //)
 
-val recyclables = mutableStateOf( listOf(
-    RecyclingItemUiState("Aluminum Can", icon = R.drawable.aluminum_can),
-    RecyclingItemUiState("Glass Bottle", icon = R.drawable.glass_bottle),
+val plastics = mutableStateOf( listOf(
     RecyclingItemUiState("Plastic Bottle", icon = R.drawable.plastic_bottle),
+))
+
+val metals = mutableStateOf( listOf(
+    RecyclingItemUiState("Aluminum Can", icon = R.drawable.aluminum_can),
+    RecyclingItemUiState("Soup Can", icon = R.drawable.aluminum_can)
+))
+
+val glass = mutableStateOf( listOf(
+    //Glass
+    RecyclingItemUiState("Glass Bottle", icon = R.drawable.glass_bottle),
+))
+
+val cardboard = mutableStateOf( listOf(
+    //Cardboard
     RecyclingItemUiState("Small Cardboard Box")
+))
+
+val recyclables = mutableStateOf(listOf(
+
 ))
 
 val icons = listOf(

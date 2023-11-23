@@ -66,6 +66,9 @@ fun ItemCard(
                 )
                 .size(80.dp)
                 .clickable {
+                    viewModel.incrementCount(name)
+                    Log.d("Count", viewModel.uiState.value.itemCounts.value.toString())
+//                    Log.d("Count", name)
                 },
             elevation = CardDefaults.cardElevation(4.dp)
         ) {
@@ -82,15 +85,7 @@ fun ItemCard(
                 if(itemUiState.icon != null) {
                     Image(
                         modifier = Modifier
-                            .fillMaxSize()
-                            //                    .padding(16.dp)
-                            .clickable {
-                                viewModel.incrementCount(name)
-                                Log.d(
-                                    "itemCount",
-                                    viewModel.uiState.value.itemCounts.value[index].toString()
-                                )
-                            },
+                            .fillMaxSize(),
                         painter = painterResource(id = itemUiState.icon!!),
                         contentDescription = "Box Icon",
                     )
@@ -100,7 +95,7 @@ fun ItemCard(
         Text(text = itemUiState.name)
         Counter(viewModel = viewModel,
             itemUiState,
-            visible = viewModel.uiState.value.itemCounts.value[index].quantity > 0,
+//            visible = viewModel.uiState.value.itemCounts.value[index].quantity > 0,
             name, index)
     }
 }

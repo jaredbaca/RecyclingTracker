@@ -17,12 +17,14 @@ import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 @Composable
-fun ItemGrid(title:String, recyclableItems:State<List<RecyclingItemUiState>>, viewModel: LogRecyclablesViewModel) {
+fun ItemGrid(title:String,
+             recyclableItems:State<List<RecyclingItemUiState>>,
+             viewModel: LogRecyclablesViewModel) {
 
     val uiState = viewModel.uiState
 
-    Log.d("Item Grid", recyclableItems.toString())
-    Log.d("uiStates", uiState.value.itemCounts.value.toString())
+//    Log.d("Item Grid", recyclableItems.toString())
+//    Log.d("uiStates", uiState.value.itemCounts.value.toString())
 
     Column {
         Text(
@@ -31,7 +33,6 @@ fun ItemGrid(title:String, recyclableItems:State<List<RecyclingItemUiState>>, vi
             fontSize = 24.sp,
             modifier = Modifier
                 .fillMaxWidth()
-
         )
         LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
             items(recyclableItems.value.size) { index ->

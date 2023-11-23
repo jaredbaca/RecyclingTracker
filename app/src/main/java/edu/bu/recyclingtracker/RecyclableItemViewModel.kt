@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 
 class RecyclableItemViewModel(name: String,
+                              category: String,
                               quantity: Int = 0,
                               isSelected: Boolean = false) : ViewModel() {
 
     private val _itemInfo: MutableState<RecyclingItemUiState> = mutableStateOf(
         RecyclingItemUiState(
             name = name,
+            category = category,
             quantity = quantity,
             isSelected = isSelected
         )

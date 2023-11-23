@@ -1,32 +1,25 @@
 package edu.bu.recyclingtracker.ui.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import edu.bu.recyclingtracker.RecyclableItemViewModel
-import edu.bu.recyclingtracker.data.icons
 import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
-import edu.bu.recyclingtracker.ui.components.ItemCard
 import edu.bu.recyclingtracker.ui.components.ItemGrid
-import edu.bu.recyclingtracker.ui.components.bottomNavBar
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
 
 @ExperimentalMaterial3Api
@@ -49,11 +42,16 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
                 .padding(paddingValues)
         ) {
 
-            Row(
+
+            Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                ItemGrid(icons, "Plastics", viewModel.getItemNames(), viewModel)
+                ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Plastic"}), viewModel)
+                ItemGrid( "Metals", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Metal"}), viewModel)
+                ItemGrid( "Glass", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Glass"}), viewModel)
+                ItemGrid( "Cardboard", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Cardboard"}), viewModel)
             }
         }
     }
 }
+

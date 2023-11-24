@@ -1,5 +1,6 @@
 package edu.bu.recyclingtracker.ui
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
@@ -22,14 +23,16 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
     /* TODO add immutable state and get method */
     var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
 
-    var totals: MutableMap<String, Int> = getItemNames().associateWith { 0 }.toMutableMap()
+    var totals: MutableState<MutableMap<String, Any>> = mutableStateOf(getItemNames().associateWith { 0 }.toMutableMap())
 
     //Updates totals from ViewModel (not DB). Unnecessary once DB is implemented
-    fun updateTotals() {
-        uiState.value.itemCounts.value.forEach {
-            totals[it.name] = totals[it.name]!! + it.quantity
-        }
+    suspend fun updateTotals() {
+//        uiState.value.itemCounts.value.forEach {
+//            totals[it.name] = totals[it.name]!! + it.quantity
+//        }
+        totals.value = getTotalsFromDB().toMutableMap()
     }
+
 
 //    If DB objects store a map
     suspend fun addEntryFromCurrentBin() {

@@ -34,20 +34,26 @@ fun ItemGrid(title:String,
             modifier = Modifier
                 .fillMaxWidth()
         )
-        LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
-            items(recyclableItems.value.size) { index ->
+            LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
+                items(recyclableItems.value.size) { index ->
+                    if(index ==0 || recyclableItems.value[index].category != recyclableItems.value[index-1].category) {
 
-                ItemCard(
+                    }
+                    ItemCard(
 //                    image = recyclableItems.value[index].icon,
-                    selected = false,
-                    name = recyclableItems.value[index].name,
-                    itemUiState = viewModel.uiState.value.itemCounts.value.find { it.name == recyclableItems.value[index].name } ?: RecyclingItemUiState("empty", "default category"),
-                    viewModel,
-                    index
-                )
+                        selected = false,
+                        name = recyclableItems.value[index].name,
+                        itemUiState = viewModel.uiState.value.itemCounts.value.find { it.name == recyclableItems.value[index].name }
+                            ?: RecyclingItemUiState("empty", "default category"),
+                        viewModel,
+                        index
+                    )
+                }
             }
-        }
-        )
+            )
+
+
+
         CenteredDivider()
     }
 

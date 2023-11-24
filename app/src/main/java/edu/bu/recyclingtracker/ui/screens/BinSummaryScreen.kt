@@ -40,12 +40,12 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                 
         floatingActionButton = {
             FloatingActionButton(onClick = {
-//                viewModel.updateTotals()
+
                 GlobalScope.launch {
                     viewModel.addEntryFromCurrentBin()
+                    viewModel.updateTotals()
                     viewModel.resetCounts()
                 }
-
 
                 navController.navigate(Routes.HOME_SCREEN)
             })

@@ -16,6 +16,8 @@ import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -46,12 +48,11 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                     )
                 }
 
-                viewModel.totals.forEach {
+                viewModel.totals.value.forEach {
                     Row {
                         Text(text = "${it.key}: ${it.value}")
                     }
                 }
-
             }
         }
     }

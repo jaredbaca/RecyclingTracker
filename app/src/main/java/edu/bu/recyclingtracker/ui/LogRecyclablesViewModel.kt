@@ -33,6 +33,12 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         totals.value = getTotalsFromDB().toMutableMap()
     }
 
+//    fun calculatePercentages() {
+//
+//        //Calculate material totals
+//        var plastics = totals.value.keys.filter { it ==  }
+//    }
+
 
 //    If DB objects store a map
     suspend fun addEntryFromCurrentBin() {

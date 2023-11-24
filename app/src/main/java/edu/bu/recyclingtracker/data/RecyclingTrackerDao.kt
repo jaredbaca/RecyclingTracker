@@ -36,12 +36,12 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
     suspend fun updateTotals(currentTotals: Map<String, Any>, updates: Map<String, Any>) = suspendCoroutine { continuation ->
         try {
             var newTotals = currentTotals.toMutableMap()
-            Log.d(TAG, currentTotals.keys.toString())
-            Log.d(TAG, currentTotals.values.toString())
-            Log.d(TAG, currentTotals.containsKey("Plastic Bottle").toString())
-//            Log.d(TAG, "new totals: ${newTotals.toString()}, current totals: ${currentTotals.toString()}, updates: ${updates.toString()}")
+//            Log.d(TAG, currentTotals.keys.toString())
+//            Log.d(TAG, currentTotals.values.toString())
+//            Log.d(TAG, currentTotals.containsKey("Plastic Bottle").toString())
+            Log.d(TAG, "new totals: ${newTotals.toString()}, current totals: ${currentTotals.toString()}, updates: ${updates.toString()}")
             for(key in updates.keys) {
-                Log.d(TAG, newTotals.containsKey(key).toString())
+//                Log.d(TAG, newTotals.containsKey(key).toString())
                 newTotals[key] = sum(currentTotals[key].toString().toDouble(),
                     updates[key].toString().toDouble())
             }

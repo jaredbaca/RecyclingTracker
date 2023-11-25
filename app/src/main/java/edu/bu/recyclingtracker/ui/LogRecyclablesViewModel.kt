@@ -37,13 +37,6 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         totals.value = getTotalsFromDB().toMutableMap()
     }
 
-//    fun calculatePercentages() {
-//
-//        //Calculate material totals
-//        var plastics = totals.value.keys.filter { it ==  }
-//    }
-
-
 //    If DB objects store a map
     suspend fun addEntryFromCurrentBin() {
 
@@ -62,16 +55,6 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             updates)
         )
     }
-
-//    //If DB objects store only fields
-//    fun addEntryFromCurrentBin() {
-//        val itemCountsMap = uiState.value.itemCounts.value.associate { it.name to it.quantity}.toMutableMap()
-//        repository.addEntry(Entry(Date(),
-//            aluminumCan = itemCountsMap["Aluminum Can"]!!,
-//            glassBottle = itemCountsMap["Glass Bottle"]!!,
-//            plasticBottle = itemCountsMap["Plastic Bottle"]!!
-//        ))
-//    }
 
     suspend fun getTotalsFromDB() : Map<String, Any>{
         return repository.getTotals()
@@ -103,14 +86,13 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             categoryTotals.put(category, total)
         }
 
-
-
         Log.d("categories", materials.toString())
         Log.d("category totals", categoryTotals.toString())
 
         return categoryTotals
     }
 
+    // Resets items counts in ViewModel
     suspend fun resetCounts() {
         uiState.value.itemCounts.value.forEach {
             it.quantity = 0

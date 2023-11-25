@@ -1,13 +1,16 @@
 package edu.bu.recyclingtracker.ui
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import androidx.compose.runtime.State
+import androidx.lifecycle.viewModelScope
 import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.recyclables
+import kotlinx.coroutines.launch
 import java.util.Date
 
 data class count(
@@ -24,6 +27,7 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
     var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
 
     var totals: MutableState<MutableMap<String, Any>> = mutableStateOf(getItemNames().associateWith { 0 }.toMutableMap())
+    var totalsByCategory: MutableState<MutableMap<String, Int>> = mutableStateOf(mutableMapOf())
 
     //Updates totals from ViewModel (not DB). Unnecessary once DB is implemented
     suspend fun updateTotals() {
@@ -71,6 +75,40 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
 
     suspend fun getTotalsFromDB() : Map<String, Any>{
         return repository.getTotals()
+    }
+
+    suspend fun getTotalsByCategory(): MutableMap<String, Int> {
+
+        //Get item totals
+        viewModelScope.launch {val totals = getTotalsFromDB() }
+
+        //Create map of categories/materials
+        var materials: MutableMap<String, MutableList<String>> = mutableMapOf()
+        var categoryTotals = mutableMapOf<String, Int>()
+
+        //Populate categories map with items from each category
+        uiState.value.itemCounts.value.forEach {
+            Log.d("Category", it.category)
+            if(!materials.containsKey(it.category)) {
+                materials.put(it.category, mutableListOf(it.name))
+            } else {
+                materials[it.category]!!.add(it.name)
+            }
+        }
+
+        for(category in materials.keys) {
+            var total = 0
+            var items = materials[category]
+            items!!.forEach { total += totals.value[it].toString().toDouble().toInt()}
+            categoryTotals.put(category, total)
+        }
+
+
+
+        Log.d("categories", materials.toString())
+        Log.d("category totals", categoryTotals.toString())
+
+        return categoryTotals
     }
 
     suspend fun resetCounts() {

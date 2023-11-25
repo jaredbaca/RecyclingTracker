@@ -77,13 +77,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                 }
                 item {
                     PieChart(
-                        data = mapOf(
-                            Pair("Sample-1", 150),
-                            Pair("Sample-2", 120),
-                            Pair("Sample-3", 110),
-                            Pair("Sample-4", 170),
-                            Pair("Sample-5", 120),
-                        )
+                        data = viewModel.totalsByCategory.value
                     )
                 }
 

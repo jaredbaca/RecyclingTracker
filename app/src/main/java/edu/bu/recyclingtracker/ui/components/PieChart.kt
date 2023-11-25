@@ -111,10 +111,10 @@ fun PieChart(
             }
         }
 
-//        DetailsPieChart(
-//            data = data,
-//            colors = colors
-//        )
+        DetailsPieChart(
+            data = data,
+            colors = colors
+        )
     }
 }
 
@@ -130,7 +130,7 @@ fun DetailsPieChart(
     ) {
         data.values.forEachIndexed { index, value ->
             DetailsPieChartItem(
-                data = Pair(data.keys.elementAt(index),value),
+                data = Pair(data.keys.elementAt(index),value.toString()),
                 color = colors[index]
             )
         }
@@ -139,7 +139,7 @@ fun DetailsPieChart(
 
 @Composable
 fun DetailsPieChartItem(
-    data: Pair<String, Int>,
+    data: Pair<String, String>,
     height: Dp = 45.dp,
     color: Color
 ) {

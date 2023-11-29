@@ -130,7 +130,9 @@ fun DetailsPieChart(
     ) {
         data.values.forEachIndexed { index, value ->
             DetailsPieChartItem(
-                data = Pair(data.keys.elementAt(index),value.toString()),
+                data = Pair(data.keys.elementAt(index),
+                    "${String.format("%.1f",
+                    (value.toDouble()/data.values.sum().toDouble()*100))}%"),
                 color = colors[index]
             )
         }

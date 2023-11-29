@@ -66,7 +66,7 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         viewModelScope.launch {val totals = getTotalsFromDB() }
 
         //Create map of categories/materials
-        var materials: MutableMap<String, MutableList<String>> = mutableMapOf()
+//        var materials: MutableMap<String, MutableList<String>> = mutableMapOf()
         var categoryTotals = mutableMapOf<String, Int>()
 
         //Longer version
@@ -97,7 +97,7 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             }
         }
 
-        Log.d("categories", materials.toString())
+//        Log.d("categories", materials.toString())
         Log.d("category totals", categoryTotals.toString())
 
         return categoryTotals

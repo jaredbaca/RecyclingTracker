@@ -69,21 +69,32 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         var materials: MutableMap<String, MutableList<String>> = mutableMapOf()
         var categoryTotals = mutableMapOf<String, Int>()
 
-        //Populate categories map with items from each category
-        uiState.value.itemCounts.value.forEach {
-            Log.d("Category", it.category)
-            if(!materials.containsKey(it.category)) {
-                materials.put(it.category, mutableListOf(it.name))
-            } else {
-                materials[it.category]!!.add(it.name)
-            }
-        }
+        //Longer version
+//        //Populate categories map with items from each category
+//        uiState.value.itemCounts.value.forEach {
+//            Log.d("Category", it.category)
+//            if(!materials.containsKey(it.category)) {
+//                materials.put(it.category, mutableListOf(it.name))
+//            } else {
+//                materials[it.category]!!.add(it.name)
+//            }
+//        }
+//
+//        for(category in materials.keys) {
+//            var total = 0
+//            var items = materials[category]
+//            items!!.forEach { total += totals.value[it].toString().toDouble().toInt()}
+//            categoryTotals.put(category, total)
+//        }
 
-        for(category in materials.keys) {
-            var total = 0
-            var items = materials[category]
-            items!!.forEach { total += totals.value[it].toString().toDouble().toInt()}
-            categoryTotals.put(category, total)
+        //Refactored version
+        totals.value.forEach { total ->
+            var key = uiState.value.itemCounts.value.find { item -> item.name == total.key }?.category
+            if(key != null && !categoryTotals.containsKey(key)) {
+                categoryTotals.put(key, total.value.toString().toDouble().toInt())
+            } else if(key != null) {
+                categoryTotals[key] = categoryTotals[key]!! + total.value.toString().toDouble().toInt()
+            }
         }
 
         Log.d("categories", materials.toString())

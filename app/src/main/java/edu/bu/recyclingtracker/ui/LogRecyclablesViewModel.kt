@@ -139,4 +139,15 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             itemCounts = mutableStateOf( newItemCounts)
         )
     }
+
+    fun updateItemQuantity(itemName: String, newQuantity: String) {
+        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach {
+            if(it.name == itemName && newQuantity.toInt() >= 0)
+                it.quantity = newQuantity.toInt()
+        }
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf(newItemCounts)
+        )
+    }
 }

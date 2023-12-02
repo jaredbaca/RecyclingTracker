@@ -68,7 +68,7 @@ fun ItemCard(
                     top = 24.dp,
                     end = 24.dp
                 )
-                .size(70.dp)
+                .size(50.dp)
                 .clickable {
                     viewModel.incrementCount(name)
                     Log.d("Count", viewModel.uiState.value.itemCounts.value.toString())
@@ -79,11 +79,12 @@ fun ItemCard(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(
-                        width = 1.dp,
-                        color = if (itemUiState.quantity > 0) Color.Green else Color.Transparent,
-                        shape = RoundedCornerShape(8.dp),
-                    ),
+//                    .border(
+//                        width = 1.dp,
+//                        color = if (itemUiState.quantity > 0) Color.Green else Color.Transparent,
+//                        shape = RoundedCornerShape(8.dp),
+//                    )
+                ,
                 contentAlignment = Alignment.Center
 
             ) {
@@ -91,7 +92,7 @@ fun ItemCard(
                     Image(
                         modifier = Modifier
 //                            .fillMaxSize()
-                            .size(50.dp)
+                            .size(40.dp)
                         ,
                         painter = painterResource(id = itemUiState.icon!!),
                         contentDescription = "Box Icon",

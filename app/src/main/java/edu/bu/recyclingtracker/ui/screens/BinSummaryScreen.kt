@@ -1,9 +1,12 @@
 package edu.bu.recyclingtracker.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material3.Divider
@@ -17,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,11 +86,13 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                     Text(text = dateFormat.format(Date()))
                 }
 
-                viewModel.uiState.value.itemCounts.value.forEach {
-                    if(it.quantity > 0) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                LazyColumn(content = {
+                    items(viewModel.uiState.value.itemCounts.value.size) {
+                        index ->
+                        if(viewModel.uiState.value.itemCounts.value[index].quantity > 0) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
 //                            Text(text = "${it.name}: ${it.quantity}")
-                            Text(text=it.quantity.toString(),
+                            Text(text=viewModel.uiState.value.itemCounts.value[index].quantity.toString(),
                                 fontSize = 24.sp,
                                 modifier = Modifier
                                     .padding(start = 16.dp))
@@ -94,17 +100,27 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                             ItemCard(
                                 selected = false,
                                 name = "",
-                                itemUiState = it,
+                                itemUiState = viewModel.uiState.value.itemCounts.value[index],
                                 viewModel = viewModel,
                                 index = 0,
                                 counterVisible = false
                             )
-                            Text(text = it.name)
+                            Text(text = viewModel.uiState.value.itemCounts.value[index].name)
                         }
                         Divider()
                     }
-                }
-
+                        }
+                    item {
+                        Row(modifier = Modifier
+                            .padding(32.dp)
+                            .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Text(text = "Total: ${viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }} Items",
+                            fontSize = 24.sp)
+                        }
+                    }
+                })
             }
 
         }

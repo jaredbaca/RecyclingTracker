@@ -36,6 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.bu.recyclingtracker.ui.theme.Cream
+import edu.bu.recyclingtracker.ui.theme.Forest_Green
+import edu.bu.recyclingtracker.ui.theme.Green
+import edu.bu.recyclingtracker.ui.theme.Teal_Green
 
 @Composable
 fun PieChart(
@@ -53,7 +57,11 @@ fun PieChart(
     }
 
     val colors = listOf(
-        Color.Blue, Color.Cyan, Color.Green, Color.Magenta, Color.Yellow
+        Teal_Green, // Plastic
+        Green, // Glass
+        Cream, // Cardboard
+        Forest_Green, // Metal
+        Color.Yellow
 //        Purple200,
 //        Purple500,
 //        Teal200,

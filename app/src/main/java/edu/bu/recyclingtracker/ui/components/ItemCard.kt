@@ -34,10 +34,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import edu.bu.recyclingtracker.R
 import edu.bu.recyclingtracker.RecyclableItemViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
+import edu.bu.recyclingtracker.data.RecyclingTrackerDao
+import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.UserDataUiEvents
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 //import edu.bu.recyclingtracker.ui.screens.viewModel
@@ -49,7 +52,8 @@ fun ItemCard(
              name:String,
              itemUiState: RecyclingItemUiState,
              viewModel: LogRecyclablesViewModel,
-             index: Int
+             index: Int,
+             counterVisible: Boolean
              )
 {
     Column(
@@ -57,14 +61,14 @@ fun ItemCard(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(64.dp),
             modifier = Modifier
                 .padding(
                     start = 24.dp,
                     top = 24.dp,
                     end = 24.dp
                 )
-                .size(80.dp)
+                .size(50.dp)
                 .clickable {
                     viewModel.incrementCount(name)
                     Log.d("Count", viewModel.uiState.value.itemCounts.value.toString())
@@ -75,42 +79,31 @@ fun ItemCard(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(
-                        width = 1.dp,
-                        color = if (itemUiState.quantity > 0) Color.Green else Color.Transparent,
-                        shape = RoundedCornerShape(8.dp),
-                    )
+//                    .border(
+//                        width = 1.dp,
+//                        color = if (itemUiState.quantity > 0) Color.Green else Color.Transparent,
+//                        shape = RoundedCornerShape(8.dp),
+//                    )
+                ,
+                contentAlignment = Alignment.Center
 
             ) {
                 if(itemUiState.icon != null) {
                     Image(
                         modifier = Modifier
-                            .fillMaxSize(),
+//                            .fillMaxSize()
+                            .size(40.dp)
+                        ,
                         painter = painterResource(id = itemUiState.icon!!),
                         contentDescription = "Box Icon",
                     )
                 }
             }
         }
-        Text(text = itemUiState.name)
+        Text(text = name)
         Counter(viewModel = viewModel,
             itemUiState,
-//            visible = viewModel.uiState.value.itemCounts.value[index].quantity > 0,
+            visible = counterVisible,
             name, index)
     }
 }
-
-//@Preview
-//@Composable
-//fun ItemCardPreview() {
-//    ItemCard(image = R.drawable.aluminum_can,
-//        name = "Aluminum Can",
-//        selected = false,
-////        model = LogRecyclablesViewModel(),
-//        itemSelected = {
-//            model.onEvent(
-//                UserDataUiEvents.itemSelected(it)
-//            )
-//        }
-//    )
-//}

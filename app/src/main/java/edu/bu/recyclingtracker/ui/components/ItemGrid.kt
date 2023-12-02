@@ -46,7 +46,8 @@ fun ItemGrid(title:String,
                         itemUiState = viewModel.uiState.value.itemCounts.value.find { it.name == recyclableItems.value[index].name }
                             ?: RecyclingItemUiState("empty", "default category"),
                         viewModel,
-                        index
+                        index,
+                        counterVisible = viewModel.uiState.value.itemCounts.value[index].quantity > 0
                     )
                 }
             }

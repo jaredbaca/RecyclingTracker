@@ -49,7 +49,8 @@ fun ItemCard(
              name:String,
              itemUiState: RecyclingItemUiState,
              viewModel: LogRecyclablesViewModel,
-             index: Int
+             index: Int,
+             counterVisible: Boolean
              )
 {
     Column(
@@ -92,10 +93,10 @@ fun ItemCard(
                 }
             }
         }
-        Text(text = itemUiState.name)
+        Text(text = name)
         Counter(viewModel = viewModel,
             itemUiState,
-//            visible = viewModel.uiState.value.itemCounts.value[index].quantity > 0,
+            visible = counterVisible,
             name, index)
     }
 }

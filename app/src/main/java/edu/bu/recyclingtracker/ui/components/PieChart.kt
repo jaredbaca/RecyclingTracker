@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,19 +25,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import edu.bu.recyclingtracker.ui.theme.Cream
-import edu.bu.recyclingtracker.ui.theme.Forest_Green
-import edu.bu.recyclingtracker.ui.theme.Green
-import edu.bu.recyclingtracker.ui.theme.Teal_Green
+import edu.bu.recyclingtracker.ui.theme.CardboardColor
+import edu.bu.recyclingtracker.ui.theme.MetalColor
+import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.PlasticColor
+import edu.bu.recyclingtracker.ui.theme.categoryColors
 
 @Composable
 fun PieChart(
@@ -57,10 +54,10 @@ fun PieChart(
     }
 
     val colors = listOf(
-        Teal_Green, // Plastic
-        Green, // Glass
-        Cream, // Cardboard
-        Forest_Green, // Metal
+        PlasticColor, // Plastic
+        MetalColor, // Metal
+        GlassColor, // Glass
+        CardboardColor, // Cardboard
         Color.Yellow
 //        Purple200,
 //        Purple500,
@@ -114,7 +111,7 @@ fun PieChart(
             ) {
                 floatValue.forEachIndexed { index, value ->
                     drawArc(
-                        color = colors[index],
+                        color = categoryColors[data.keys.elementAt(index)] ?: Color.Green,
                         lastValue,
                         value,
                         useCenter = false,

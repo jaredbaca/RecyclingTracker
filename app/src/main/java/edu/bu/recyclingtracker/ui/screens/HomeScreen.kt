@@ -22,6 +22,10 @@ import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.ItemGrid
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
+import edu.bu.recyclingtracker.ui.theme.CardboardColor
+import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.MetalColor
+import edu.bu.recyclingtracker.ui.theme.PlasticColor
 
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,15 +33,15 @@ import edu.bu.recyclingtracker.ui.components.bottomNavBar2
 fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
 
     val itemGrids: List<@Composable () -> Unit> = listOf(
-        {ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Plastic"}), viewModel)},
-        {ItemGrid( "Metals", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Metal"}), viewModel)},
-        {ItemGrid( "Glass", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Glass"}), viewModel)},
-        {ItemGrid( "Cardboard", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Cardboard"}), viewModel)}
+        {ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Plastic"}), viewModel, color = PlasticColor)},
+        {ItemGrid( "Metals", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Metal"}), viewModel, color = MetalColor)},
+        {ItemGrid( "Glass", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Glass"}), viewModel, color = GlassColor)},
+        {ItemGrid( "Cardboard", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Cardboard"}), viewModel, color = CardboardColor)}
     )
 
     Scaffold(
         topBar = {
-            AppToolbar(toolbarTitle = "Home")
+            AppToolbar(toolbarTitle = "Recyclables")
         },
         bottomBar = {
             bottomNavBar2(navItems = navItems, navController)
@@ -52,28 +56,22 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
         ) {
 
 
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
+//            Column(
+//                modifier = Modifier.fillMaxWidth()
+//            ) {
 //                ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Plastic"}), viewModel)
 //                ItemGrid( "Metals", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Metal"}), viewModel)
 //                ItemGrid( "Glass", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Glass"}), viewModel)
 //                ItemGrid( "Cardboard", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Cardboard"}), viewModel),
-                ItemGrid( "Recyclables",
-                    recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value
-//                    .filter{it.category == "Cardboard"}
-                    )
-                    , viewModel)
+//                ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == "Plastic" }), viewModel) }
 
+            LazyColumn {
+                for (grid in itemGrids) {
+                    item {
+                        grid.invoke()
+                    }
+                }
             }
-
-//            LazyColumn {
-//                for (grid in itemGrids) {
-//                    item {
-//                        grid.invoke()
-//                    }
-//                }
-//            }
         }
     }
 }

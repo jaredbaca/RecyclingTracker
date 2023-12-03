@@ -1,5 +1,6 @@
 package edu.bu.recyclingtracker.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Recycling
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +45,11 @@ import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.ItemCard
+import edu.bu.recyclingtracker.ui.components.ItemCardNoCounter
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
+import edu.bu.recyclingtracker.ui.theme.FABColor
+import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.categoryColors
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -53,14 +61,16 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
 
     Scaffold(
         topBar = {
-            AppToolbar(toolbarTitle = "Home")
+            AppToolbar(toolbarTitle = "Bin Summary")
         },
         bottomBar = {
             bottomNavBar2(navItems = navItems, navController)
         } ,
                 
         floatingActionButton = {
-            FloatingActionButton(onClick = {
+            FloatingActionButton(
+                containerColor = FABColor,
+                onClick = {
 
                 GlobalScope.launch {
                     viewModel.addEntryFromCurrentBin()
@@ -72,7 +82,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                 navController.navigate(Routes.HOME_SCREEN)
             })
             {
-                Icon(imageVector = Icons.Default.Upload, contentDescription = null)
+                Icon(imageVector = Icons.Default.Send, contentDescription = null)
             }
         }
 
@@ -84,12 +94,12 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                 .padding(paddingValues)
         ) {
             Column {
-                Row {
-                    Text(
-                        text = "Bin Summary Screen",
-                        fontSize = 24.sp
-                    )
-                }
+//                Row {
+//                    Text(
+//                        text = "Bin Summary Screen",
+//                        fontSize = 24.sp
+//                    )
+//                }
 
                 val dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy")
 
@@ -144,13 +154,13 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
 //                                    modifier = Modifier.weight(1f)
                                 )   {
 
-                                    ItemCard(
+                                    ItemCardNoCounter(
                                         selected = false,
                                         name = "",
                                         itemUiState = itemList[index],
                                         viewModel = viewModel,
                                         index = 0,
-                                        counterVisible = false,
+                                        color = categoryColors[itemList[index].category] ?: Color.Green
                                     )
                                 }
 
@@ -181,7 +191,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                         Row(modifier = Modifier
                             .padding(32.dp)
                             .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
+//                            horizontalArrangement = Arrangement.End
                         ) {
                             Text(text = "Total: ${itemList.sumOf { it.quantity }} Items",
                             fontSize = 24.sp)

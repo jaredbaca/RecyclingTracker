@@ -61,7 +61,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
 
     Scaffold(
         topBar = {
-            AppToolbar(toolbarTitle = "Home")
+            AppToolbar(toolbarTitle = "Bin Summary")
         },
         bottomBar = {
             bottomNavBar2(navItems = navItems, navController)
@@ -94,12 +94,12 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                 .padding(paddingValues)
         ) {
             Column {
-                Row {
-                    Text(
-                        text = "Bin Summary Screen",
-                        fontSize = 24.sp
-                    )
-                }
+//                Row {
+//                    Text(
+//                        text = "Bin Summary Screen",
+//                        fontSize = 24.sp
+//                    )
+//                }
 
                 val dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy")
 

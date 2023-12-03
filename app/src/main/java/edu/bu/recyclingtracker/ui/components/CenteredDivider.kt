@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CenteredDivider() {
+fun CenteredDivider(paddingValue: Int) {
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 64.dp, end = 64.dp, top = 24.dp, bottom = 24.dp)
+            .padding(start = paddingValue.dp, end = paddingValue.dp, top = 24.dp, bottom = 24.dp)
             .height(1.dp)
             .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f))
 //            .padding(vertical = 48.dp)

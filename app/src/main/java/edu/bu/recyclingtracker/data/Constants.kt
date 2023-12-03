@@ -22,9 +22,9 @@ val recyclables = mutableStateOf( listOf(
     RecyclingItemUiState("Pasta Sauce Jar", "Glass", icon = R.drawable.glass_jar),
 
     //Cardboard
-    RecyclingItemUiState("Small Cardboard Box", "Cardboard", icon = R.drawable.cardboard_box),
-    RecyclingItemUiState("Medium Cardboard Box", "Cardboard", icon = R.drawable.cardboard_box),
-    RecyclingItemUiState("Large Cardboard Box", "Cardboard", icon = R.drawable.cardboard_box),
+    RecyclingItemUiState("Small Box", "Cardboard", icon = R.drawable.cardboard_box),
+    RecyclingItemUiState("Medium Box", "Cardboard", icon = R.drawable.cardboard_box),
+    RecyclingItemUiState("Large Box", "Cardboard", icon = R.drawable.cardboard_box),
     RecyclingItemUiState("Pizza Box", "Cardboard", icon = R.drawable.cardboard_box),
     RecyclingItemUiState("Frozen Food Box", "Cardboard", icon = R.drawable.frozen_food_box),
 ))

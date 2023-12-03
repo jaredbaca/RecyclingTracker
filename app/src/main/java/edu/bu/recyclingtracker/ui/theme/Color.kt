@@ -11,10 +11,18 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val Forest_Green = Color(parseColor("#08392B"))
-val Teal_Green = Color(parseColor("#578E87"))
-val Cream = Color(parseColor("#F7E2C7"))
+//Item Specific Colors
+val MetalColor = Color(parseColor("#A9B7C2"))
+val PlasticColor = Color(parseColor("#4A6F89"))
+val CardboardColor = Color(parseColor("#F7E2C7"))
+val GlassColor = Color(parseColor("#29660C"))
 
-//val Green = Color(0x29660C)
+//
+val FABColor = Color(parseColor("#76B947"))
 
-val Green = Color(parseColor("#29660C"))
+var categoryColors = mapOf<String, Color>(
+    "Metal" to MetalColor,
+    "Plastic" to PlasticColor,
+    "Cardboard" to CardboardColor,
+    "Glass" to GlassColor
+)

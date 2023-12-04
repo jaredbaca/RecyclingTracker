@@ -16,10 +16,10 @@ val recyclables = mutableStateOf( listOf(
     RecyclingItemUiState("Steel Can", "Metal",  icon = R.drawable.steel_can),
 
     //Glass
-    RecyclingItemUiState("Beer Bottle", "Glass", icon = R.drawable.glass_bottle),
-    RecyclingItemUiState("Wine Bottle", "Glass", icon = R.drawable.glass_bottle),
-    RecyclingItemUiState("Mason Jar", "Glass", icon = R.drawable.glass_jar),
-    RecyclingItemUiState("Pasta Sauce Jar", "Glass", icon = R.drawable.glass_jar),
+    RecyclingItemUiState("Beer Bottle", "Glass", icon = R.drawable.glass_bottle_white),
+    RecyclingItemUiState("Wine Bottle", "Glass", icon = R.drawable.glass_bottle_white),
+    RecyclingItemUiState("Mason Jar", "Glass", icon = R.drawable.glass_jar_white),
+    RecyclingItemUiState("Pasta Sauce Jar", "Glass", icon = R.drawable.glass_jar_white),
 
     //Cardboard
     RecyclingItemUiState("Small Box", "Cardboard", icon = R.drawable.cardboard_box),

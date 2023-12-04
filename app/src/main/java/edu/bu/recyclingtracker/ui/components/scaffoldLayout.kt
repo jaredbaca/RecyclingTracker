@@ -16,8 +16,12 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Recycling
+import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Timeline
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.QueryStats
+import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material3.BadgeDefaults
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -86,13 +90,16 @@ fun bottomNavBar2(
                   navController: NavController, viewModel: LogRecyclablesViewModel) {
 
     var navItems = listOf<NavItem>(
-        NavItem("Home", Icons.Default.Home, Routes.HOME_SCREEN),
-        NavItem("Bin", Icons.Default.ShoppingCart, Routes.BIN_SUMMARY_SCREEN, badgeCount = viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }),
-        NavItem("Stats", Icons.Default.Timeline, Routes.STATS_SCREEN)
+        NavItem("Home", Icons.Rounded.Home, Routes.HOME_SCREEN),
+        NavItem("Bin", Icons.Rounded.ShoppingBag, Routes.BIN_SUMMARY_SCREEN, badgeCount = viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }),
+        NavItem("Stats", Icons.Rounded.QueryStats, Routes.STATS_SCREEN)
     )
 
     BottomNavigation(
-        backgroundColor = Color(android.graphics.Color.parseColor("#63ad1e"))
+        backgroundColor =
+//        Color(android.graphics.Color.parseColor("#63ad1e")) //Previous Green
+        Color(android.graphics.Color.parseColor("#C1D9B7"))
+
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -111,11 +112,12 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                 }
 
                 var itemList by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value) }
+                var uiState = viewModel.uiState
 
                 LazyColumn(content = {
-                    items(itemList.size) {
-                        index ->
-                        if(itemList[index].quantity > 0) {
+                    items(items = uiState.value.itemCounts.value) {
+                        item ->
+                        if(item.quantity > 0) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -144,7 +146,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
 //                                modifier = Modifier.weight(1f)
                             )   {
 
-                                Text(text=itemList[index].quantity.toString(),
+                                Text(text=item.quantity.toString(),
                                     fontSize = 18.sp,
                                     modifier = Modifier
                                         .padding(start = 16.dp)
@@ -159,10 +161,10 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                                     ItemCardNoCounter(
                                         selected = false,
                                         name = "",
-                                        itemUiState = itemList[index],
+                                        itemUiState = item,
                                         viewModel = viewModel,
                                         index = 0,
-                                        color = categoryColors[itemList[index].category] ?: Color.Green
+                                        color = categoryColors[item.category] ?: Color.Green
                                     )
                                 }
 
@@ -170,7 +172,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                                     modifier = Modifier.weight(1f)
                                 )   {
 
-                                    Text(text = itemList[index].name
+                                    Text(text = item.name
                                     )
                                 }
 
@@ -179,7 +181,8 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                                 //Delete Button
                                 //TODO Need to make this update in real time
                             IconButton(onClick = {
-                                itemList[index].quantity = 0;
+//                                itemList[index].quantity = 0;
+                                viewModel.updateItemQuantity(item.name, "0")
                             }) {
                                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove Item")
                             }

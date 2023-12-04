@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
 import androidx.compose.material.BottomNavigation
@@ -16,8 +17,12 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Recycling
+import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Timeline
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.QueryStats
+import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material3.BadgeDefaults
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,9 +32,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -38,6 +45,8 @@ import edu.bu.recyclingtracker.data.NavItem
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
 import edu.bu.recyclingtracker.ui.screens.Routes
+import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.navBarColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,13 +95,16 @@ fun bottomNavBar2(
                   navController: NavController, viewModel: LogRecyclablesViewModel) {
 
     var navItems = listOf<NavItem>(
-        NavItem("Home", Icons.Default.Home, Routes.HOME_SCREEN),
-        NavItem("Bin", Icons.Default.ShoppingCart, Routes.BIN_SUMMARY_SCREEN, badgeCount = viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }),
-        NavItem("Stats", Icons.Default.Timeline, Routes.STATS_SCREEN)
+        NavItem("Home", Icons.Rounded.Home, Routes.HOME_SCREEN),
+        NavItem("Bin", Icons.Rounded.ShoppingBag, Routes.BIN_SUMMARY_SCREEN, badgeCount = viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }),
+        NavItem("Stats", Icons.Rounded.QueryStats, Routes.STATS_SCREEN)
     )
 
     BottomNavigation(
-        backgroundColor = Color(android.graphics.Color.parseColor("#63ad1e"))
+        backgroundColor =
+//        Color(android.graphics.Color.parseColor("#63ad1e")) //Previous Green
+        navBarColor
+
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -115,10 +127,23 @@ fun bottomNavBar2(
                             )
                             }
                             }) {
-                                Icon(navItem.icon, contentDescription = "")
+                                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Icon(navItem.icon, contentDescription = "",
+                                        tint = if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) Color.Black else Color.Gray
+                                    )
+                                    if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) {
+                                        Text(navItem.name, textAlign = TextAlign.Center, fontSize = 10.sp)
+                                    }
+                                }
                             }
                         } else {
-                            Icon(navItem.icon, contentDescription = "")
+                            Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                                Icon(navItem.icon, contentDescription = "",
+                                    tint = if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) Color.Black else Color.Gray
+                                )
+                                if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) {Text(navItem.name, textAlign = TextAlign.Center, fontSize = 10.sp)}
+                            }
+
                         }
                     }
 

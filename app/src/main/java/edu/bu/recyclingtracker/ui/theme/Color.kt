@@ -13,12 +13,13 @@ val Pink40 = Color(0xFF7D5260)
 
 //Item Specific Colors
 val MetalColor = Color(parseColor("#A9B7C2"))
-val PlasticColor = Color(parseColor("#4A6F89"))
+val PlasticColor = Color(parseColor("#81ABBC"))
 val CardboardColor = Color(parseColor("#F7E2C7"))
 val GlassColor = Color(parseColor("#29660C"))
 
 //
 val FABColor = Color(parseColor("#76B947"))
+val navBarColor = Color(parseColor("#C1D9B7"))
 
 var categoryColors = mapOf<String, Color>(
     "Metal" to MetalColor,

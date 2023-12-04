@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import edu.bu.recyclingtracker.data.navItems
+//import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.CenteredDivider
@@ -44,7 +44,10 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
             AppToolbar(toolbarTitle = "Your Recycling Stats")
         },
         bottomBar = {
-            bottomNavBar2(navItems = navItems, navController)
+            bottomNavBar2(
+//                navItems = navItems,
+                navController,
+                viewModel)
         }
 
     ) {paddingValues ->

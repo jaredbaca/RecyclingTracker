@@ -122,10 +122,10 @@ fun PieChart(
                     lastValue += value
                 }
             }
-            Column {
-                Text(text = categoryStat)
-                Text(text = percentageStat)
-            }
+//            Column {
+//                Text(text = categoryStat)
+//                Text(text = percentageStat)
+//            }
 
         }
 

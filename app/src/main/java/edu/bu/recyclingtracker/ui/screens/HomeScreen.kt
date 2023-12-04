@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import edu.bu.recyclingtracker.data.navItems
+//import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
@@ -44,7 +44,9 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
             AppToolbar(toolbarTitle = "Recyclables")
         },
         bottomBar = {
-            bottomNavBar2(navItems = navItems, navController)
+            bottomNavBar2(
+//                navItems = navItems,
+                navController, viewModel)
         }
 
     ) {paddingValues ->

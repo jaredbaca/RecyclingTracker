@@ -101,6 +101,18 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                             .padding(8.dp),
                             textAlign = TextAlign.Center,
                             color = Color.Gray)
+                        CenteredDivider(paddingValue = 256)
+
+                        Text("That's the equivalent of ", fontSize = 18.sp, modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                            textAlign = TextAlign.Center,
+                            color = Color.Gray)
+                        Text("100 kg of CO2 ", fontSize = 18.sp, modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                            textAlign = TextAlign.Center,
+                            color = PlasticColor)
                     }
                 }
 

@@ -122,10 +122,6 @@ fun PieChart(
                     lastValue += value
                 }
             }
-//            Column {
-//                Text(text = categoryStat)
-//                Text(text = percentageStat)
-//            }
 
         }
 
@@ -158,9 +154,32 @@ fun DetailsPieChart(
 }
 
 @Composable
+fun SimplifiedDetailsPieChart(
+    data: Map<String, Int>,
+    colors: List<Color>
+) {
+    Column(
+        modifier = Modifier
+            .padding(top = 80.dp)
+            .fillMaxWidth()
+    ) {
+        data.values.forEachIndexed { index, value ->
+            SimplifiedDetailsPieChartItem(
+                data = Pair(data.keys.elementAt(index),
+                    "${String.format("%.1f",
+                        (value.toDouble()/data.values.sum().toDouble()*100))}%"),
+                color = colors[index]
+            )
+        }
+    }
+}
+
+
+
+@Composable
 fun DetailsPieChartItem(
     data: Pair<String, String>,
-    height: Dp = 35.dp,
+    height: Dp = 30.dp,
     color: Color
 ) {
     Surface(
@@ -189,6 +208,51 @@ fun DetailsPieChartItem(
                     fontWeight = FontWeight.Medium,
                     fontSize = 16.sp,
                     color = Color.Black
+                )
+                Text(
+                    modifier = Modifier.padding(start = 15.dp),
+                    text = data.second.toString(),
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SimplifiedDetailsPieChartItem(
+    data: Pair<String, String>,
+    height: Dp = 35.dp,
+    color: Color
+) {
+    Surface(
+        modifier = Modifier
+            .padding(vertical = 10.dp, horizontal = 40.dp),
+        color = Color.Transparent
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+//            Box(
+//                modifier = Modifier
+//                    .background(
+//                        color = color,
+//                        shape = RoundedCornerShape(10.dp)
+//                    )
+//                    .size(height)
+//            )
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    modifier = Modifier.padding(start = 15.dp),
+                    text = data.first,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    color = color
                 )
                 Text(
                     modifier = Modifier.padding(start = 15.dp),

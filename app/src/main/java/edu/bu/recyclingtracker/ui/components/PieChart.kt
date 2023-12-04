@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +42,7 @@ import edu.bu.recyclingtracker.ui.theme.categoryColors
 @Composable
 fun PieChart(
     data: Map<String, Int>,
-    radiusOuter: Dp = 140.dp,
+    radiusOuter: Dp = 120.dp,
     chartBarWidth: Dp = 35.dp,
     animDuration: Int = 1000
 ) {
@@ -59,14 +60,15 @@ fun PieChart(
         GlassColor, // Glass
         CardboardColor, // Cardboard
         Color.Yellow
-//        Purple200,
-//        Purple500,
-//        Teal200,
-//        Purple700,
-//        Blue
     )
 
     var animationPlayed by remember { mutableStateOf(false) }
+
+    var plasticStats = listOf<String>("Plastic", "82.3%")
+
+
+    var categoryStat by remember { mutableStateOf(plasticStats[0]) }
+    var percentageStat by remember { mutableStateOf(plasticStats[1]) }
 
     var lastValue = 0f
 
@@ -120,6 +122,11 @@ fun PieChart(
                     lastValue += value
                 }
             }
+            Column {
+                Text(text = categoryStat)
+                Text(text = percentageStat)
+            }
+
         }
 
         DetailsPieChart(
@@ -153,7 +160,7 @@ fun DetailsPieChart(
 @Composable
 fun DetailsPieChartItem(
     data: Pair<String, String>,
-    height: Dp = 45.dp,
+    height: Dp = 35.dp,
     color: Color
 ) {
     Surface(
@@ -180,14 +187,14 @@ fun DetailsPieChartItem(
                     modifier = Modifier.padding(start = 15.dp),
                     text = data.first,
                     fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
+                    fontSize = 16.sp,
                     color = Color.Black
                 )
                 Text(
                     modifier = Modifier.padding(start = 15.dp),
                     text = data.second.toString(),
                     fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
+                    fontSize = 16.sp,
                     color = Color.Gray
                 )
             }

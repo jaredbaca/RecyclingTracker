@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
 import androidx.compose.material.BottomNavigation
@@ -31,9 +32,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -42,6 +45,8 @@ import edu.bu.recyclingtracker.data.NavItem
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
 import edu.bu.recyclingtracker.ui.screens.Routes
+import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.navBarColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +103,7 @@ fun bottomNavBar2(
     BottomNavigation(
         backgroundColor =
 //        Color(android.graphics.Color.parseColor("#63ad1e")) //Previous Green
-        Color(android.graphics.Color.parseColor("#C1D9B7"))
+        navBarColor
 
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -122,10 +127,23 @@ fun bottomNavBar2(
                             )
                             }
                             }) {
-                                Icon(navItem.icon, contentDescription = "")
+                                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Icon(navItem.icon, contentDescription = "",
+                                        tint = if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) Color.Black else Color.Gray
+                                    )
+                                    if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) {
+                                        Text(navItem.name, textAlign = TextAlign.Center, fontSize = 10.sp)
+                                    }
+                                }
                             }
                         } else {
-                            Icon(navItem.icon, contentDescription = "")
+                            Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                                Icon(navItem.icon, contentDescription = "",
+                                    tint = if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) Color.Black else Color.Gray
+                                )
+                                if(currentDestination?.hierarchy?.any { it.route == navItem.route } == true) {Text(navItem.name, textAlign = TextAlign.Center, fontSize = 10.sp)}
+                            }
+
                         }
                     }
 

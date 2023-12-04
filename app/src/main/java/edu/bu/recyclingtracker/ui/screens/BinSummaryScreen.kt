@@ -51,6 +51,7 @@ import edu.bu.recyclingtracker.ui.components.bottomNavBar2
 import edu.bu.recyclingtracker.ui.theme.FABColor
 import edu.bu.recyclingtracker.ui.theme.GlassColor
 import edu.bu.recyclingtracker.ui.theme.categoryColors
+import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -72,7 +73,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                 
         floatingActionButton = {
             FloatingActionButton(
-                containerColor = FABColor,
+                containerColor = navBarColor,
                 onClick = {
 
                 GlobalScope.launch {

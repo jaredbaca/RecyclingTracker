@@ -19,6 +19,7 @@ val GlassColor = Color(parseColor("#29660C"))
 
 //
 val FABColor = Color(parseColor("#76B947"))
+val navBarColor = Color(parseColor("#C1D9B7"))
 
 var categoryColors = mapOf<String, Color>(
     "Metal" to MetalColor,

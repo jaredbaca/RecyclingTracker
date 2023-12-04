@@ -41,7 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import edu.bu.recyclingtracker.data.navItems
+//import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.ItemCard
@@ -64,7 +64,9 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
             AppToolbar(toolbarTitle = "Bin Summary")
         },
         bottomBar = {
-            bottomNavBar2(navItems = navItems, navController)
+            bottomNavBar2(
+//                navItems = navItems,
+                navController, viewModel)
         } ,
                 
         floatingActionButton = {

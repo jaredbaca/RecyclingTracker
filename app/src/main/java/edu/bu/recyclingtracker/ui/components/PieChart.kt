@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +42,7 @@ import edu.bu.recyclingtracker.ui.theme.categoryColors
 @Composable
 fun PieChart(
     data: Map<String, Int>,
-    radiusOuter: Dp = 140.dp,
+    radiusOuter: Dp = 120.dp,
     chartBarWidth: Dp = 35.dp,
     animDuration: Int = 1000
 ) {
@@ -59,14 +60,15 @@ fun PieChart(
         GlassColor, // Glass
         CardboardColor, // Cardboard
         Color.Yellow
-//        Purple200,
-//        Purple500,
-//        Teal200,
-//        Purple700,
-//        Blue
     )
 
     var animationPlayed by remember { mutableStateOf(false) }
+
+    var plasticStats = listOf<String>("Plastic", "82.3%")
+
+
+    var categoryStat by remember { mutableStateOf(plasticStats[0]) }
+    var percentageStat by remember { mutableStateOf(plasticStats[1]) }
 
     var lastValue = 0f
 
@@ -120,6 +122,7 @@ fun PieChart(
                     lastValue += value
                 }
             }
+
         }
 
         DetailsPieChart(
@@ -151,9 +154,32 @@ fun DetailsPieChart(
 }
 
 @Composable
+fun SimplifiedDetailsPieChart(
+    data: Map<String, Int>,
+    colors: List<Color>
+) {
+    Column(
+        modifier = Modifier
+            .padding(top = 80.dp)
+            .fillMaxWidth()
+    ) {
+        data.values.forEachIndexed { index, value ->
+            SimplifiedDetailsPieChartItem(
+                data = Pair(data.keys.elementAt(index),
+                    "${String.format("%.1f",
+                        (value.toDouble()/data.values.sum().toDouble()*100))}%"),
+                color = colors[index]
+            )
+        }
+    }
+}
+
+
+
+@Composable
 fun DetailsPieChartItem(
     data: Pair<String, String>,
-    height: Dp = 45.dp,
+    height: Dp = 30.dp,
     color: Color
 ) {
     Surface(
@@ -180,14 +206,59 @@ fun DetailsPieChartItem(
                     modifier = Modifier.padding(start = 15.dp),
                     text = data.first,
                     fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
+                    fontSize = 16.sp,
                     color = Color.Black
                 )
                 Text(
                     modifier = Modifier.padding(start = 15.dp),
                     text = data.second.toString(),
                     fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SimplifiedDetailsPieChartItem(
+    data: Pair<String, String>,
+    height: Dp = 35.dp,
+    color: Color
+) {
+    Surface(
+        modifier = Modifier
+            .padding(vertical = 10.dp, horizontal = 40.dp),
+        color = Color.Transparent
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+//            Box(
+//                modifier = Modifier
+//                    .background(
+//                        color = color,
+//                        shape = RoundedCornerShape(10.dp)
+//                    )
+//                    .size(height)
+//            )
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    modifier = Modifier.padding(start = 15.dp),
+                    text = data.first,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    color = color
+                )
+                Text(
+                    modifier = Modifier.padding(start = 15.dp),
+                    text = data.second.toString(),
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
                     color = Color.Gray
                 )
             }

@@ -29,20 +29,32 @@ val recyclables = mutableStateOf( listOf(
     RecyclingItemUiState("Frozen Food Box", "Cardboard", icon = R.drawable.frozen_food_box),
 ))
 
-//val metals = mutableStateOf( listOf(
-//    RecyclingItemUiState("Aluminum Can", icon = R.drawable.aluminum_can),
-//    RecyclingItemUiState("Soup Can", icon = R.drawable.aluminum_can)
-//))
+val itemWeights: Map<String, Int> = mapOf(
+    //Weight in grams
+    //Plastics
+    "12oz Bottle" to 15,
+    "2-Liter Bottle" to 40,
+    "Takeout Box" to 15,
+    "Detergent Bottle" to 200,
+    "Milk Jug" to 110,
 
-//val glass = mutableStateOf( listOf(
-//    //Glass
-//    RecyclingItemUiState("Glass Bottle", icon = R.drawable.glass_bottle),
-//))
+    //Metals
+    "Aluminum Can" to 13,
+    "Steel Can" to 35,
 
-//val cardboard = mutableStateOf( listOf(
-//    //Cardboard
-//    RecyclingItemUiState("Small Cardboard Box")
-//))
+    //Glass
+    "Beer Bottle" to 250,
+    "Wine Bottle" to 600,
+    "Mason Jar" to 350,
+    "Pasta Sauce Jar" to 250,
+
+    //Cardboard
+    "Small Box" to 300,
+    "Medium Box" to 600,
+    "Large Box" to 1300,
+    "Pizza Box" to 400,
+    "Frozen Food Box" to 300
+)
 
 
 val icons = listOf(

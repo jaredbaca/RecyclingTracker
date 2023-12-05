@@ -80,68 +80,15 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
             )
         }
     )
-
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet { 
-                IconButton(onClick = {
-                    scope.launch { drawerState.apply { close() } }
-                }) {
-                    Icon(imageVector = Icons.Default.Close, contentDescription = null)
-                }
-
-                Text("Account",
-//                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center, fontSize = 24.sp)
-                Text("History")
-            }
-        },
-    ) {
-
-        Scaffold(
-            topBar = {
-                AppToolbar(toolbarTitle = "Recyclables", scope, drawerState)
-            },
-            bottomBar = {
-                bottomNavBar2(
-//                navItems = navItems,
-                    navController, viewModel
-                )
-            }
-
-        ) { paddingValues ->
-
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-
-
-//            Column(
-//                modifier = Modifier.fillMaxWidth()
-//            ) {
-//                ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Plastic"}), viewModel)
-//                ItemGrid( "Metals", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Metal"}), viewModel)
-//                ItemGrid( "Glass", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Glass"}), viewModel)
-//                ItemGrid( "Cardboard", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter{it.category == "Cardboard"}), viewModel),
-//                ItemGrid( "Plastics", recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == "Plastic" }), viewModel) }
-
-                LazyColumn {
-                    for (grid in itemGrids) {
-                        item {
-                            grid.invoke()
-                        }
+            LazyColumn {
+                for (grid in itemGrids) {
+                    item {
+                        grid.invoke()
                     }
                 }
             }
         }
-    }
-}
+
 
 
 

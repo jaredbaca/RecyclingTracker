@@ -43,25 +43,6 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
-
-    Scaffold(
-        topBar = {
-//            AppToolbar(toolbarTitle = "Your Recycling Stats")
-        },
-        bottomBar = {
-            bottomNavBar2(
-//                navItems = navItems,
-                navController,
-                viewModel)
-        }
-
-    ) {paddingValues ->
-
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
             LazyColumn {
                 item {
                     headerText(text = "Categories")
@@ -136,5 +117,3 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
 
             } // Lazy Column
         } // Surface
-    }
-}

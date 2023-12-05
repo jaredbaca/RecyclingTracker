@@ -108,9 +108,12 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
 
     // Resets items counts in ViewModel
     suspend fun resetCounts() {
-        uiState.value.itemCounts.value.forEach {
-            it.quantity = 0
-        }
+        var newItemCounts = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach { it.quantity = 0 }
+
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf( newItemCounts)
+        )
     }
 
     fun getItemNames() : MutableList<String> {

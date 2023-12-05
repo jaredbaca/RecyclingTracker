@@ -42,7 +42,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -84,33 +87,11 @@ fun AppToolbar(toolbarTitle:String, scope: CoroutineScope, drawerState: DrawerSt
 }
 
 @Composable
-fun bottomNavBar() {
-    BottomAppBar(
-        modifier = Modifier.fillMaxWidth()
-
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.Recycling, contentDescription = "Recycling Page")
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = "Recycling Page")
-            }
-
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.Timeline, contentDescription = "Recycling Page")
-            }
-        }
-    }
-}
-
-@Composable
 fun bottomNavBar2(
 //    navItems: List<NavItem>,
                   navController: NavController, viewModel: LogRecyclablesViewModel) {
+
+    var badgeCount by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }) }
 
     var navItems = listOf<NavItem>(
         NavItem("Home", Icons.Rounded.Home, Routes.HOME_SCREEN),

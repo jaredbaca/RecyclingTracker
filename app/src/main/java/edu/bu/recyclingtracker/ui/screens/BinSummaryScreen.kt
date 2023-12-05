@@ -61,155 +61,85 @@ import java.util.Date
 @Composable
 fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
 
-    Scaffold(
-        topBar = {
-//            AppToolbar(toolbarTitle = "Bin Summary")
-        },
-        bottomBar = {
-            bottomNavBar2(
-//                navItems = navItems,
-                navController, viewModel)
-        } ,
-                
-        floatingActionButton = {
-            FloatingActionButton(
-                containerColor = navBarColor,
-                onClick = {
+        Column {
 
-                GlobalScope.launch {
-                    viewModel.addEntryFromCurrentBin()
-                    viewModel.updateTotals()
-                    viewModel.totalsByCategory = mutableStateOf(viewModel.getTotalsByCategory())
-                    viewModel.weights = mutableStateOf(viewModel.calculateWeights())
-                    viewModel.resetCounts()
-                }
+            val dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy")
 
-                navController.navigate(Routes.HOME_SCREEN)
-            })
-            {
-                Icon(imageVector = Icons.Default.Send, contentDescription = null)
+
+            Row {
+                Text(text = dateFormat.format(Date()))
             }
-        }
 
-    ) {paddingValues ->
+            var itemList by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value) }
+            var uiState = viewModel.uiState
 
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            Column {
-//                Row {
-//                    Text(
-//                        text = "Bin Summary Screen",
-//                        fontSize = 24.sp
-//                    )
-//                }
+            LazyColumn(content = {
+                items(items = uiState.value.itemCounts.value) {
+                    item ->
+                    if(item.quantity > 0) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
 
-                val dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy")
+                        Column(
+                        )   {
 
-
-                Row {
-                    Text(text = dateFormat.format(Date()))
-                }
-
-                var itemList by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value) }
-                var uiState = viewModel.uiState
-
-                LazyColumn(content = {
-                    items(items = uiState.value.itemCounts.value) {
-                        item ->
-                        if(item.quantity > 0) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-//                                horizontalArrangement = Arrangement.SpaceEvenly
-                            ) {
-//                            Text(text = "${it.name}: ${it.quantity}")
-
-
-
-//                            var text by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value[index].quantity.toString()) }
-//
-//                           TextField(value = text,
-//                               onValueChange = {
-//                                   viewModel.updateItemQuantity(viewModel.uiState.value.itemCounts.value[index].name, it)
-////                                   text = it
-//                               },
-//                               modifier = Modifier
-//                                   .size(48.dp)
-//                                   .padding(start = 8.dp),
-//                               keyboardOptions = KeyboardOptions(
-//                                   keyboardType = KeyboardType.Number
-//                               )
-//                           )
+                            Text(text=item.quantity.toString(),
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .padding(start = 16.dp)
+                            )
+                        }
 
                             Column(
-//                                modifier = Modifier.weight(1f)
                             )   {
 
-                                Text(text=item.quantity.toString(),
-                                    fontSize = 18.sp,
-                                    modifier = Modifier
-                                        .padding(start = 16.dp)
-//                                        .weight(1f),
+                                ItemCardNoCounter(
+                                    selected = false,
+                                    name = "",
+                                    itemUiState = item,
+                                    viewModel = viewModel,
+                                    index = 0,
+                                    color = categoryColors[item.category] ?: Color.Green
                                 )
                             }
 
-                                Column(
-//                                    modifier = Modifier.weight(1f)
-                                )   {
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            )   {
 
-                                    ItemCardNoCounter(
-                                        selected = false,
-                                        name = "",
-                                        itemUiState = item,
-                                        viewModel = viewModel,
-                                        index = 0,
-                                        color = categoryColors[item.category] ?: Color.Green
-                                    )
-                                }
-
-                                Column(
-                                    modifier = Modifier.weight(1f)
-                                )   {
-
-                                    Text(text = item.name
-                                    )
-                                }
-
-
-
-                                //Delete Button
-                                //TODO Need to make this update in real time
-                            IconButton(onClick = {
-//                                itemList[index].quantity = 0;
-                                viewModel.updateItemQuantity(item.name, "0")
-                            }) {
-                                Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove Item")
+                                Text(text = item.name
+                                )
                             }
 
+
+
+                            //Delete Button
+                        IconButton(onClick = {
+                            viewModel.updateItemQuantity(item.name, "0")
+                        }) {
+                            Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove Item")
                         }
 
-                        Divider()
                     }
-                        }
-                    item {
-                        Row(modifier = Modifier
-                            .padding(32.dp)
-                            .fillMaxWidth(),
-//                            horizontalArrangement = Arrangement.End
-                        ) {
-                            Text(text = "Total: ${itemList.sumOf { it.quantity }} Items",
-                            fontSize = 24.sp)
-                        }
+
+                    Divider()
+                }
                     }
-                })
-            }
+                item {
+                    Row(modifier = Modifier
+                        .padding(32.dp)
+                        .fillMaxWidth(),
+                    ) {
+                        Text(text = "Total: ${itemList.sumOf { it.quantity }} Items",
+                        fontSize = 24.sp)
+                    }
+                }
+            })
+        }
 
         }
-    }
-}
 
 @Preview
 @Composable

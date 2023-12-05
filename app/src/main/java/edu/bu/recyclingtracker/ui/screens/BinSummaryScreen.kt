@@ -80,6 +80,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                     viewModel.addEntryFromCurrentBin()
                     viewModel.updateTotals()
                     viewModel.totalsByCategory = mutableStateOf(viewModel.getTotalsByCategory())
+                    viewModel.weights = mutableStateOf(viewModel.calculateWeights())
                     viewModel.resetCounts()
                 }
 

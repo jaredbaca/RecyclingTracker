@@ -9,6 +9,7 @@ import androidx.compose.runtime.State
 import androidx.lifecycle.viewModelScope
 import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
+import edu.bu.recyclingtracker.data.itemWeights
 import edu.bu.recyclingtracker.data.recyclables
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -28,6 +29,8 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
 
     var totals: MutableState<MutableMap<String, Any>> = mutableStateOf(getItemNames().associateWith { 0 }.toMutableMap())
     var totalsByCategory: MutableState<MutableMap<String, Int>> = mutableStateOf(mutableMapOf())
+    var weights: MutableState<MutableMap<String, Double>> = mutableStateOf( mutableMapOf())
+
 
     //Updates totals from ViewModel (not DB). Unnecessary once DB is implemented
     suspend fun updateTotals() {
@@ -150,4 +153,44 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             itemCounts = mutableStateOf(newItemCounts)
         )
     }
+
+    fun gramsToPounds(grams: Double): Double {
+        val poundsPerKilogram = 2.20462
+        return grams / 1000 * poundsPerKilogram
+    }
+
+    suspend fun calculateWeights(): MutableMap<String, Double> {
+
+        var newWeights: MutableMap<String, Double> =  mutableMapOf()
+
+        //Calculate weights for individual items
+
+        totals.value.forEach { total ->
+            if(total.key != null) {
+                newWeights.put(total.key,
+                    gramsToPounds(total.value.toString().toDouble() * (itemWeights[total.key]?.toDouble()?:0.0)))
+            }
+        }
+
+        //Calculate weights for categories
+        var items = mutableListOf<String>()
+
+        totalsByCategory.value.keys.forEach { category ->
+            items.clear()
+            uiState.value.itemCounts.value.forEach { if(it.category==category) items.add(it.name) }
+            var sum = newWeights.filter {weight -> items.contains(weight.key) }.values.sum()
+            newWeights.put(category, sum)
+        }
+
+
+
+        Log.d("New Weights", "weights: $newWeights")
+        return newWeights
+    }
+
 }
+
+
+
+
+

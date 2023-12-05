@@ -6,12 +6,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.DrawerValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -25,13 +29,20 @@ import androidx.compose.material.icons.rounded.QueryStats
 import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material3.BadgeDefaults
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,18 +58,25 @@ import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
 import edu.bu.recyclingtracker.ui.screens.Routes
 import edu.bu.recyclingtracker.ui.theme.GlassColor
 import edu.bu.recyclingtracker.ui.theme.navBarColor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppToolbar(toolbarTitle:String) {
+fun AppToolbar(toolbarTitle:String, scope: CoroutineScope, drawerState: DrawerState) {
     TopAppBar(
         title = {Text(text = toolbarTitle)},
         navigationIcon = {
             Icon(imageVector = Icons.Filled.Menu,
                 contentDescription = "navigation icon",
                 modifier = Modifier
-                    .clickable {  },
-
+                    .clickable {
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    },
                 tint = Color.Black,
             )
         },
@@ -153,7 +171,51 @@ fun bottomNavBar2(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldLayout() {
+fun ScaffoldLayout(navController: NavController, viewModel: LogRecyclablesViewModel) {
+    val drawerState = rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet { /* Drawer content */ }
+        },
+    ) {
+        Scaffold(
+            topBar = {
+//                AppToolbar(toolbarTitle = "Recyclables")
+            },
+            bottomBar = {
+                bottomNavBar2(
+                    navController, viewModel
+                )
+            }
 
+        ) { paddingValues ->
+
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                /* Content */
+            }
+        }
+    }
 }
+
+//@Composable
+//fun navDrawer() {
+//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+//    val scope = rememberCoroutineScope()
+//
+//    ModalNavigationDrawer(
+//        drawerState = drawerState
+//        drawerContent = {
+//            ModalDrawerSheet {}
+//        },
+//        ) {
+//
+//    }
+//}

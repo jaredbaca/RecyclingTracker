@@ -63,7 +63,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
 
     Scaffold(
         topBar = {
-            AppToolbar(toolbarTitle = "Bin Summary")
+//            AppToolbar(toolbarTitle = "Bin Summary")
         },
         bottomBar = {
             bottomNavBar2(

@@ -46,7 +46,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
 
     Scaffold(
         topBar = {
-            AppToolbar(toolbarTitle = "Your Recycling Stats")
+//            AppToolbar(toolbarTitle = "Your Recycling Stats")
         },
         bottomBar = {
             bottomNavBar2(

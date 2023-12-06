@@ -24,11 +24,12 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         var itemCounts: State<List<RecyclingItemUiState>> = mutableStateOf( listOf())
     )
 
+
     /* TODO add immutable state and get method */
     var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
 
     var totals: MutableState<MutableMap<String, Any>> = mutableStateOf(getItemNames().associateWith { 0 }.toMutableMap())
-    var totalsByCategory: MutableState<MutableMap<String, Int>> = mutableStateOf(mutableMapOf())
+    var totalsByCategory: MutableState<MutableMap<String, Int>> = mutableStateOf(getTotalsByCategory())
     var weights: MutableState<MutableMap<String, Double>> = mutableStateOf( mutableMapOf())
 
 
@@ -63,10 +64,11 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         return repository.getTotals()
     }
 
-    suspend fun getTotalsByCategory(): MutableMap<String, Int> {
+     fun getTotalsByCategory(): MutableMap<String, Int> {
 
         //Get item totals
-        viewModelScope.launch {val totals = getTotalsFromDB() }
+//        viewModelScope.launch {val totals = getTotalsFromDB() }
+
 
         //Create map of categories/materials
 //        var materials: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -104,6 +106,11 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         Log.d("category totals", categoryTotals.toString())
 
         return categoryTotals
+    }
+
+    suspend fun loadCategoryTotals() {
+        var newCategoryTotals = getTotalsByCategory()
+
     }
 
     // Resets items counts in ViewModel

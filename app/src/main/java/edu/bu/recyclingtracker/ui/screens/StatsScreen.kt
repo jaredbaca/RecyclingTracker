@@ -50,7 +50,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                 }
                 item {
                     PieChart(
-                        data = viewModel.totalsByCategory.value
+                        data = viewModel.totalsByCategory
                     )
                     Spacer(modifier = Modifier.height(48.dp))
                 }

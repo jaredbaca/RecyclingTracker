@@ -22,6 +22,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,16 +45,16 @@ import edu.bu.recyclingtracker.ui.theme.categoryColors
 
 @Composable
 fun PieChart(
-    data: Map<String, Int>,
+    data: MutableState<MutableMap<String, Int>>,
     radiusOuter: Dp = 120.dp,
     chartBarWidth: Dp = 35.dp,
     animDuration: Int = 1000
 ) {
 
-    val totalSum = data.values.sum()
+    val totalSum = data.value.values.sum()
     val floatValue = mutableListOf<Float>()
 
-    data.values.forEachIndexed { index, values ->
+    data.value.values.forEachIndexed { index, values ->
         floatValue.add(index, 360 * values.toFloat() / totalSum.toFloat())
     }
 
@@ -116,7 +117,7 @@ fun PieChart(
             ) {
                 floatValue.forEachIndexed { index, value ->
                     drawArc(
-                        color = categoryColors[data.keys.elementAt(index)] ?: Color.Green,
+                        color = categoryColors[data.value.keys.elementAt(index)] ?: Color.Green,
                         lastValue,
                         value,
                         useCenter = false,
@@ -137,7 +138,7 @@ fun PieChart(
 
 @Composable
 fun DetailsPieChart(
-    data: Map<String, Int>,
+    data: MutableState<MutableMap<String, Int>>,
     colors: List<Color>
 ) {
     Column(
@@ -145,11 +146,11 @@ fun DetailsPieChart(
             .padding(top = 80.dp)
             .fillMaxWidth()
     ) {
-        data.values.forEachIndexed { index, value ->
+        data.value.values.forEachIndexed { index, value ->
             DetailsPieChartItem(
-                data = Pair(data.keys.elementAt(index),
+                data = Pair(data.value.keys.elementAt(index),
                     "${String.format("%.1f",
-                    (value.toDouble()/data.values.sum().toDouble()*100))}%"),
+                    (value.toDouble()/data.value.values.sum().toDouble()*100))}%"),
                 color = colors[index]
             )
         }

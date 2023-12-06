@@ -23,6 +23,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -32,6 +34,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -48,6 +52,7 @@ import edu.bu.recyclingtracker.ui.screens.Routes
 import edu.bu.recyclingtracker.ui.theme.RecyclingTrackerTheme
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -88,10 +93,20 @@ fun RecyclingTrackerApp() {
     //Create view model here so that it can utilize the repository
     val recyclablesViewModel: LogRecyclablesViewModel = viewModel {LogRecyclablesViewModel(recyclingTrackerRepository)}
 
+    LaunchedEffect(true) {
+        GlobalScope.async {
+            recyclablesViewModel.updateTotals()
+            recyclablesViewModel.totalsByCategory.value = recyclablesViewModel.getTotalsByCategory()
+            recyclablesViewModel.weights = mutableStateOf(recyclablesViewModel.calculateWeights())
+        }
+    }
+
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
-
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -113,13 +128,12 @@ fun RecyclingTrackerApp() {
                 AppToolbar(toolbarTitle = "Recyclables", scope, drawerState)
             },
             bottomBar = {
-                bottomNavBar2(
-//                navItems = navItems,
-                    navController, recyclablesViewModel
-                )
+                bottomNavBar2(navController, recyclablesViewModel)
             },
 
             floatingActionButton = {
+                if(currentDestination?.hierarchy?.any { it.route == Routes.BIN_SUMMARY_SCREEN } == true) {
+
                 FloatingActionButton(
                     containerColor = navBarColor,
                     onClick = {
@@ -138,6 +152,7 @@ fun RecyclingTrackerApp() {
                     Icon(imageVector = Icons.Default.Send, contentDescription = null)
                 }
             }
+    }
 
         ) { paddingValues ->
 

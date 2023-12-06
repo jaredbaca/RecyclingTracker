@@ -41,6 +41,7 @@ import edu.bu.recyclingtracker.data.RecyclingTrackerDao
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
+import edu.bu.recyclingtracker.ui.components.drawerItem
 //import edu.bu.recyclingtracker.ui.screens.LogRecyclablesScreen
 import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
 import edu.bu.recyclingtracker.ui.screens.Routes
@@ -96,16 +97,13 @@ fun RecyclingTrackerApp() {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                IconButton(onClick = {
-                    scope.launch { drawerState.apply { close() } }
-                }) {
+                IconButton(onClick = { scope.launch { drawerState.apply { close() } } }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
 
-                Text("Account",
-//                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center, fontSize = 24.sp)
-                Text("History")
+                drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
+                drawerItem(name = "History", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
+                drawerItem(name = "Settings", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
             }
         },
     ) {

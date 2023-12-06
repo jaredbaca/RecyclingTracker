@@ -30,6 +30,4 @@ fun LoginScreen() {
         })
 
     }
-
-
 }

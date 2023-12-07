@@ -26,6 +26,8 @@ import edu.bu.recyclingtracker.data.itemWeights
 //import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
+import edu.bu.recyclingtracker.ui.components.BarGraph
+import edu.bu.recyclingtracker.ui.components.BarType
 import edu.bu.recyclingtracker.ui.components.CenteredDivider
 import edu.bu.recyclingtracker.ui.components.PieChart
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
@@ -57,6 +59,39 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                 item {
                     headerText(text = "Item Breakdown")
                     CenteredDivider(paddingValue = 128)
+                }
+
+                // Bar Graph test
+                item {
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 30.dp)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        val dataList = mutableListOf(30,60,90,50)
+                        val floatValue = mutableListOf<Float>()
+                        val datesList = mutableListOf(2,3,4,5)
+
+                        dataList.forEachIndexed { index, value ->
+
+                            floatValue.add(index = index, element = value.toFloat()/dataList.max().toFloat())
+
+                        }
+
+                        BarGraph(
+                            graphBarData = floatValue,
+                            xAxisScaleData = datesList,
+                            barData_ = dataList,
+                            height = 300.dp,
+                            roundType = BarType.TOP_CURVED,
+                            barWidth = 20.dp,
+                            barColor = PlasticColor,
+                            barArrangement = Arrangement.SpaceEvenly
+                        )
+                    }
                 }
 
                 item {
@@ -112,6 +147,8 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                             color = PlasticColor)
                     }
                 }
+
+
 
 
 

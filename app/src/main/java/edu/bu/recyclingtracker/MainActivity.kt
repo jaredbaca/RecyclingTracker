@@ -111,7 +111,9 @@ fun RecyclingTrackerApp() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
+            ModalDrawerSheet(
+                drawerContainerColor = navBarColor
+            ) {
                 IconButton(onClick = { scope.launch { drawerState.apply { close() } } }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }

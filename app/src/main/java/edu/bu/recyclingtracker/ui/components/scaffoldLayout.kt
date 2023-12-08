@@ -87,9 +87,7 @@ fun AppToolbar(toolbarTitle:String, scope: CoroutineScope, drawerState: DrawerSt
 }
 
 @Composable
-fun bottomNavBar2(
-//    navItems: List<NavItem>,
-                  navController: NavController, viewModel: LogRecyclablesViewModel) {
+fun bottomNavBar2(navController: NavController, viewModel: LogRecyclablesViewModel) {
 
     var badgeCount by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }) }
 
@@ -152,39 +150,39 @@ fun bottomNavBar2(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ScaffoldLayout(navController: NavController, viewModel: LogRecyclablesViewModel) {
-    val drawerState = rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet { /* Drawer content */ }
-        },
-    ) {
-        Scaffold(
-            topBar = {
-//                AppToolbar(toolbarTitle = "Recyclables")
-            },
-            bottomBar = {
-                bottomNavBar2(
-                    navController, viewModel
-                )
-            }
-
-        ) { paddingValues ->
-
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                /* Content */
-            }
-        }
-    }
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun ScaffoldLayout(navController: NavController, viewModel: LogRecyclablesViewModel) {
+//    val drawerState = rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
+//    val scope = rememberCoroutineScope()
+//    ModalNavigationDrawer(
+//        drawerState = drawerState,
+//        drawerContent = {
+//            ModalDrawerSheet { /* Drawer content */ }
+//        },
+//    ) {
+//        Scaffold(
+//            topBar = {
+////                AppToolbar(toolbarTitle = "Recyclables")
+//            },
+//            bottomBar = {
+//                bottomNavBar2(
+//                    navController, viewModel
+//                )
+//            }
+//
+//        ) { paddingValues ->
+//
+//            Surface(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .padding(paddingValues)
+//            ) {
+//                /* Content */
+//            }
+//        }
+//    }
+//}
 
 //@Composable
 //fun navDrawer() {

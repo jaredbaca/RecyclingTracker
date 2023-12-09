@@ -15,10 +15,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,7 +30,6 @@ import edu.bu.recyclingtracker.ui.components.CenteredDivider
 import edu.bu.recyclingtracker.ui.components.PieChart
 import edu.bu.recyclingtracker.ui.components.headerText
 import edu.bu.recyclingtracker.ui.components.weightText
-import edu.bu.recyclingtracker.ui.theme.GlassColor
 import edu.bu.recyclingtracker.ui.theme.PlasticColor
 import edu.bu.recyclingtracker.ui.theme.categoryColors
 
@@ -76,6 +71,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                         // Test Data
                         val vmTotals = viewModel.totals.value
                         val dataList = mutableListOf(30, 60, 90, 120, 75, 100)
+
                         val floatValue = mutableListOf<Float>()
 //                        val datesList = mutableListOf(1,2,3,4)
                         val labels = mutableListOf<String>(
@@ -89,21 +85,21 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                             "Item 8"
                         )
 
-                        val itemsByCategory = mutableListOf<String>()
-                        var graphColor = GlassColor
+                        val itemsWithinCategory = mutableListOf<String>()
 
                         // Generate Bar Graphs for 4 categories
                         for (category in viewModel.totalsByCategory.value.keys) {
                             // Recyclables Data
-                            itemsByCategory.clear()
+                            itemsWithinCategory.clear()
                             var graphColor = categoryColors[category]?:Color.Gray
 
+                            // Build list of item names in given category
                             viewModel.uiState.value.itemCounts.value.forEach {
-                                if (it.category == category) itemsByCategory.add(
+                                if (it.category == category) itemsWithinCategory.add(
                                     it.name
                                 )
                             }
-                            Log.d("Item List", itemsByCategory.toString())
+                            Log.d("Item List", itemsWithinCategory.toString())
 
 //                            var itemTotal by remember {
 //                                mutableStateOf(vmTotals.filter {
@@ -113,32 +109,38 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
 //                                })
 //                            }
 
+                            // select totals for given category from overall totals
                             var itemTotal = vmTotals.filter {
-                                    itemsByCategory.contains(
+                                    itemsWithinCategory.contains(
                                         it.key
                                     ) && it.value.toString().toDouble() > 0
                                 }
 
                             Log.d("$category Totals:", itemTotal.toString())
 
-                            // Adding plastics to float value list
-                            itemTotal.values.forEachIndexed { index, value ->
-                                //                            if(viewModel.uiState.value.itemCounts.value.filter { it.category == "Plastic" }.any { it.name == dataList.keys.elementAt(index) }) {
-                                floatValue.add(index = index,
-                                    element = value.toString().toFloat() / itemTotal.values.maxWith(
-                                        compareBy { it as? Comparable<*> }).toString().toFloat()
-                                )
-                                //                            }
-                            }
+                            // Convert totals to float value list
+//                            itemTotal.values.forEachIndexed { index, value ->
+//                                floatValue.add(index = index,
+//                                    element = value.toString().toFloat() / itemTotal.values.maxWith(
+//                                        compareBy { it as? Comparable<*> }).toString().toFloat()
+//                                )
+//                            }
 
+                            var plasticTotals = mutableListOf<Int>(2,5,4,8,3)
+
+                            // Add bar graph composable to barGraphs list
                             barGraphs.add(
                                 {
                                     BarGraph(
-                                        graphBarData = floatValue,
+                                        graphBarData = convertToFloats(itemTotal.values.mapNotNull {
+                                            it.toString().toDouble().toInt()
+                                        }.toMutableList()),
+//                                        graphBarData = convertToFloats(plasticTotals),
                                         xAxisLabels = labels,
+//                                        barData_ = plasticTotals,
                                         barData_ = itemTotal.values.mapNotNull {
                                             it.toString().toDouble().toInt()
-                                        },
+                                        }.toMutableList(),
                                         height = 300.dp,
                                         roundType = BarType.TOP_CURVED,
                                         barWidth = 20.dp,
@@ -221,3 +223,15 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
 
             } // Lazy Column
         } // Surface
+
+fun convertToFloats(itemTotal: List<Any>): MutableList<Float> {
+    var floatValue: MutableList<Float> = mutableListOf()
+
+    itemTotal.forEachIndexed { index, value ->
+        floatValue.add(index = index,
+            element = value.toString().toFloat() / itemTotal.maxWith(
+                compareBy { it as? Comparable<*> }).toString().toFloat()
+        )
+    }
+    return floatValue
+}

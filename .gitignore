@@ -64,3 +64,10 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# Gradle Files
+#.gradle/8.0/executionHistory
+#.gradle/8.0/fileHashes
+#.gradle/buildOutputCleanup
+#.gradle
+#

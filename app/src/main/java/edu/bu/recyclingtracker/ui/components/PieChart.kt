@@ -126,7 +126,6 @@ fun PieChart(
                     lastValue += value
                 }
             }
-
         }
 
         DetailsPieChart(

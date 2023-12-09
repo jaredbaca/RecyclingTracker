@@ -131,7 +131,7 @@ fun PieChart(
 
         DetailsPieChart(
             data = data,
-            colors = colors
+            colors = categoryColors
         )
     }
 }
@@ -139,7 +139,7 @@ fun PieChart(
 @Composable
 fun DetailsPieChart(
     data: MutableState<MutableMap<String, Int>>,
-    colors: List<Color>
+    colors: Map<String, Color>
 ) {
     Column(
         modifier = Modifier
@@ -151,7 +151,7 @@ fun DetailsPieChart(
                 data = Pair(data.value.keys.elementAt(index),
                     "${String.format("%.1f",
                     (value.toDouble()/data.value.values.sum().toDouble()*100))}%"),
-                color = colors[index]
+                color = colors[data.value.keys.elementAt(index)]!!
             )
         }
     }

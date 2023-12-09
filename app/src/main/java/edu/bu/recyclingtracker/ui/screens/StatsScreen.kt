@@ -46,6 +46,8 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                     headerText(text = "Categories")
                     CenteredDivider(paddingValue = 128)
                 }
+
+                // Pie Chart
                 item {
                     PieChart(
                         data = viewModel.totalsByCategory
@@ -130,19 +132,21 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                             }
 
                             barGraphs.add(
-                                {BarGraph(
-                                graphBarData = floatValue,
-                                xAxisLabels = labels,
-                                barData_ = itemTotal.values.mapNotNull {
-                                    it.toString().toDouble().toInt()
-                                },
-                                height = 300.dp,
-                                roundType = BarType.TOP_CURVED,
-                                barWidth = 20.dp,
-                                barColor = graphColor,
-                                barArrangement = Arrangement.SpaceEvenly,
-                                category = category
-                            )}
+                                {
+                                    BarGraph(
+                                        graphBarData = floatValue,
+                                        xAxisLabels = labels,
+                                        barData_ = itemTotal.values.mapNotNull {
+                                            it.toString().toDouble().toInt()
+                                        },
+                                        height = 300.dp,
+                                        roundType = BarType.TOP_CURVED,
+                                        barWidth = 20.dp,
+                                        barColor = graphColor,
+                                        barArrangement = Arrangement.SpaceEvenly,
+                                        category = category
+                                    )
+                                }
                             )
                         }
                         // Display 4 bar graphs in pager view

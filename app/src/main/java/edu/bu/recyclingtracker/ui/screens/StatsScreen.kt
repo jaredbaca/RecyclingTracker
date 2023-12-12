@@ -29,9 +29,14 @@ import edu.bu.recyclingtracker.ui.components.BarType
 import edu.bu.recyclingtracker.ui.components.CenteredDivider
 import edu.bu.recyclingtracker.ui.components.PieChart
 import edu.bu.recyclingtracker.ui.components.headerText
+import edu.bu.recyclingtracker.ui.components.impactText
 import edu.bu.recyclingtracker.ui.components.weightText
 import edu.bu.recyclingtracker.ui.theme.PlasticColor
 import edu.bu.recyclingtracker.ui.theme.categoryColors
+
+/*
+Composable for User Stats page that displays item totals, category percentages, and environmental impact estimate.
+ */
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -42,7 +47,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                     CenteredDivider(paddingValue = 128)
                 }
 
-                // Pie Chart
+                // Pie Chart showing item category percentages
                 item {
                     PieChart(
                         data = viewModel.totalsByCategory
@@ -54,7 +59,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                     CenteredDivider(paddingValue = 128)
                 }
 
-                // Bar Graph test
+                // Item Breakdown Bar Graphs
                 item {
                     Column(
                         modifier = Modifier
@@ -64,16 +69,12 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-
+                        // Empty list to hold Bar Graph composables. They will be invoked all at once further down in this section.
                         var barGraphs: MutableList<@Composable () -> Unit> = mutableListOf()
 
-//
                         // Test Data
                         val vmTotals = viewModel.totals.value
-                        val dataList = mutableListOf(30, 60, 90, 120, 75, 100)
-
                         val floatValue = mutableListOf<Float>()
-//                        val datesList = mutableListOf(1,2,3,4)
                         val labels = mutableListOf<String>(
                             "Item 1",
                             "Item 2",
@@ -85,9 +86,10 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                             "Item 8"
                         )
 
+                        // List to hold item names
                         val itemsWithinCategory = mutableListOf<String>()
 
-                        // Generate Bar Graphs for 4 categories
+                        // Loop through list of categories and create a bar graph for each
                         for (category in viewModel.totalsByCategory.value.keys) {
                             // Recyclables Data
                             itemsWithinCategory.clear()
@@ -101,15 +103,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                             }
                             Log.d("Item List", itemsWithinCategory.toString())
 
-//                            var itemTotal by remember {
-//                                mutableStateOf(vmTotals.filter {
-//                                    itemsByCategory.contains(
-//                                        it.key
-//                                    ) && it.value.toString().toDouble() > 0
-//                                })
-//                            }
-
-                            // select totals for given category from overall totals
+                            // Select totals for given category from overall totals
                             var itemTotal = vmTotals.filter {
                                     itemsWithinCategory.contains(
                                         it.key
@@ -117,14 +111,6 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                                 }
 
                             Log.d("$category Totals:", itemTotal.toString())
-
-                            // Convert totals to float value list
-//                            itemTotal.values.forEachIndexed { index, value ->
-//                                floatValue.add(index = index,
-//                                    element = value.toString().toFloat() / itemTotal.values.maxWith(
-//                                        compareBy { it as? Comparable<*> }).toString().toFloat()
-//                                )
-//                            }
 
                             var plasticTotals = mutableListOf<Int>(2,5,4,8,3)
 
@@ -135,9 +121,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                                         graphBarData = convertToFloats(itemTotal.values.mapNotNull {
                                             it.toString().toDouble().toInt()
                                         }.toMutableList()),
-//                                        graphBarData = convertToFloats(plasticTotals),
                                         xAxisLabels = labels,
-//                                        barData_ = plasticTotals,
                                         barData_ = itemTotal.values.mapNotNull {
                                             it.toString().toDouble().toInt()
                                         }.toMutableList(),
@@ -151,24 +135,21 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                                 }
                             )
                         }
-                        // Display 4 bar graphs in pager view
-                        val pagerState = rememberPagerState(pageCount = {
-                            4
-                        })
+
+                        // Pager View to hold the 4 item category bar graphs and make them scrollable
+                        val pagerState = rememberPagerState(pageCount = { 4 })
                         HorizontalPager(state = pagerState) { page ->
                             // Our page content
                             barGraphs[page].invoke()
                         }
                     }
-
                 }
 
+                // Environmental Impact Estimate
                 item {
                     headerText(text = "Impact")
                     CenteredDivider(paddingValue = 128)
                 }
-
-                var weight = "100 lbs of plastic "
 
                 item {
                     Column(modifier = Modifier
@@ -176,36 +157,17 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                         .padding(8.dp),
                         ) {
 
-                        Text("You've recycled ", fontSize = 18.sp, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                            textAlign = TextAlign.Center,
-                            color = Color.Gray)
-
+                        impactText(text = "You've recycled ", color = Color.Gray)
                         //Plastic
                         weightText(category = "Plastic", viewModel = viewModel, color = PlasticColor)
 
-//                        //Metal
-//                        weightText(category = "Metal", viewModel = viewModel, color = MetalColor)
-//
-//                        //Glass
-//                        weightText(category = "Glass", viewModel = viewModel, color = GlassColor)
-//
-//                        //Cardboard
-//                        weightText(category = "Cardboard", viewModel = viewModel, color = CardboardColor)
-
-                        Text("so far this year ", fontSize = 18.sp, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                            textAlign = TextAlign.Center,
-                            color = Color.Gray)
+                        impactText(text = "so far this year ", color = Color.Gray)
+                        
                         CenteredDivider(paddingValue = 256)
 
-                        Text("That's the equivalent of ", fontSize = 18.sp, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                            textAlign = TextAlign.Center,
-                            color = Color.Gray)
+                        impactText(text = "That's the equivalent of ", color = Color.Gray)
+
+                        // Calculate total CO2
                         Text("${
                             String.format("%.1f",
                             ((viewModel.weights.value["Plastic"]?:0.0)/2000) * 5774)
@@ -224,7 +186,10 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
             } // Lazy Column
         } // Surface
 
-fun convertToFloats(itemTotal: List<Any>): MutableList<Float> {
+/*
+Utility function to convert list of Any to Floats for use in the Bar Graph bar data
+ */
+private fun convertToFloats(itemTotal: List<Any>): MutableList<Float> {
     var floatValue: MutableList<Float> = mutableListOf()
 
     itemTotal.forEachIndexed { index, value ->

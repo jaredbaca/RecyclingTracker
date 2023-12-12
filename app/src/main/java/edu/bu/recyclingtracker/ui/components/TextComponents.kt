@@ -15,15 +15,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
-import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.PlasticColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+/*
+This file contains various text and field composables used throughout the app
+ */
+
 
 @Composable
 fun headerText(text: String, color: Color = Color.Black) {
@@ -34,6 +38,9 @@ fun headerText(text: String, color: Color = Color.Black) {
         color = color)
 }
 
+/*
+Used for the weight section of the stats page. Color coded by item category.
+ */
 @Composable
 fun weightText(category: String, viewModel: LogRecyclablesViewModel, color: Color) {
     Text("${
@@ -47,6 +54,9 @@ fun weightText(category: String, viewModel: LogRecyclablesViewModel, color: Colo
     )
 }
 
+/*
+Clickable drawer items for the navigation drawer
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun drawerItem(name: String,
@@ -64,6 +74,9 @@ fun drawerItem(name: String,
     })
 }
 
+/*
+Login Field for username and password
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun loginField(label: String, keyboardType: KeyboardOptions) {
@@ -75,4 +88,16 @@ fun loginField(label: String, keyboardType: KeyboardOptions) {
         label = {Text(label)},
         keyboardOptions = keyboardType
     )
+}
+
+/*
+Styled text for stats page Impact section
+ */
+@Composable
+fun impactText(text: String, color: Color) {
+    Text(text = text, fontSize = 18.sp, modifier = Modifier
+        .fillMaxWidth()
+        .padding(8.dp),
+        textAlign = TextAlign.Center,
+        color = color)
 }

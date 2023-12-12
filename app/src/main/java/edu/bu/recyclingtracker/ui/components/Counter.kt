@@ -1,7 +1,5 @@
 package edu.bu.recyclingtracker.ui.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
@@ -17,10 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import edu.bu.recyclingtracker.RecyclableItemViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
+/*
+This composable provides the counter component that is part of the item card
+which allows users to increment or decrement the current item count
+ */
 @Composable
 fun Counter(viewModel: LogRecyclablesViewModel,
             itemUiState: RecyclingItemUiState,
@@ -29,9 +30,7 @@ fun Counter(viewModel: LogRecyclablesViewModel,
             index: Int
 ) {
 
-//    if(visible) {
     Box(modifier = Modifier
-//        .border(BorderStroke(2.dp, Color.Black))
         .size(100.dp, 40.dp)) {
         if(visible) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -50,7 +49,4 @@ fun Counter(viewModel: LogRecyclablesViewModel,
             }
         }
     }
-
-//    }
-
 }

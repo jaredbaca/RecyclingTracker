@@ -64,6 +64,10 @@ import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/*
+This contains the Top App Bar and Bottom Nav Bar composables.
+The rest of the scaffold layout was moved to RecyclingTrackerApp composable in the Main Activity
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppToolbar(toolbarTitle:String, scope: CoroutineScope, drawerState: DrawerState) {
@@ -149,52 +153,3 @@ fun bottomNavBar2(navController: NavController, viewModel: LogRecyclablesViewMod
         }
     }
 }
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun ScaffoldLayout(navController: NavController, viewModel: LogRecyclablesViewModel) {
-//    val drawerState = rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
-//    val scope = rememberCoroutineScope()
-//    ModalNavigationDrawer(
-//        drawerState = drawerState,
-//        drawerContent = {
-//            ModalDrawerSheet { /* Drawer content */ }
-//        },
-//    ) {
-//        Scaffold(
-//            topBar = {
-////                AppToolbar(toolbarTitle = "Recyclables")
-//            },
-//            bottomBar = {
-//                bottomNavBar2(
-//                    navController, viewModel
-//                )
-//            }
-//
-//        ) { paddingValues ->
-//
-//            Surface(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(paddingValues)
-//            ) {
-//                /* Content */
-//            }
-//        }
-//    }
-//}
-
-//@Composable
-//fun navDrawer() {
-//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-//    val scope = rememberCoroutineScope()
-//
-//    ModalNavigationDrawer(
-//        drawerState = drawerState
-//        drawerContent = {
-//            ModalDrawerSheet {}
-//        },
-//        ) {
-//
-//    }
-//}

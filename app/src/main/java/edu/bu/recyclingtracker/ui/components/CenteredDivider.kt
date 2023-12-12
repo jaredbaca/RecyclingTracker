@@ -10,16 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/*
+Custom centered divider used throughout the application
+ */
 @Composable
 fun CenteredDivider(paddingValue: Int) {
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = paddingValue.dp, end = paddingValue.dp, top = 24.dp, bottom = 24.dp)
             .height(1.dp)
             .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f))
-//            .padding(vertical = 48.dp)
     )
-
 }

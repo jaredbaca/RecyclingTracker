@@ -1,10 +1,9 @@
 package edu.bu.recyclingtracker.data
 
+/*
+Database Repository that calls the functions implemented in the DAO.
+ */
 class RecyclingTrackerRepository(private val recyclingDao: RecyclingTrackerDao) {
-
-    fun addUser(user: HashMap<String, String>) {
-        recyclingDao.addUser(user)
-    }
 
     fun addEntry(entry: Entry) {
         recyclingDao.addEntry(entry)

@@ -14,36 +14,32 @@ import edu.bu.recyclingtracker.data.recyclables
 import kotlinx.coroutines.launch
 import java.util.Date
 
-data class count(
-    var items: MutableMap<String, Int>
-)
+/**
+ * This ViewModel stores the current item counts for selected items and handles communication with the Firestore database
+ */
 
 class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository) : ViewModel() {
-
     data class RecyclingPageUiState(
         var itemCounts: State<List<RecyclingItemUiState>> = mutableStateOf( listOf())
     )
 
-
-    /* TODO add immutable state and get method */
     var uiState = mutableStateOf(RecyclingPageUiState(recyclables))
-
     var totals: MutableState<MutableMap<String, Any>> = mutableStateOf(getItemNames().associateWith { 0 }.toMutableMap())
     var totalsByCategory: MutableState<MutableMap<String, Int>> = mutableStateOf(getTotalsByCategory())
     var weights: MutableState<MutableMap<String, Double>> = mutableStateOf( mutableMapOf())
 
 
-    //Updates totals from ViewModel (not DB). Unnecessary once DB is implemented
+    /*
+     * Updates item totals held in ViewModel with totals from Firestore DB
+    */
     suspend fun updateTotals() {
-//        uiState.value.itemCounts.value.forEach {
-//            totals[it.name] = totals[it.name]!! + it.quantity
-//        }
         totals.value = getTotalsFromDB().toMutableMap()
     }
 
-//    If DB objects store a map
+    /*
+    Creates a new Firestore entry from current item counts. Includes a date stamp and a map of recycled items
+    */
     suspend fun addEntryFromCurrentBin() {
-
         //Get current counts from uiState
         var updates = uiState.value.itemCounts.value.associate { it.name to it.quantity}
             .toMutableMap()
@@ -60,39 +56,21 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         )
     }
 
+    /*
+    Implements repository function to retrieve totals from Firestore DB
+     */
     suspend fun getTotalsFromDB() : Map<String, Any>{
         return repository.getTotals()
     }
 
+    /*
+     Returns a mutable map containing the item totals broken down by category: Plastic, Glass, Cardboard, Metal
+     */
      fun getTotalsByCategory(): MutableMap<String, Int> {
-
-        //Get item totals
-//        viewModelScope.launch {val totals = getTotalsFromDB() }
-
-
-        //Create map of categories/materials
-//        var materials: MutableMap<String, MutableList<String>> = mutableMapOf()
+        //Create map of categories
         var categoryTotals = mutableMapOf<String, Int>()
 
-        //Longer version
-//        //Populate categories map with items from each category
-//        uiState.value.itemCounts.value.forEach {
-//            Log.d("Category", it.category)
-//            if(!materials.containsKey(it.category)) {
-//                materials.put(it.category, mutableListOf(it.name))
-//            } else {
-//                materials[it.category]!!.add(it.name)
-//            }
-//        }
-//
-//        for(category in materials.keys) {
-//            var total = 0
-//            var items = materials[category]
-//            items!!.forEach { total += totals.value[it].toString().toDouble().toInt()}
-//            categoryTotals.put(category, total)
-//        }
-
-        //Refactored version
+        //Calculate totals by category
         totals.value.forEach { total ->
             var key = uiState.value.itemCounts.value.find { item -> item.name == total.key }?.category
             if(key != null && !categoryTotals.containsKey(key)) {
@@ -102,18 +80,14 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             }
         }
 
-//        Log.d("categories", materials.toString())
         Log.d("category totals", categoryTotals.toString())
 
         return categoryTotals
     }
 
-    suspend fun loadCategoryTotals() {
-        var newCategoryTotals = getTotalsByCategory()
-
-    }
-
-    // Resets items counts in ViewModel
+    /*
+    Resets ViewModel item counts. Used after entry has been submitted to DB.
+     */
     suspend fun resetCounts() {
         var newItemCounts = uiState.value.itemCounts.value.toMutableList()
         newItemCounts.forEach { it.quantity = 0 }
@@ -123,12 +97,18 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         )
     }
 
+    /*
+    Utility function to generate a list of item names from a list of RecyclingItemUiState objects
+     */
     fun getItemNames() : MutableList<String> {
         var itemNames: MutableList<String> = mutableListOf()
         uiState.value.itemCounts.value.forEach { itemNames.add(it.name) }
         return itemNames
     }
 
+    /*
+    Increments item count in ViewModel
+     */
     fun incrementCount(itemName:String) {
         //Add exception here
         val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
@@ -141,6 +121,9 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         )
     }
 
+    /*
+    Decrements item count in ViewModel
+     */
     fun decrementCount(itemName:String) {
         //Add exception here
         val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
@@ -153,6 +136,9 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         )
     }
 
+    /*
+    Updates item count in ViewModel to a specified quantity
+     */
     fun updateItemQuantity(itemName: String, newQuantity: String) {
         val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
         newItemCounts.forEach {
@@ -164,17 +150,22 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         )
     }
 
+    /*
+    Utility function to convert grams to pounds for item weight calculations
+     */
     fun gramsToPounds(grams: Double): Double {
         val poundsPerKilogram = 2.20462
         return grams / 1000 * poundsPerKilogram
     }
 
+    /*
+    Calculates the weights of all items currently logged in DB based on rough estimates of individual item weights.
+     */
     suspend fun calculateWeights(): MutableMap<String, Double> {
 
         var newWeights: MutableMap<String, Double> =  mutableMapOf()
 
         //Calculate weights for individual items
-
         totals.value.forEach { total ->
             if(total.key != null) {
                 newWeights.put(total.key,
@@ -191,8 +182,6 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
             var sum = newWeights.filter {weight -> items.contains(weight.key) }.values.sum()
             newWeights.put(category, sum)
         }
-
-
 
         Log.d("New Weights", "weights: $newWeights")
         return newWeights

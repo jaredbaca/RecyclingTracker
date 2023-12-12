@@ -28,8 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import edu.bu.recyclingtracker.data.icons
-//import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
@@ -41,11 +39,15 @@ import edu.bu.recyclingtracker.ui.theme.MetalColor
 import edu.bu.recyclingtracker.ui.theme.PlasticColor
 import kotlinx.coroutines.launch
 
+/*
+Composable for the Home Screen, where user can begin adding items for recycling.
+ */
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
 
+    // Item Grids for each category are stored as a list of Composables that will then be invoked in the Lazy Column below.
     val itemGrids: List<@Composable () -> Unit> = listOf(
         {
             ItemGrid(
@@ -80,6 +82,8 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
             )
         }
     )
+
+    // Lazy Column to hold and invoke Composables to create Item Grids
             LazyColumn {
                 for (grid in itemGrids) {
                     item {

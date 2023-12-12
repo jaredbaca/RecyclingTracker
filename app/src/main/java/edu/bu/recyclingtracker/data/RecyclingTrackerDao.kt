@@ -12,50 +12,56 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.reflect.typeOf
 
+/*
+Database Access Object that defines the implementation for functions interacting with Firestore DB.
+ */
 class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
 
-    val collectionReference = firestore.collection("users/${CURRENT_USER}/entries")
+    val entriesCollectionReference = firestore.collection("users/${CURRENT_USER}/entries")
+    val totalsCollectionReference = firestore.collection("users/${CURRENT_USER}/totals")
 
-    //Test function - need to rewrite for recyclables instead of users
-    fun addUser(user: HashMap<String, String>) {
-        try {
-            firestore.collection("users").add(user)
-        } catch (e: Exception) {
-            Log.w("Firebase", "Error adding user to db")
-        }
-    }
-
+    /*
+    Adds a new entry to the Firestore DB
+     */
     fun addEntry(entry: Entry) {
         try {
-            firestore.collection("users/${CURRENT_USER}/entries").add(entry)
+            entriesCollectionReference.add(entry)
         } catch (e: Exception) {
-            Log.w("Firestore", "Error adding user to db")
+            Log.w(TAG, "Error adding user to db")
         }
     }
 
+    /*
+    Manually updates the totals document in the Firestore DB. Used whenever a new entry is added to make sure the totals
+    are in sync with the entries collection.
+    This is a manual implementation of something that could be done with cloud functions in a future iteration.
+     */
     suspend fun updateTotals(currentTotals: Map<String, Any>, updates: Map<String, Any>) = suspendCoroutine { continuation ->
         try {
             var newTotals = currentTotals.toMutableMap()
-//            Log.d(TAG, currentTotals.keys.toString())
-//            Log.d(TAG, currentTotals.values.toString())
-//            Log.d(TAG, currentTotals.containsKey("Plastic Bottle").toString())
+
             Log.d(TAG, "new totals: ${newTotals.toString()}, current totals: ${currentTotals.toString()}, updates: ${updates.toString()}")
+
+            // Adds the updated amount (from viewModel counts) to the previous total
             for(key in updates.keys) {
-//                Log.d(TAG, newTotals.containsKey(key).toString())
                 newTotals[key] = sum(currentTotals[key].toString().toDouble(),
                     updates[key].toString().toDouble())
             }
-            firestore.collection("users/${CURRENT_USER}/totals").document("totals").set(newTotals)
+            // Replace existing totals in Firestore DB with newly updated totals
+            totalsCollectionReference.document("totals").set(newTotals)
             continuation.resume(Unit)
         } catch (e: Exception) {
-            Log.w("Firestore", "Error updating totals")
+            Log.w(TAG, "Error updating totals")
             continuation.resume(Unit)
         }
     }
 
+    /*
+    Retrieve the item totals from Firestore DB. Returns a map of <String, Any>
+     */
     suspend fun getTotals(): Map<String, Any> = suspendCoroutine { continuation ->
         try {
-            val documentRef = firestore.collection("users/${CURRENT_USER}/totals").document("totals")
+            val documentRef = totalsCollectionReference.document("totals")
 
             documentRef.get()
                 .addOnSuccessListener { document ->

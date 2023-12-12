@@ -72,27 +72,31 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/*
+This is the top level composable for the Recycling Tracker app
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecyclingTrackerApp() {
 
-    //Instantiating Firestore DB
+    // Here we create the dependencies that will be passed further down the stack
+
+    // Instantiating Firestore DB
     val db = Firebase.firestore
 
     db.firestoreSettings = firestoreSettings {
         isPersistenceEnabled = false
     }
-
     //Using emulator for testing mode
 //    db.useEmulator("10.0.2.2", 8080)
 
-    //Create Repository object
+    // Create Repository object
     var recyclingTrackerRepository = RecyclingTrackerRepository(RecyclingTrackerDao((db)))
 
-
-    //Create view model here so that it can utilize the repository
+    // Create view model here so that it can utilize the repository
     val recyclablesViewModel: LogRecyclablesViewModel = viewModel {LogRecyclablesViewModel(recyclingTrackerRepository)}
 
+    // Retrieve initial totals from Firestore to display on stats page
     LaunchedEffect(true) {
         GlobalScope.async {
             recyclablesViewModel.updateTotals()
@@ -102,6 +106,7 @@ fun RecyclingTrackerApp() {
     }
 
 
+    // Instantiating the nav controller and scaffold component states
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
@@ -167,15 +172,4 @@ fun RecyclingTrackerApp() {
             }
         }
     }
-
 }
-
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun LogRecyclablesScreenPreview() {
-//    RecyclingTrackerTheme {
-//        LogRecyclablesScreen(model = LogRecyclablesViewModel(), navController = )
-//    }
-//}

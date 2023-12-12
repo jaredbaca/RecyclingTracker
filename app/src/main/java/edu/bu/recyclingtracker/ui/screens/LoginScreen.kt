@@ -8,14 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import edu.bu.recyclingtracker.ui.components.loginField
+import edu.bu.recyclingtracker.ui.theme.GlassColor
+import edu.bu.recyclingtracker.ui.theme.PlasticColor
+import edu.bu.recyclingtracker.ui.theme.navBarColor
 
 /*
 This is a custom login screen intended for use with Firebase Auth
@@ -33,7 +33,7 @@ This is a custom login screen intended for use with Firebase Auth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
 
     Surface(
         modifier = Modifier
@@ -45,7 +45,10 @@ fun LoginScreen() {
 
             loginField(label = "Username", keyboardType = KeyboardOptions.Default)
             loginField(label = "Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
-            Button(modifier = Modifier.padding(16.dp), onClick = { /*TODO*/ }) {
+            Button(modifier = Modifier
+                .padding(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = navBarColor),
+                onClick = { /*TODO*/ }) {
                 Text("Login")
             }
 
@@ -53,7 +56,7 @@ fun LoginScreen() {
                 Text(text = "or", modifier = Modifier.padding(bottom = 16.dp))
             }
             Text(text = "Create Account", modifier = Modifier.clickable {
-
+                navController.navigate(Routes.SIGNUP_SCREEN)
             })
         }
 

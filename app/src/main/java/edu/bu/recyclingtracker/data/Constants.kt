@@ -11,8 +11,8 @@ Any new items should be added here first.
 val recyclables = mutableStateOf( listOf(
     //Plastics
     RecyclingItemUiState("12oz Bottle", "Plastic" ,icon = R.drawable.plastic_bottle),
-    RecyclingItemUiState("2-Liter Bottle", "Plastic", icon = R.drawable.plastic_bottle),
-    RecyclingItemUiState("Takeout Box", "Plastic"),
+    RecyclingItemUiState("2-Liter Bottle", "Plastic", icon = R.drawable.two_liter_bottle),
+    RecyclingItemUiState("Takeout Box", "Plastic", icon = R.drawable.takeout_container),
     RecyclingItemUiState("Detergent Bottle", "Plastic", icon = R.drawable.detergent_bottle),
     RecyclingItemUiState("Milk Jug", "Plastic", icon = R.drawable.detergent_bottle),
 
@@ -22,7 +22,7 @@ val recyclables = mutableStateOf( listOf(
 
     //Glass
     RecyclingItemUiState("Beer Bottle", "Glass", icon = R.drawable.glass_bottle),
-    RecyclingItemUiState("Wine Bottle", "Glass", icon = R.drawable.glass_bottle),
+    RecyclingItemUiState("Wine Bottle", "Glass", icon = R.drawable.wine_bottle),
     RecyclingItemUiState("Mason Jar", "Glass", icon = R.drawable.glass_jar),
     RecyclingItemUiState("Pasta Sauce Jar", "Glass", icon = R.drawable.glass_jar),
 
@@ -30,7 +30,7 @@ val recyclables = mutableStateOf( listOf(
     RecyclingItemUiState("Small Box", "Cardboard", icon = R.drawable.cardboard_box),
     RecyclingItemUiState("Medium Box", "Cardboard", icon = R.drawable.cardboard_box),
     RecyclingItemUiState("Large Box", "Cardboard", icon = R.drawable.cardboard_box),
-    RecyclingItemUiState("Pizza Box", "Cardboard", icon = R.drawable.cardboard_box),
+    RecyclingItemUiState("Pizza Box", "Cardboard", icon = R.drawable.pizza_box),
     RecyclingItemUiState("Frozen Food Box", "Cardboard", icon = R.drawable.frozen_food_box),
 ))
 

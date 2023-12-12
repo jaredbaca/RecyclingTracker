@@ -1,15 +1,10 @@
 package edu.bu.recyclingtracker.ui.screens
 
-import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 /*
@@ -23,7 +18,7 @@ fun RecyclingTrackerNavigationGraph(navController: NavHostController, recyclable
     NavHost(navController = navController, startDestination = Routes.HOME_SCREEN) {
 
         composable(Routes.LOGIN_SCREEN) {
-            LoginScreen()
+            LoginScreen(navController)
         }
 
         composable(Routes.HOME_SCREEN) {
@@ -36,6 +31,10 @@ fun RecyclingTrackerNavigationGraph(navController: NavHostController, recyclable
 
         composable(Routes.STATS_SCREEN) {
             StatsScreen(navController, recyclablesViewModel)
+        }
+
+        composable(Routes.SIGNUP_SCREEN) {
+            SignUpScreen()
         }
     }
 }

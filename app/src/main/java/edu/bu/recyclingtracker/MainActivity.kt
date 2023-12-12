@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Recycling
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -139,7 +140,7 @@ fun RecyclingTrackerApp() {
             },
 
             floatingActionButton = {
-                if(currentDestination?.hierarchy?.any { it.route == Routes.BIN_SUMMARY_SCREEN } == true) {
+                if(currentDestination?.hierarchy?.any { it.route == Routes.BIN_SUMMARY_SCREEN || it.route == Routes.HOME_SCREEN } == true) {
 
                 FloatingActionButton(
                     containerColor = navBarColor,
@@ -156,7 +157,7 @@ fun RecyclingTrackerApp() {
                         navController.navigate(Routes.HOME_SCREEN)
                     })
                 {
-                    Icon(imageVector = Icons.Default.Send, contentDescription = null)
+                    Icon(imageVector = Icons.Default.Recycling, contentDescription = null)
                 }
             }
     }

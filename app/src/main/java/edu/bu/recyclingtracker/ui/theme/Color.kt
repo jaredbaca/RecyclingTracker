@@ -15,7 +15,9 @@ val Pink40 = Color(0xFF7D5260)
 val MetalColor = Color(parseColor("#A9B7C2"))
 val PlasticColor = Color(parseColor("#81ABBC"))
 val CardboardColor = Color(parseColor("#F7E2C7"))
-val GlassColor = Color(parseColor("#29660C"))
+val GlassColor =
+    Color(parseColor("#83B36F"))
+//    Color(parseColor("#29660C"))
 
 //
 val FABColor = Color(parseColor("#76B947"))

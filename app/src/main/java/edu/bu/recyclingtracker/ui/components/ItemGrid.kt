@@ -25,6 +25,9 @@ import androidx.compose.ui.unit.sp
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
+/*
+Item Grid composable creates a grid of Item Cards to display available recycling items.
+ */
 @Composable
 fun ItemGrid(title:String,
              recyclableItems:State<List<RecyclingItemUiState>>,
@@ -34,27 +37,20 @@ fun ItemGrid(title:String,
 
     val uiState = viewModel.uiState
 
-//    Log.d("Item Grid", recyclableItems.toString())
-//    Log.d("uiStates", uiState.value.itemCounts.value.toString())
-
     Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
         Divider()
         Text(
-            text = title,
+            text = title, //Category Name
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             modifier = Modifier
                 .fillMaxWidth()
         )
-//        CenteredDivider(110)
 
-
-
-
+        // Splits the list of items into groups of 2 to create columns on the home screen
         var chunkedItems = recyclableItems.value.chunked(2)
 
         chunkedItems.forEach { subList ->
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -74,76 +70,6 @@ fun ItemGrid(title:String,
                     }
                 }
             }
-
         }
-//            LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp), content = {
-////                item{Text("Plastics")}
-//                items(recyclableItems.value.size) { index ->
-////                    if(recyclableItems.value[index].category=="Plastic") {
-//                        ItemCard(
-////                    image = recyclableItems.value[index].icon,
-//                            selected = false,
-//                            name = recyclableItems.value[index].name,
-//                            itemUiState = viewModel.uiState.value.itemCounts.value.find { it.name == recyclableItems.value[index].name }
-//                                ?: RecyclingItemUiState("empty", "default category"),
-//                            viewModel,
-//                            index,
-//                            counterVisible = viewModel.uiState.value.itemCounts.value[index].quantity > 0
-//                        )
-////                    }
-//                }
-//            }
-//            )
-
-
-
     }
-
-//    LazyColumn(
-//        verticalArrangement = Arrangement.SpaceEvenly,
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(24.dp)
-//    ) {
-//        item {
-//            Text(text = "Plastics",
-//            modifier = Modifier.fillMaxWidth(),
-//                textAlign = TextAlign.Center,
-//                fontSize = 24.sp
-//            )
-//        }
-////        item { CenteredDivider() }
-//        items(
-//            items = recyclableItems.value.filter { it.category == "Plastic" }.chunked(2),
-//            key = null
-//        ) {
-//            chunkedItems ->
-//            LazyRow(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(8.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween
-//            ) {
-//                items(chunkedItems) {
-//                    item ->
-//
-//                    ItemCard(
-//                        selected = false,
-//                        name = item.name,
-//                        itemUiState = viewModel.uiState.value.itemCounts.value.find { it.name == item.name }
-//                            ?: RecyclingItemUiState("empty", "default category"),
-//                        viewModel,
-//                        0,
-//                        counterVisible = item.quantity > 0
-//                    )
-//                }
-//            }
-//        }
-
-
-
-//    }
-
-
-
 }

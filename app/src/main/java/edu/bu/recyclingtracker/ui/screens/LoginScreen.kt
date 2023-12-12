@@ -27,6 +27,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import edu.bu.recyclingtracker.ui.components.loginField
 
+/*
+This is a custom login screen intended for use with Firebase Auth
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen() {
@@ -38,11 +42,13 @@ fun LoginScreen() {
     ) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
+
             loginField(label = "Username", keyboardType = KeyboardOptions.Default)
             loginField(label = "Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
             Button(modifier = Modifier.padding(16.dp), onClick = { /*TODO*/ }) {
                 Text("Login")
             }
+
             Row {
                 Text(text = "or", modifier = Modifier.padding(bottom = 16.dp))
             }

@@ -12,15 +12,15 @@ import androidx.navigation.compose.rememberNavController
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
+/*
+Navigation Graph used in the main RecyclingTracker App composable. Contains composables for all screens.
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecyclingTrackerNavigationGraph(navController: NavHostController, recyclablesViewModel: LogRecyclablesViewModel) {
-//    val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.HOME_SCREEN) {
-//        composable(Routes.LOG_RECYCLABLES_SCREEN) {
-//            LogRecyclablesScreen(recyclablesViewModel)
-//        }
 
         composable(Routes.LOGIN_SCREEN) {
             LoginScreen()
@@ -37,6 +37,5 @@ fun RecyclingTrackerNavigationGraph(navController: NavHostController, recyclable
         composable(Routes.STATS_SCREEN) {
             StatsScreen(navController, recyclablesViewModel)
         }
-
     }
 }

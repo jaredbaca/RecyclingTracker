@@ -43,6 +43,11 @@ import edu.bu.recyclingtracker.ui.theme.GlassColor
 import edu.bu.recyclingtracker.ui.theme.PlasticColor
 import edu.bu.recyclingtracker.ui.theme.categoryColors
 
+/*
+This composable creates a custom pie chart to display the category breakdown of recycled items.
+This code was adapted from the Jetpack Compose tutorial linked here:
+https://medium.com/@developerchunk/create-custom-pie-chart-with-animations-in-jetpack-compose-android-studio-kotlin-49cf95ef321e
+ */
 @Composable
 fun PieChart(
     data: MutableState<MutableMap<String, Int>>,
@@ -63,7 +68,6 @@ fun PieChart(
         MetalColor, // Metal
         GlassColor, // Glass
         CardboardColor, // Cardboard
-        Color.Yellow
     )
 
     var animationPlayed by remember { mutableStateOf(false) }
@@ -239,15 +243,6 @@ fun SimplifiedDetailsPieChartItem(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
-//            Box(
-//                modifier = Modifier
-//                    .background(
-//                        color = color,
-//                        shape = RoundedCornerShape(10.dp)
-//                    )
-//                    .size(height)
-//            )
 
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(

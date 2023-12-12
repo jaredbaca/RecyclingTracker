@@ -57,25 +57,31 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 
+/*
+Composable that creates the summary screen showing currently selected items (much like a shopping cart)
+Takes the Nav Controller and ViewModel as arguments
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
 
         Column {
-
+            //Date stamp
             val dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy")
-
 
             Row {
                 Text(text = dateFormat.format(Date()))
             }
 
+            //Access items from ViewModel
             var itemList by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value) }
             var uiState = viewModel.uiState
 
+            //Lazy column so that the content is scrollable
             LazyColumn(content = {
                 items(items = uiState.value.itemCounts.value) {
                     item ->
+                    // Only display items that have a count greater than 0
                     if(item.quantity > 0) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -85,6 +91,7 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                         Column(
                         )   {
 
+                            // Item count
                             Text(text=item.quantity.toString(),
                                 fontSize = 18.sp,
                                 modifier = Modifier
@@ -92,9 +99,8 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                             )
                         }
 
-                            Column(
-                            )   {
-
+                            // Item icon
+                            Column() {
                                 ItemCardNoCounter(
                                     selected = false,
                                     name = "",
@@ -105,28 +111,26 @@ fun BinSummaryScreen(navController: NavController, viewModel: LogRecyclablesView
                                 )
                             }
 
+                            // Item name
                             Column(
                                 modifier = Modifier.weight(1f)
                             )   {
-
-                                Text(text = item.name
-                                )
+                                Text(text = item.name)
                             }
 
-
-
-                            //Delete Button
+                            // Delete Button
                         IconButton(onClick = {
                             viewModel.updateItemQuantity(item.name, "0")
                         }) {
                             Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove Item")
                         }
-
                     }
 
                     Divider()
-                }
                     }
+                }
+
+                // Total number of items
                 item {
                     Row(modifier = Modifier
                         .padding(32.dp)

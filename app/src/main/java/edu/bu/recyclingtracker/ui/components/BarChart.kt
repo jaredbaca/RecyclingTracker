@@ -45,13 +45,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.lang.Math.round
 
-// Creating a custom bar chart. Taken and modified from the tutorial linked here:
-// https://medium.com/@developerchunk/create-custom-bargraph-with-scales-in-jetpack-compose-android-studio-kotlin-deadba24fd9b
+
+/*
+This composable creates a custom bar chart to represent Recyclable Item totals.
+The code was adapted from the tutorial linked here:
+https://medium.com/@developerchunk/create-custom-bargraph-with-scales-in-jetpack-compose-android-studio-kotlin-deadba24fd9b
+ */
 
 @Composable
 fun BarGraph(
     graphBarData: List<Float>,
-//    xAxisScaleData: List<Int>,
     xAxisLabels: List<String>,
     barData_: List<Int>,
     height: Dp,
@@ -107,7 +110,6 @@ fun BarGraph(
     val horizontalLineHeight = 5.dp
 
     Column {
-
         Text(
             category, modifier = Modifier
                 .fillMaxWidth()
@@ -282,6 +284,4 @@ fun BarGraph(
             }
         }
     }
-    Log.d("Bar Chart", "Bar Chart Created")
-
 }

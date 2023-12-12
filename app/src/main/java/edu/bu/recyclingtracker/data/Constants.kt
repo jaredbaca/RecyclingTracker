@@ -3,6 +3,11 @@ package edu.bu.recyclingtracker.data
 import androidx.compose.runtime.mutableStateOf
 import edu.bu.recyclingtracker.R
 
+/*
+List of RecyclingItemUiState objects for each recyclable item.
+This serves as the master list of all recyclables available in the app.
+Any new items should be added here first.
+ */
 val recyclables = mutableStateOf( listOf(
     //Plastics
     RecyclingItemUiState("12oz Bottle", "Plastic" ,icon = R.drawable.plastic_bottle),
@@ -16,10 +21,10 @@ val recyclables = mutableStateOf( listOf(
     RecyclingItemUiState("Steel Can", "Metal",  icon = R.drawable.steel_can),
 
     //Glass
-    RecyclingItemUiState("Beer Bottle", "Glass", icon = R.drawable.glass_bottle_white),
-    RecyclingItemUiState("Wine Bottle", "Glass", icon = R.drawable.glass_bottle_white),
-    RecyclingItemUiState("Mason Jar", "Glass", icon = R.drawable.glass_jar_white),
-    RecyclingItemUiState("Pasta Sauce Jar", "Glass", icon = R.drawable.glass_jar_white),
+    RecyclingItemUiState("Beer Bottle", "Glass", icon = R.drawable.glass_bottle),
+    RecyclingItemUiState("Wine Bottle", "Glass", icon = R.drawable.glass_bottle),
+    RecyclingItemUiState("Mason Jar", "Glass", icon = R.drawable.glass_jar),
+    RecyclingItemUiState("Pasta Sauce Jar", "Glass", icon = R.drawable.glass_jar),
 
     //Cardboard
     RecyclingItemUiState("Small Box", "Cardboard", icon = R.drawable.cardboard_box),
@@ -29,6 +34,10 @@ val recyclables = mutableStateOf( listOf(
     RecyclingItemUiState("Frozen Food Box", "Cardboard", icon = R.drawable.frozen_food_box),
 ))
 
+/*
+Master list of item weight estimates.
+Weight amounts are very rough and are only intended to provide a rough estimate.
+ */
 val itemWeights: Map<String, Int> = mapOf(
     //Weight in grams
     //Plastics
@@ -56,11 +65,5 @@ val itemWeights: Map<String, Int> = mapOf(
     "Frozen Food Box" to 300
 )
 
-
-val icons = listOf(
-    R.drawable.aluminum_can,
-    R.drawable.glass_bottle,
-    R.drawable.plastic_bottle,
-)
-
+// Temporary current user constant for testing. Will be replace by Firebase auth instance.
 const val CURRENT_USER = "Jared Baca"

@@ -28,8 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import edu.bu.recyclingtracker.data.icons
-//import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.data.recyclables
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar

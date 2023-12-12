@@ -55,14 +55,9 @@ fun LoginScreen() {
             Text(text = "Create Account", modifier = Modifier.clickable {
 
             })
-
         }
 
         var username by remember { mutableStateOf("Username") }
-
-        TextField(value = username, onValueChange = {
-                text -> username = text
-        })
 
     }
 }

@@ -25,9 +25,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
@@ -60,12 +62,14 @@ fun SignUpScreen(
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
+            Text(text = "Sign Up", fontSize = 36.sp, color = Color.LightGray)
+
             //Email
             OutlinedTextField(value = email,
                 onValueChange = {
                     email = it
                 },
-                label = {Text(email)},
+                label = {Text("email")},
             )
 
             //Password
@@ -73,7 +77,7 @@ fun SignUpScreen(
                 onValueChange = {
                     password = it
                 },
-                label = {Text(password)},
+                label = {Text("password")},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )
 //            loginField(label = "Confirm Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))

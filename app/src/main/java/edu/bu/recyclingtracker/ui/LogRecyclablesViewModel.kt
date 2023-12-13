@@ -33,7 +33,10 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
      * Updates item totals held in ViewModel with totals from Firestore DB
     */
     suspend fun updateTotals() {
-        totals.value = getTotalsFromDB().toMutableMap()
+        var dbTotals = getTotalsFromDB()
+        if(dbTotals.isNotEmpty()) {
+            totals.value = getTotalsFromDB().toMutableMap()
+        }
     }
 
     /*

@@ -150,10 +150,11 @@ fun DetailsPieChart(
             .fillMaxWidth()
     ) {
         data.value.values.forEachIndexed { index, value ->
+            var percentage = (value.toDouble()/data.value.values.sum().toDouble()*100)
             DetailsPieChartItem(
                 data = Pair(data.value.keys.elementAt(index),
                     "${String.format("%.1f",
-                    (value.toDouble()/data.value.values.sum().toDouble()*100))}%"),
+                    if(percentage.isNaN()) 0.0 else percentage)}%"),
                 color = colors[data.value.keys.elementAt(index)]!!
             )
         }
@@ -171,10 +172,14 @@ fun SimplifiedDetailsPieChart(
             .fillMaxWidth()
     ) {
         data.values.forEachIndexed { index, value ->
+            var percentage = (value.toDouble()/data.values.sum().toDouble()*100)
+            if(percentage.isNaN()) {
+                percentage = 0.0
+            }
             SimplifiedDetailsPieChartItem(
                 data = Pair(data.keys.elementAt(index),
                     "${String.format("%.1f",
-                        (value.toDouble()/data.values.sum().toDouble()*100))}%"),
+                        if(percentage.isNaN())0 else percentage)}%"),
                 color = colors[index]
             )
         }

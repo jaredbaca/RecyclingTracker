@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -86,7 +87,7 @@ fun loginField(label: String, keyboardType: KeyboardOptions) {
             text = it
         },
         label = {Text(label)},
-        keyboardOptions = keyboardType
+        keyboardOptions = keyboardType,
     )
 }
 

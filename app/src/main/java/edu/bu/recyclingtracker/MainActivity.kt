@@ -1,16 +1,16 @@
 package edu.bu.recyclingtracker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Recycling
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -27,20 +27,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.AndroidViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.firestoreSettings
+import dagger.hilt.android.AndroidEntryPoint
+import edu.bu.recyclingtracker.authentication.LoginViewModel
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.RecyclingTrackerDao
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
@@ -56,9 +58,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+//    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             RecyclingTrackerTheme {
                 // A surface container using the 'background' color from the theme
@@ -96,6 +103,7 @@ fun RecyclingTrackerApp() {
 
     // Create view model here so that it can utilize the repository
     val recyclablesViewModel: LogRecyclablesViewModel = viewModel {LogRecyclablesViewModel(recyclingTrackerRepository)}
+    val loginViewModel: LoginViewModel = hiltViewModel()
 
     // Retrieve initial totals from Firestore to display on stats page
     LaunchedEffect(true) {
@@ -123,20 +131,31 @@ fun RecyclingTrackerApp() {
                 IconButton(onClick = { scope.launch { drawerState.apply { close() } } }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
-
-                drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
+                if(loginViewModel.currentUser == null) {
+                    drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
+                }
                 drawerItem(name = "History", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
                 drawerItem(name = "Settings", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
+                
+                if(loginViewModel.currentUser != null) {
+                    Text(text = "Log Out", modifier = Modifier
+                        .clickable { loginViewModel.logoutUser()
+                        navController.navigate(Routes.LOGIN_SCREEN)
+                            Log.d("Log Out", loginViewModel.currentUser.value?.email.toString())
+                        })
+                }
             }
         },
     ) {
 
         Scaffold(
             topBar = {
-                AppToolbar(toolbarTitle = "Recyclables", scope, drawerState)
+                AppToolbar(toolbarTitle = "", scope, drawerState)
             },
             bottomBar = {
-                bottomNavBar2(navController, recyclablesViewModel)
+                if(currentDestination?.hierarchy?.any { it.route == Routes.LOGIN_SCREEN || it.route == Routes.SIGNUP_SCREEN } == false) {
+                    bottomNavBar2(navController, recyclablesViewModel)
+                }
             },
 
             floatingActionButton = {

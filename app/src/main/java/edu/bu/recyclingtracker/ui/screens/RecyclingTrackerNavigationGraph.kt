@@ -5,6 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.firebase.auth.FirebaseAuth
+import edu.bu.recyclingtracker.authentication.LoginScreen
+import edu.bu.recyclingtracker.authentication.SignUpScreen
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
 /*
@@ -13,9 +16,12 @@ Navigation Graph used in the main RecyclingTracker App composable. Contains comp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecyclingTrackerNavigationGraph(navController: NavHostController, recyclablesViewModel: LogRecyclablesViewModel) {
+fun RecyclingTrackerNavigationGraph(
+    navController: NavHostController,
+    recyclablesViewModel: LogRecyclablesViewModel,
+) {
 
-    NavHost(navController = navController, startDestination = Routes.HOME_SCREEN) {
+    NavHost(navController = navController, startDestination = Routes.LOGIN_SCREEN) {
 
         composable(Routes.LOGIN_SCREEN) {
             LoginScreen(navController)
@@ -34,7 +40,7 @@ fun RecyclingTrackerNavigationGraph(navController: NavHostController, recyclable
         }
 
         composable(Routes.SIGNUP_SCREEN) {
-            SignUpScreen()
+            SignUpScreen(navController, recyclablesViewModel)
         }
     }
 }

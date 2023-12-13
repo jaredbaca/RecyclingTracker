@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,11 +40,14 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.bu.recyclingtracker.R
+import edu.bu.recyclingtracker.data.recyclables
 import java.lang.Math.round
 
 
@@ -247,17 +252,18 @@ fun BarGraph(
                                 )
 
                                 // scale x-axis
-                                Text(
-                                    modifier = Modifier
-                                        .padding(top = 16.dp)
-                                        .rotate(270f),
-//                                text = xAxisScaleData[index].toString(),
-                                    text = xAxisLabels[index],
-                                    fontSize = 10.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    textAlign = TextAlign.Center,
-                                    color = Color.Black
-                                )
+//                                Text(
+//                                    modifier = Modifier
+//                                        .padding(top = 16.dp)
+//                                        .rotate(270f),
+////                                text = xAxisScaleData[index].toString(),
+//                                    text = xAxisLabels[index],
+//                                    fontSize = 10.sp,
+//                                    fontWeight = FontWeight.Medium,
+//                                    textAlign = TextAlign.Center,
+//                                    color = Color.Black
+//                                )
+                                Image(painter = painterResource(id = recyclables.value.find { it.name == xAxisLabels[index] }?.icon?:R.drawable.aluminum_can), contentDescription = "bar graph icon", modifier = Modifier.padding(top = 8.dp))
 
                             }
                         }

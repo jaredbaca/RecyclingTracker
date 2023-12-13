@@ -121,7 +121,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                                         graphBarData = convertToFloats(itemTotal.values.mapNotNull {
                                             it.toString().toDouble().toInt()
                                         }.toMutableList()),
-                                        xAxisLabels = labels,
+                                        xAxisLabels = itemTotal.keys.toMutableList(),
                                         barData_ = itemTotal.values.mapNotNull {
                                             it.toString().toDouble().toInt()
                                         }.toMutableList(),

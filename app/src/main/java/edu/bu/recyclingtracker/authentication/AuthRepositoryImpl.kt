@@ -13,7 +13,8 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
-    override fun loginUser(email: String, password: String): Flow<Resource<AuthResult>> {
+    override fun loginUser(email: String, password: String)
+    : Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
@@ -34,4 +35,9 @@ class AuthRepositoryImpl @Inject constructor(
             Log.d("Firebase Auth", "Error Creating Account")
         }
     }
+
+    override suspend fun login(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).await()
+    }
+
 }

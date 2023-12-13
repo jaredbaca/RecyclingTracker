@@ -135,10 +135,12 @@ fun RecyclingTrackerApp(auth: FirebaseAuth) {
 
         Scaffold(
             topBar = {
-                AppToolbar(toolbarTitle = "Recyclables", scope, drawerState)
+                AppToolbar(toolbarTitle = "", scope, drawerState)
             },
             bottomBar = {
-                bottomNavBar2(navController, recyclablesViewModel)
+                if(currentDestination?.hierarchy?.any { it.route == Routes.LOGIN_SCREEN || it.route == Routes.SIGNUP_SCREEN } == false) {
+                    bottomNavBar2(navController, recyclablesViewModel)
+                }
             },
 
             floatingActionButton = {

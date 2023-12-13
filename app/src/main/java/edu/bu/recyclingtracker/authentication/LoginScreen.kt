@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -59,8 +60,23 @@ fun LoginScreen(navController: NavHostController) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            loginField(label = "Username", keyboardType = KeyboardOptions.Default)
-            loginField(label = "Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
+            OutlinedTextField(value = email,
+                onValueChange = {
+                    email = it
+                },
+                label = {Text("email")},
+//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+            )
+
+            OutlinedTextField(value = password,
+                onValueChange = {
+                    password = it
+                },
+                label = {Text("password")},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            )
+
+//            loginField(label = "Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
             Button(modifier = Modifier
                 .padding(16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = navBarColor),

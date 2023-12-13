@@ -11,6 +11,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,7 @@ import edu.bu.recyclingtracker.ui.components.loginField
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     navController: NavHostController,
@@ -56,8 +59,22 @@ fun SignUpScreen(
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            loginField(label = "Email", keyboardType = KeyboardOptions.Default)
-            loginField(label = "Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
+            //Email
+            OutlinedTextField(value = email,
+                onValueChange = {
+                    email = it
+                },
+                label = {Text(email)},
+            )
+
+            //Password
+            OutlinedTextField(value = password,
+                onValueChange = {
+                    password = it
+                },
+                label = {Text(password)},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            )
 //            loginField(label = "Confirm Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
 
             Button(modifier = Modifier

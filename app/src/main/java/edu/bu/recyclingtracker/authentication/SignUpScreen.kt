@@ -1,6 +1,7 @@
 package edu.bu.recyclingtracker.authentication
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -92,6 +93,13 @@ fun SignUpScreen(
                 }) {
                 Text("Register")
             }
+
+            Row {
+                Text(text = "or", modifier = Modifier.padding(bottom = 16.dp))
+            }
+            Text(text = "Login with Existing Account", modifier = Modifier.clickable {
+                navController.navigate(Routes.LOGIN_SCREEN)
+            })
 
             Row(
                 modifier = Modifier.fillMaxWidth(),

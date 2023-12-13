@@ -142,19 +142,20 @@ fun RecyclingTrackerApp() {
                 IconButton(onClick = { scope.launch { drawerState.apply { close() } } }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
-                if(loginViewModel.currentUser == null) {
-                    drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
-                }
-                Text(text = "Welcome,", modifier = Modifier.padding(start = 36.dp, top = 16.dp), fontSize = 36.sp)
-                Text(text = "${loginViewModel.currentUser?.email?.split("@")?.get(0)}",
-                    modifier = Modifier
-                        .padding(start = 36.dp, bottom = 16.dp)
-                    , fontSize = 24.sp)
+//                if(loginViewModel.currentUser == null) {
+//                    drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
+//                }
 
-                drawerItem(name = "History", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
-                drawerItem(name = "Settings", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
                 
                 if(loginViewModel.currentUser != null) {
+                    Text(text = "Welcome,", modifier = Modifier.padding(start = 36.dp, top = 16.dp), fontSize = 36.sp)
+                    Text(text = "${loginViewModel.currentUser?.email?.split("@")?.get(0)}",
+                        modifier = Modifier
+                            .padding(start = 36.dp, bottom = 32.dp)
+                        , fontSize = 24.sp)
+
+//                    drawerItem(name = "History", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
+                    drawerItem(name = "Settings", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
                     Row(verticalAlignment = Alignment.Bottom) {
                         Text(text = "Log Out", fontSize = 18.sp, modifier = Modifier
                             .padding(start = 36.dp, top = 16.dp, bottom = 16.dp)

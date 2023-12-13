@@ -1,5 +1,6 @@
 package edu.bu.recyclingtracker.authentication
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -107,6 +108,7 @@ fun LoginScreen(navController: NavHostController) {
                     if(state.value?.isSuccess?.isNotEmpty() == true) {
                         val success = state.value?.isSuccess
                         Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+                        navController.navigate(Routes.HOME_SCREEN)
                     }
                 }
             }

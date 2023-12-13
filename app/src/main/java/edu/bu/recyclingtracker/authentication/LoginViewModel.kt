@@ -1,8 +1,11 @@
 package edu.bu.recyclingtracker.authentication
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.recyclingtracker.util.Resource
 import kotlinx.coroutines.channels.Channel
@@ -19,11 +22,17 @@ class LoginViewModel @Inject constructor(
     val _signInState = Channel<SignInState>()
     val signInState = _signInState.receiveAsFlow()
 
+    private val _currentUser = MutableLiveData<FirebaseUser?>()
+    val currentUser: LiveData<FirebaseUser?> get() = _currentUser
+
     fun loginUser(email: String, password: String) = viewModelScope.launch {
         repository.loginUser(email, password).collect{ result ->
             when(result) {
                 is Resource.Success -> {
                     _signInState.send(SignInState(isSuccess = "Sign In Successful"))
+                    _currentUser.value = result.data?.user
+                    Log.d("Auth",result.data?.user?.email.toString())
+                    Log.d("Current User", currentUser.value?.email.toString())
                 }
 
                 is Resource.Loading -> {
@@ -35,5 +44,9 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun logoutUser() = viewModelScope.launch {
+        repository.logoutUser()
     }
 }

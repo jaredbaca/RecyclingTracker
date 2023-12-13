@@ -1,8 +1,10 @@
 package edu.bu.recyclingtracker.authentication
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import edu.bu.recyclingtracker.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -36,8 +38,15 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun login(email: String, password: String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password).await()
+    override fun logoutUser() {
+        try {
+            firebaseAuth.signOut()
+        } catch (e: Exception) {
+            Log.d("Sign Out", e.message.toString())
+        }
     }
+
+
+
 
 }

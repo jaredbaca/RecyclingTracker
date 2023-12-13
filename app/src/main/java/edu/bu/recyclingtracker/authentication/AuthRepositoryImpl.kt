@@ -6,15 +6,22 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import edu.bu.recyclingtracker.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
+
+    override val currentUser get() = firebaseAuth.currentUser
     override fun loginUser(email: String, password: String)
     : Flow<Resource<AuthResult>> {
         return flow {
@@ -46,7 +53,15 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-
+override fun getAuthState(viewModelScope: CoroutineScope) = callbackFlow {
+        val authStateListener = FirebaseAuth.AuthStateListener { auth ->
+            trySend(auth.currentUser == null)
+        }
+        firebaseAuth.addAuthStateListener(authStateListener)
+        awaitClose {
+            firebaseAuth.removeAuthStateListener(authStateListener)
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), firebaseAuth.currentUser == null)
 
 
 }

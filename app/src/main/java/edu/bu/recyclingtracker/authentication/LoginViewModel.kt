@@ -1,6 +1,10 @@
 package edu.bu.recyclingtracker.authentication
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +13,8 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.recyclingtracker.util.Resource
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -22,17 +28,22 @@ class LoginViewModel @Inject constructor(
     val _signInState = Channel<SignInState>()
     val signInState = _signInState.receiveAsFlow()
 
-    private val _currentUser = MutableLiveData<FirebaseUser?>()
-    val currentUser: LiveData<FirebaseUser?> get() = _currentUser
+    val currentUser = repository.currentUser
+    val currentUserMutable = mutableStateOf(repository.currentUser)
+
+
+
+//    private val _currentUser: MutableState<FirebaseUser?> = mutableStateOf(null)
+//    val currentUser: MutableState<FirebaseUser?> get() = _currentUser
 
     fun loginUser(email: String, password: String) = viewModelScope.launch {
         repository.loginUser(email, password).collect{ result ->
             when(result) {
                 is Resource.Success -> {
                     _signInState.send(SignInState(isSuccess = "Sign In Successful"))
-                    _currentUser.value = result.data?.user
+//                    _currentUser.value = result.data?.user
                     Log.d("Auth",result.data?.user?.email.toString())
-                    Log.d("Current User", currentUser.value?.email.toString())
+//                    Log.d("Current User", currentUser.value?.email.toString())
                 }
 
                 is Resource.Loading -> {

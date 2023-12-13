@@ -2,11 +2,13 @@ package edu.bu.recyclingtracker.ui.screens
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
 import edu.bu.recyclingtracker.authentication.LoginScreen
+import edu.bu.recyclingtracker.authentication.LoginViewModel
 import edu.bu.recyclingtracker.authentication.SignUpScreen
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 
@@ -20,8 +22,8 @@ fun RecyclingTrackerNavigationGraph(
     navController: NavHostController,
     recyclablesViewModel: LogRecyclablesViewModel,
 ) {
-
-    NavHost(navController = navController, startDestination = Routes.LOGIN_SCREEN) {
+    val loginViewModel: LoginViewModel = hiltViewModel()
+    NavHost(navController = navController, startDestination = if(loginViewModel.currentUser == null) Routes.LOGIN_SCREEN else Routes.HOME_SCREEN) {
 
         composable(Routes.LOGIN_SCREEN) {
             LoginScreen(navController)

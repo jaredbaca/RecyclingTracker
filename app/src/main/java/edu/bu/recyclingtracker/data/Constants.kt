@@ -66,4 +66,4 @@ val itemWeights: Map<String, Int> = mapOf(
 )
 
 // Temporary current user constant for testing. Will be replace by Firebase auth instance.
-const val CURRENT_USER = "Jared Baca"
+//const val CURRENT_USER = "Jared Baca"

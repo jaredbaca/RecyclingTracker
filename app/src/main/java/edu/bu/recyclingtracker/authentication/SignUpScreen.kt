@@ -33,6 +33,7 @@ import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.loginField
+import edu.bu.recyclingtracker.ui.screens.Routes
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.launch
 
@@ -102,6 +103,7 @@ fun SignUpScreen(
                     if(state.value?.isSuccess?.isNotEmpty() == true) {
                         val success = state.value?.isSuccess
                         Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+                        navController.navigate(Routes.LOGIN_SCREEN)
                     }
                 }
             }

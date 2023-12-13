@@ -25,12 +25,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -56,6 +60,7 @@ import edu.bu.recyclingtracker.ui.theme.RecyclingTrackerTheme
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -98,12 +103,16 @@ fun RecyclingTrackerApp() {
     //Using emulator for testing mode
 //    db.useEmulator("10.0.2.2", 8080)
 
+    val loginViewModel: LoginViewModel = hiltViewModel()
+//    val currentUser by loginViewModel.currentUser.observeAsState()
+//    val currentUser by loginViewModel.currentUser
+
+
     // Create Repository object
-    var recyclingTrackerRepository = RecyclingTrackerRepository(RecyclingTrackerDao((db)))
+    var recyclingTrackerRepository = RecyclingTrackerRepository(RecyclingTrackerDao(db, loginViewModel))
 
     // Create view model here so that it can utilize the repository
     val recyclablesViewModel: LogRecyclablesViewModel = viewModel {LogRecyclablesViewModel(recyclingTrackerRepository)}
-    val loginViewModel: LoginViewModel = hiltViewModel()
 
     // Retrieve initial totals from Firestore to display on stats page
     LaunchedEffect(true) {
@@ -134,14 +143,19 @@ fun RecyclingTrackerApp() {
                 if(loginViewModel.currentUser == null) {
                     drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
                 }
+                Text(text = "${loginViewModel.currentUser?.email}")
+
                 drawerItem(name = "History", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
                 drawerItem(name = "Settings", route = Routes.HOME_SCREEN, navController = navController, scope, drawerState)
                 
                 if(loginViewModel.currentUser != null) {
-                    Text(text = "Log Out", modifier = Modifier
-                        .clickable { loginViewModel.logoutUser()
-                        navController.navigate(Routes.LOGIN_SCREEN)
-                            Log.d("Log Out", loginViewModel.currentUser.value?.email.toString())
+                    Text(text = "Log Out", fontSize = 18.sp, modifier = Modifier
+                        .padding(start = 36.dp, top = 16.dp, bottom = 16.dp)
+                        .clickable {
+                            loginViewModel.logoutUser()
+                            navController.navigate(Routes.LOGIN_SCREEN)
+//                            Log.d("Log Out", loginViewModel.currentUser.value?.email.toString())
+//                            scope.launch { drawerState.apply { close() } }
                         })
                 }
             }

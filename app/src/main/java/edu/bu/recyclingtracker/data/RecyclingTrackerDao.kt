@@ -2,8 +2,12 @@ package edu.bu.recyclingtracker.data
 
 import android.util.Log
 import androidx.compose.runtime.currentCompositionErrors
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.bu.recyclingtracker.authentication.LoginViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
@@ -15,8 +19,9 @@ import kotlin.reflect.typeOf
 /*
 Database Access Object that defines the implementation for functions interacting with Firestore DB.
  */
-class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
+class RecyclingTrackerDao(private val firestore: FirebaseFirestore, private val loginViewModel: LoginViewModel) {
 
+    val CURRENT_USER = loginViewModel.currentUser?.email
     val entriesCollectionReference = firestore.collection("users/${CURRENT_USER}/entries")
     val totalsCollectionReference = firestore.collection("users/${CURRENT_USER}/totals")
 
@@ -26,6 +31,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
     fun addEntry(entry: Entry) {
         try {
             entriesCollectionReference.add(entry)
+            Log.d("Auth", "Current User in AddEntry: ${loginViewModel.currentUser?.email}")
         } catch (e: Exception) {
             Log.w(TAG, "Error adding user to db")
         }
@@ -44,7 +50,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
 
             // Adds the updated amount (from viewModel counts) to the previous total
             for(key in updates.keys) {
-                newTotals[key] = sum(currentTotals[key].toString().toDouble(),
+                newTotals[key] = sum((currentTotals[key]?:0).toString().toDouble(),
                     updates[key].toString().toDouble())
             }
             // Replace existing totals in Firestore DB with newly updated totals
@@ -61,6 +67,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
      */
     suspend fun getTotals(): Map<String, Any> = suspendCoroutine { continuation ->
         try {
+
             val documentRef = totalsCollectionReference.document("totals")
 
             documentRef.get()
@@ -71,6 +78,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore) {
                         continuation.resume(totals)
                     } else {
                         Log.w(TAG, "Document not found")
+                        firestore.document("users/${CURRENT_USER}/totals/totals").set(emptyMap<String, Any>())
                         continuation.resume(emptyMap())
                     }
                 }

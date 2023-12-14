@@ -15,7 +15,7 @@ The Recycling Tracker app allows users to log the items that they recycle on a w
 <img width="240" alt="Bar_Graph_Plastic" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/50d354f1-bfed-41cf-a17e-316f0bef1996">
 
 ## Built With
-Kotlin(https://kotlinlang.org/)
+[Kotlin] (https://kotlinlang.org/)
 <br>Jetpack Compose (https://developer.android.com/jetpack/compose)
 <br>Firebase (https://firebase.google.com/)
 <br>Cloud Firestore (https://firebase.google.com/docs/firestore)

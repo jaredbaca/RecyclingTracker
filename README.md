@@ -1,14 +1,18 @@
 # RecyclingTracker
 
 ##### Author: Jared Baca
+
+## Overview
+The Recycling Tracker app allows users to log the items that they recycle on a weekly basis in order to measure the impact their recycling habits have on the environment. It allows users to view their recycling trends over time and gain valuable insights into the types of materials they are recycling.
+
 <img width="243" alt="Register" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/77749b24-9199-4f75-a105-bd9e00f0813b">
 <img width="238" alt="Login" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/085b5e13-d2bf-4561-9258-11651be05366">
 <img width="238" alt="Home_Screen_Selections" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/bb9fbc96-3df1-477c-9eb0-23ea2ba222fc">
 <img width="237" alt="Drawer" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/15813488-7628-4e2b-a3c3-3e4eabffc413">
-
-
-## Overview
-The Recycling Tracker app allows users to log the items that they recycle on a weekly basis in order to measure the impact their recycling habits have on the environment. It allows users to view their recycling trends over time and gain valuable insights into the types of materials they are recycling.
+<img width="235" alt="Pie_Chart" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/5075e99d-f7cd-433e-8e0c-62a0ce484fc0">
+<img width="239" alt="Impact" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/eeeff8a3-d456-40b8-baa3-9d8e440422da">
+<img width="244" alt="Bin_Summary" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/51d18016-c88b-446f-ac41-fc0ffbc783bf">
+<img width="240" alt="Bar_Graph_Plastic" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/50d354f1-bfed-41cf-a17e-316f0bef1996">
 
 ## Built With
 Kotlin (https://kotlinlang.org/)

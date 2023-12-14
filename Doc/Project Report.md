@@ -176,7 +176,7 @@ The Cloud Firestore databases consists of documents, which contain key-value pai
 
 The structure of the database for this project is shown below.
 
-![RecyclingTracker_DB_Graph](https://github.com/jaredbaca/RecyclingTracker/assets/110132943/760b45b6-81ef-43fe-8310-ceaea7b243ba)
+![RecyclingTracker_DB_Graph](https://github.com/jaredbaca/RecyclingTracker/assets/110132943/7857e312-24ff-4fd8-b56f-818cd6ef4979)
 
 
 <img width="1150" alt="Screen Shot 2023-11-24 at 3 20 34 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/6d679b75-3b6f-4713-8c1d-4db3e6ff8aa6">

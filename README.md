@@ -45,7 +45,6 @@ The Recycling Tracker app allows users to log the items that they recycle on a w
 
 ## Sources
 
-Packaging a React.JS Application into a Java Spring Boot Application - Wazoo Web Bytes (https://www.youtube.com/watch?v=gIuHATUBGvA)
 <br>[Firebase Authentication with Jetpack Compose - Android Studio Tutorial - Arfin Hosain](https://www.youtube.com/watch?v=Ke90Tje7VS0&t=1734s)
 <br>[Building an Android app with Jetpack Compose and Firebase - Marina Coelho](https://firebase.blog/posts/2022/04/building-an-app-android-jetpack-compose-firebase)
 <br>[Create Custom Pie Chart with Animations in Jetpack Compose | Android Studio | Kotlin - Developer Chunk](https://medium.com/@developerchunk/create-custom-pie-chart-with-animations-in-jetpack-compose-android-studio-kotlin-49cf95ef321e)

@@ -20,25 +20,25 @@ The Recycling Tracker app allows users to log the items that they recycle on a w
 <br>[Firebase](https://firebase.google.com/)
 <br>[Cloud Firestore](https://firebase.google.com/docs/firestore)
 
-## Detailed Description
-#### Yt-dlp, Java, Shell Scripts
+## App Architecture
+#### 
 
-#### PySceneDetect
+#### 
 
+#### 
 
-#### Spring Boot, Tomcat
+#### 
 
-
-#### React
-
+## Project Structure
 
 ## Included Files
-### Java Classes
+### 
 
-### Shell Scripts
+### 
 
-### React Components
+### 
 
+## Future Work
 
 ### Notes
 

@@ -17,7 +17,7 @@ The fundamental logic for the app has mostly been implemented in this sprint. Th
 
 - Added Recyclables Screen for logging individual items, Recycling Bin screen which functions like a shopping cart to store currently selected recyclables, and a Stats screen to display lifetime totals. These were implemented using Jetpack Compose and a Scaffold layout with bottom navigation. It currently uses placeholder icons for each item. UI will be fleshed out and designed in future iteration.
 
-  - The Bin Summary page uses a floating action button for submitting current bin to the Firestore database. Each entry contains a map of items and their quanitites, along with a date stamp.
+- The Bin Summary page uses a floating action button for submitting current bin to the Firestore database. Each entry contains a map of items and their quanitites, along with a date stamp.
 
 - Implemented a ViewModel to store current item counts, as well as to handle database access.
 

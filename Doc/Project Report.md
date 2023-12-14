@@ -1,7 +1,7 @@
 # Recycling Tracker
 Author: Jared Baca
 
-- https://github.com/jaredbaca/RecyclingTracker
+https://github.com/jaredbaca/RecyclingTracker
 
 ## Overview 
 

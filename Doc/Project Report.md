@@ -31,96 +31,96 @@ The fundamental logic for the app has mostly been implemented in this sprint. Th
 |Description|As a user, I want to create a user account to record my recycling habits and view my impact data over time.  |
 |Mockups||
 |Acceptance Tests|The user will create an account with a username and password. They will then be prompted to provide some basic information, which will then be stored in their profile page for future viewing and editing.|
-|Test Results| |
-|Status||)* 
+|Test Results|Account Creation successful |
+|Status|Done|)* 
 
 |Title|View Material Categories (Essential)|
 |---|---|
 |Description|As a user, I want to be able to start by viewing recycling categories by material so that I can find each items quickly. |
 |Mockups||
 |Acceptance Tests|The user will be presented with cards for each of the main material categories: Cardboard, Glass, Plastic, Paper, etc. When they select a material, they will see a grid of icons showing common recyclabes in that category. They will then select items by tapping on the icons and increasing the count, much like a shopping cart. 
-|Test Results| |
-|Status||)* 
+|Test Results|Items counts successfully updated in UI |
+|Status|Done|)* 
 
 |Title|Build a Recycling "Bin" (Essential)|
 |---|---|
 |Description|As a user, I need to be able to select the items I am recycling from the grid of common recyclable items |
 |Mockups||
 |Acceptance Tests|The user will then select items by tapping on the icons and increasing the count, much like a shopping cart. These items will be added to a bin object, which contains a time and date stamp. When ready, the user can submit those items, and they will be logged and added to their overall total of recycled materials.|
-|Test Results| |
-|Status||)* 
+|Test Results|Items successfully added to Bin|
+|Status|Done|)* 
 
 |Title|Edit Date of Already Submitted Bin (Desirable)|
 |---|---|
 |Description|As a user, I need to be able to edit the date of a previously submitted bin in order to make corrections or adjustments |
 |Mockups||
 |Acceptance Tests|The user can view their recycling history organized by bins (individual submissions). They need to be able to easily edit the data contained in this bin object and have it reflected in the database and update their totals accordingly.|
-|Test Results| |
-|Status||)* 
+|Test Results|Not implemented|
+|Status|TBD|)* 
 
 |Title|View weekly, monthly, and yearly summary (Desirable)|
 |---|---|
 |Description|As a user, I want to have visual representations (graphs, charts, etc.) that summarize my overall recycling progress and how those habits have impacted the environment. |
 |Mockups||
 |Acceptance Tests|Click on the summary tab and click “yearly” to view pie chart and overall carbon reduction.|
-|Test Results| |
-|Status||)* 
+|Test Results|Summary only shows totals from the beginning to now|
+|Status|Partially implemented|)* 
 
 |Title|Receive Feedback that Bin Has Been Submitted to Database (Desirable)|
 |---|---|
 |Description|As a user, I want to receive a confirmation message that my items have been logged successfully. |
 |Mockups||
 |Acceptance Tests|After submitting bin, receive a message showing the bin summary and whether it was successfully uploaded or not.|
-|Test Results| |
-|Status||)* 
+|Test Results| Not implemented|
+|Status|TBD|)* 
 
 |Title|View Trends (Desirable)|
 |---|---|
 |Description|As a user, I want to view how my carbon footprint has increased or decreased over time as feedback on my recycling habits.|
 |Mockups||
 |Acceptance Tests|Under the summary tab, the user clicks the “Trends” button to display a line graph showing their carbon emissions over time.|
-|Test Results| |
-|Status||)* 
+|Test Results| Not implemented|
+|Status|TBD|)* 
 
 |Title|View Material Breakdown (Desirable)|
 |---|---|
 |Description|As a user, I want to view a pie chart of my recycled items to date broken down by material and overall weight (e.g. "This year you've recycled 50lbs of plastic"), so that I can get a sense of my long term impact.|
 |Mockups||
 |Acceptance Tests|Under the summary tab, user will be presented with a pie chart that pulls from the database total amounts and separatees them by material. It will also total the approximate weight in each category.|
-|Test Results| |
-|Status||)* 
+|Test Results|Pie chart and bar graph successfully created|
+|Status|Done|)* 
 
 |Title|View Offset Information Based on Totals (Desirable)|
 |---|---|
 |Description|As a user, along with the totals of each material weight, I want to view exmamples of the types of emissions that could possibly be offset by those amounts, so that I can see a direct benefit of the recycling I have done.|
 |Mockups||
 |Acceptance Tests|Along with the approximate weights of each material type, the user will receive one or more "impact statements" along the lines of "That is the equivalent of X number of car trips" in order to draw a parallel between recycling and overall carbon footprint|
-|Test Results| |
-|Status||)* 
+|Test Results|CO2 offset estimate generated for plastic only|
+|Status|Partially implemented|)* 
 
 |Title|Receive Recommendations (Desirable)|
 |---|---|
 |Description|As a user, I want to be able to receive personalized recommendations from the app for how I can reduce my carbon footprint.|
 |Mockups||
 |Acceptance Tests|Under Summary, the user will see their highest impact activities identified and the app will provide recommendations for reducing those activities. Ex. User logs a consistent commute via car, and the app shows how much their emissions would be reduced if they opted to take the nearby commuter train instead.|
-|Test Results| |
-|Status||)* 
+|Test Results|Not implemented|
+|Status|TBD|)* 
 
 |Title|Earn Badges (Optional)|
 |---|---|
 |Description|As a user, I want to be able to set recycling goals and earn badges and rewards for achieving them so that I can feel a sense of accomplishment for reducing emissions and developing environmentally friendly habits.|
 |Mockups||
 |Acceptance Tests|Goal value reached for a specific parameter should trigger the addition of a badge/achievement on user’s profile|
-|Test Results| |
-|Status||)* 
+|Test Results|Not Implemented|
+|Status|TBD|)* 
 
 |Title|Receive Weekly Wrap-Up (Optional)|
 |---|---|
 |Description|As a user, I want to receive a weekly wrap-up showing my recycling totals for the week and the impact comparisons listed above.|
 |Mockups||
 |Acceptance Tests|At the end of each week, the user will receive a summary page outlining their progress throughout the week.|
-|Test Results| |
-|Status||)* 
+|Test Results|Not Implemented|
+|Status|TBD|)* 
 
 ## Design and Implementation
 
@@ -160,12 +160,20 @@ Current UI assets are placeholders and are intended only to test the underlying 
 <img width="1149" alt="Screen Shot 2023-11-24 at 3 20 26 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/d1a28235-9809-4b1a-954f-5493d6b6f2c8">
 
 
+## App Architecture
 
+The app uses Model - View - ViewModel (MVVM) architecture. The data layer consists of a NoSQL database provided by Google Cloud Firestore. A DAO and repository handle the database interactions. A primary ViewModel, the LogRecyclablesViewModel, handles item counts for currently selected items, database read/writes (via the repository), and the logic that generates the data for the Stats page. This includes breaking down the items by category, estimating their weights, and generating the Carbon Offset estimate. Separate Hilt ViewModels are used for Sign In and Sign Up screens. These ViewModels communicate with a Auth Repository to handle all Firebase authentication.
+
+The application uses a single Main Activity with composable functions for each screen: HomeScreen, BinSummary, StatsPage, LoginScreen, and SignUpScreen. These components are invoked from within a Navigation Graph (RecyclingTrackerNavigationGraph), which resides in the top-level application composable, the RecyclingTrackerApp composable.
 
 ## Project Structure
 
 <img width="521" alt="Screen Shot 2023-11-24 at 4 07 03 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/a4beafe5-4ffa-44dc-90fd-49ae9d89fee0">
 
+## Recycling Item UI State
+<img width="632" alt="Screen Shot 2023-12-13 at 11 41 40 PM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/ca13b393-9e81-4a38-b8eb-d2bf59cd4a52">
+
+This is a data class that provides the basic information for each recycling item. It contains fields for the name, category (recycling material), quantity, and icon. The primary UI State held by the ViewModel is a mutable state of a list containing all recyclables. Many other functions within the app reference this UiState and the item list it contains.
     
 ## Timeline
 
@@ -177,10 +185,9 @@ Current UI assets are placeholders and are intended only to test the underlying 
 
 
 ## Future Work (Optional)
-- Implement login flow with Firebase
-- Replace placeholder icons
-- Configure the drawer in the scaffold layout
-- Expand stats page using recycling data
+- Add desirable features such as badges
+- Make bin information editable
+- Include a full history of user's recycling subimssions, so that they can be edited
 
     
 ## Project Demo Links
@@ -189,3 +196,21 @@ Current UI assets are placeholders and are intended only to test the underlying 
 
 ## References
 
+### Jetpack Compose and Android Resources
+[Firebase Authentication with Jetpack Compose - Android Studio Tutorial - Arfin Hosain](https://www.youtube.com/watch?v=Ke90Tje7VS0&t=1734s)
+<br>[Building an Android app with Jetpack Compose and Firebase - Marina Coelho](https://firebase.blog/posts/2022/04/building-an-app-android-jetpack-compose-firebase)
+<br>[Create Custom Pie Chart with Animations in Jetpack Compose | Android Studio | Kotlin - Developer Chunk](https://medium.com/@developerchunk/create-custom-pie-chart-with-animations-in-jetpack-compose-android-studio-kotlin-49cf95ef321e)
+<br>[Create Custom BarGraph with Scales in Jetpack Compose | Android Studio | Kotlin - Developer Chunk](https://medium.com/@developerchunk/create-custom-bargraph-with-scales-in-jetpack-compose-android-studio-kotlin-deadba24fd9b)
+<br>[How to Make A Bottom Navigation With Badges in Jetpack Compose - Android Studio Tutorial - Philipp Lackner](https://www.youtube.com/watch?v=4xyRnIntwTo&t=750s)
+<br>[Mastering Firebase Integration: Jetpack Compose App with Login and SignUp Features - Native Mobile Bits](https://www.youtube.com/watch?v=KOI7fS7k8Y0&t=351s)
+<br>[Building a Complete Login Registration Flow in Jetpack Compose | Step-by-Step Tutorial - Native Mobile Bits](https://www.youtube.com/watch?v=PeUERQJnHdI)
+<br>[Developing a Complete Android Project in Jetpack Compose - Native Mobile Bits](https://www.youtube.com/watch?v=dEEyZkZekvI&t=3478s)
+<br>[Get Started with Firebase Authentication on Android](https://firebase.google.com/docs/auth/android/start)
+
+### Recycling Data References
+[Department of Environmental Protection - Montgomery County, Maryland](https://www.montgomerycountymd.gov/sws/footprint/)
+[Environmental Protection Agency - Greenhouse Gas Equivalencies Calculator](https://www.epa.gov/energy/greenhouse-gas-equivalencies-calculator)
+[Environmental Protection Agency - WARM Waste Reduction Model](https://www.epa.gov/warm/documentation-waste-reduction-model-warm)
+[Greenhouse Gas Reductions Calculator - StopWaste.org](https://www.stopwaste.org/at-work/reduce-and-reuse/recycling-business-waste/recycling-climate-protection/greenhouse-gas)
+[Earthday.org Plastic Pollution Calculator](https://www.earthday.org/plastic-pollution-calculator-2/)
+[Environmental Impact Calculators - California State University](https://www.csusm.edu/sustainability/takeaction/knowurimpact.html)

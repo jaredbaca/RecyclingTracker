@@ -154,26 +154,54 @@ Current UI assets are placeholders and are intended only to test the underlying 
 <img width="239" alt="Screen Shot 2023-12-13 at 2 43 39 AM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/ac60d44e-8b8c-4ecc-bfa1-3368b83f2d60">
 
 
-### Database Console
+## App Architecture
+### Overview
+The app uses Model - View - ViewModel (MVVM) architecture. There is a single Main Activity with composable functions for each screen: HomeScreen, BinSummary, StatsPage, LoginScreen, and SignUpScreen. These components are invoked from within a Navigation Graph (RecyclingTrackerNavigationGraph), which resides in the top-level application composable, the RecyclingTrackerApp composable.
+
+### View Models
+The LogRecyclablesViewModel is the primary view model for the app. It contains all information about recyclable items, including item name, count, category, and icon. This information is stored in a RecyclableItemUiState object, which is a data class that provides the basic information for each recycling item. 
+
+<img width="632" alt="Screen Shot 2023-12-13 at 11 41 40 PM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/ca13b393-9e81-4a38-b8eb-d2bf59cd4a52">
+
+The primary UI State is a list of RecyclingItemUiState objects, held within a Mutable State. Many other functions within the app reference this UiState and the item list it contains.
+
+In addition to the item counts and UI information, the LogRecyclablesViewModel also handles database read/writes (via the repository), as well as the logic that generates the data for the Stats page. This includes breaking down the items by category, estimating their weights, and generating the Carbon Offset estimate. 
+
+Separate Hilt ViewModels are used for Sign In and Sign Up screens. These ViewModels communicate with a Auth Repository to handle all Firebase authentication.
+
+### Database Configuration
+The data layer consists of a NoSQL database provided by Google Cloud Firestore. A DAO and repository handle the database interactions.
+
+The Cloud Firestore databases consists of documents, which contain key-value pairs. These documents are held in collections and subcollections. As a rule, all Firestore databases alternate between collections, and documents (a collection cannot contain another collection, and a document cannot contain another document).
+
+The structure of the database for this project is:
+
+Users (Collection) 
+  -> #### User (Document) 
+    -> #### Entries (Collection) 
+      -> Entry (Document) 
+        -> Date (Field)
+        -> Items (Sub Collection)
+          -> Item (Key)
+          -> Count (Value)       
+          
+    -> #### Totals (Collection) 
+      -> Totals (Document)
+        -> Item (Key)
+        -> Count (Value)
+
 
 <img width="1150" alt="Screen Shot 2023-11-24 at 3 20 34 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/6d679b75-3b6f-4713-8c1d-4db3e6ff8aa6">
 <img width="1149" alt="Screen Shot 2023-11-24 at 3 20 26 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/d1a28235-9809-4b1a-954f-5493d6b6f2c8">
-
-
-## App Architecture
-
-The app uses Model - View - ViewModel (MVVM) architecture. The data layer consists of a NoSQL database provided by Google Cloud Firestore. A DAO and repository handle the database interactions. A primary ViewModel, the LogRecyclablesViewModel, handles item counts for currently selected items, database read/writes (via the repository), and the logic that generates the data for the Stats page. This includes breaking down the items by category, estimating their weights, and generating the Carbon Offset estimate. Separate Hilt ViewModels are used for Sign In and Sign Up screens. These ViewModels communicate with a Auth Repository to handle all Firebase authentication.
-
-The application uses a single Main Activity with composable functions for each screen: HomeScreen, BinSummary, StatsPage, LoginScreen, and SignUpScreen. These components are invoked from within a Navigation Graph (RecyclingTrackerNavigationGraph), which resides in the top-level application composable, the RecyclingTrackerApp composable.
 
 ## Project Structure
 
 <img width="521" alt="Screen Shot 2023-11-24 at 4 07 03 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/a4beafe5-4ffa-44dc-90fd-49ae9d89fee0">
 
 ## Recycling Item UI State
-<img width="632" alt="Screen Shot 2023-12-13 at 11 41 40 PM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/ca13b393-9e81-4a38-b8eb-d2bf59cd4a52">
 
-This is a data class that provides the basic information for each recycling item. It contains fields for the name, category (recycling material), quantity, and icon. The primary UI State held by the ViewModel is a mutable state of a list containing all recyclables. Many other functions within the app reference this UiState and the item list it contains.
+
+
     
 ## Timeline
 

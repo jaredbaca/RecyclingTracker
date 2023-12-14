@@ -133,16 +133,6 @@ The fundamental logic for the app has mostly been implemented in this sprint. Th
 
 ![image](https://github.com/CS683/project-jared-baca/assets/110132943/f2119d09-961d-467e-9c50-0908935ca691)
 
-### Early UI
-
-Current UI assets are placeholders and are intended only to test the underlying logic. Icons may be replaced with stock photos, and pie chart colors will be updated to reflect app design pallette.
-
-<img width="260" alt="Screen Shot 2023-11-24 at 3 19 23 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/b1e2f9a8-2067-4d16-bae9-9f1d76748192">
-<img width="256" alt="Screen Shot 2023-11-24 at 3 19 37 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/32daff66-8de3-4879-984d-c46a9d51c301">
-<img width="261" alt="Screen Shot 2023-11-24 at 3 19 43 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/5050da74-327a-4546-b3ba-01dadf16c058">
-<img width="255" alt="Screen Shot 2023-11-24 at 3 20 04 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/4a9b0c85-effe-4b1b-b393-704f96939859">
-<img width="236" alt="Screen Shot 2023-11-24 at 9 54 41 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/146d005c-bbc8-4391-8bc7-1d55e3b9f5f4">
-
 ### Final UI
 <img width="243" alt="Screen Shot 2023-12-13 at 2 44 10 AM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/5583cd8d-6b5b-4c7f-8ea2-c1fa276c12fc">
 <img width="238" alt="Screen Shot 2023-12-13 at 2 44 02 AM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/f03f1cf0-030d-4abe-aea1-7e5290f42dae">
@@ -152,6 +142,16 @@ Current UI assets are placeholders and are intended only to test the underlying 
 <img width="235" alt="Screen Shot 2023-12-13 at 2 43 13 AM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/60884aea-67c0-4236-9ba9-002b2a4ac5fb">
 <img width="240" alt="Screen Shot 2023-12-13 at 2 43 23 AM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/e78e6d1c-d788-4739-80d5-0f8cae65e5db">
 <img width="239" alt="Screen Shot 2023-12-13 at 2 43 39 AM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/ac60d44e-8b8c-4ecc-bfa1-3368b83f2d60">
+
+### Early UI
+
+Current UI assets are placeholders and are intended only to test the underlying logic. Icons may be replaced with stock photos, and pie chart colors will be updated to reflect app design pallette.
+
+<img width="260" alt="Screen Shot 2023-11-24 at 3 19 23 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/b1e2f9a8-2067-4d16-bae9-9f1d76748192">
+<img width="256" alt="Screen Shot 2023-11-24 at 3 19 37 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/32daff66-8de3-4879-984d-c46a9d51c301">
+<img width="261" alt="Screen Shot 2023-11-24 at 3 19 43 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/5050da74-327a-4546-b3ba-01dadf16c058">
+<img width="255" alt="Screen Shot 2023-11-24 at 3 20 04 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/4a9b0c85-effe-4b1b-b393-704f96939859">
+<img width="236" alt="Screen Shot 2023-11-24 at 9 54 41 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/146d005c-bbc8-4391-8bc7-1d55e3b9f5f4">
 
 
 ## App Architecture

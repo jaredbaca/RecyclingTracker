@@ -1,5 +1,5 @@
 # Recycling Tracker
-Jared Baca
+Author: Jared Baca
 
 - https://github.com/jaredbaca/RecyclingTracker
 
@@ -184,8 +184,6 @@ The structure of the database for this project is:
 ## Project Structure
 
 <img width="521" alt="Screen Shot 2023-11-24 at 4 07 03 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/a4beafe5-4ffa-44dc-90fd-49ae9d89fee0">
-
-## Recycling Item UI State
 
 
 

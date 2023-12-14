@@ -1,4 +1,4 @@
-package edu.bu.recyclingtracker.ui
+package edu.bu.recyclingtracker.ui.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
@@ -6,12 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import androidx.compose.runtime.State
-import androidx.lifecycle.viewModelScope
 import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.itemWeights
 import edu.bu.recyclingtracker.data.recyclables
-import kotlinx.coroutines.launch
 import java.util.Date
 
 /**

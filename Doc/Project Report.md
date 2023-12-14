@@ -176,19 +176,6 @@ The Cloud Firestore databases consists of documents, which contain key-value pai
 
 The structure of the database for this project is:
 
-Users (Collection) 
-  -> #### User (Document) 
-    -> #### Entries (Collection) 
-      -> Entry (Document) 
-        -> Date (Field)
-        -> Items (Sub Collection)
-          -> Item (Key)
-          -> Count (Value)       
-          
-    -> #### Totals (Collection) 
-      -> Totals (Document)
-        -> Item (Key)
-        -> Count (Value)
 
 
 <img width="1150" alt="Screen Shot 2023-11-24 at 3 20 34 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/6d679b75-3b6f-4713-8c1d-4db3e6ff8aa6">

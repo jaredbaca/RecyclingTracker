@@ -45,6 +45,7 @@ The Recycling Tracker app allows users to log the items that they recycle on a w
 
 ## Sources
 
+### Jetpack Compose & Android Resources
 <br>[Firebase Authentication with Jetpack Compose - Android Studio Tutorial - Arfin Hosain](https://www.youtube.com/watch?v=Ke90Tje7VS0&t=1734s)
 <br>[Building an Android app with Jetpack Compose and Firebase - Marina Coelho](https://firebase.blog/posts/2022/04/building-an-app-android-jetpack-compose-firebase)
 <br>[Create Custom Pie Chart with Animations in Jetpack Compose | Android Studio | Kotlin - Developer Chunk](https://medium.com/@developerchunk/create-custom-pie-chart-with-animations-in-jetpack-compose-android-studio-kotlin-49cf95ef321e)
@@ -54,4 +55,12 @@ The Recycling Tracker app allows users to log the items that they recycle on a w
 <br>[Building a Complete Login Registration Flow in Jetpack Compose | Step-by-Step Tutorial - Native Mobile Bits](https://www.youtube.com/watch?v=PeUERQJnHdI)
 <br>[Developing a Complete Android Project in Jetpack Compose - Native Mobile Bits](https://www.youtube.com/watch?v=dEEyZkZekvI&t=3478s)
 <br>[Get Started with Firebase Authentication on Android](https://firebase.google.com/docs/auth/android/start)
+
+### Recycling Data Resources
+[Department of Environmental Protection - Montgomery County, Maryland](https://www.montgomerycountymd.gov/sws/footprint/)
+[Environmental Protection Agency - Greenhouse Gas Equivalencies Calculator](https://www.epa.gov/energy/greenhouse-gas-equivalencies-calculator)
+[Environmental Protection Agency - WARM Waste Reduction Model](https://www.epa.gov/warm/documentation-waste-reduction-model-warm)
+[Greenhouse Gas Reductions Calculator - StopWaste.org](https://www.stopwaste.org/at-work/reduce-and-reuse/recycling-business-waste/recycling-climate-protection/greenhouse-gas)
+[Earthday.org Plastic Pollution Calculator](https://www.earthday.org/plastic-pollution-calculator-2/)
+[Environmental Impact Calculators - California State University](https://www.csusm.edu/sustainability/takeaction/knowurimpact.html)
 

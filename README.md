@@ -23,24 +23,31 @@ A detailed project report can be found [here](https://github.com/jaredbaca/Recyc
 <br>[Cloud Firestore](https://firebase.google.com/docs/firestore)
 
 ## App Architecture
-#### 
+### Overview
+The app uses Model - View - ViewModel (MVVM) architecture. There is a single Main Activity with composable functions for each screen: HomeScreen, BinSummary, StatsPage, LoginScreen, and SignUpScreen. These components are invoked from within a Navigation Graph (RecyclingTrackerNavigationGraph), which resides in the top-level application composable, the RecyclingTrackerApp composable.
 
-#### 
+### View Models
+The LogRecyclablesViewModel is the primary view model for the app. It contains all information about recyclable items, including item name, count, category, and icon. This information is stored in a RecyclableItemUiState object, which is a data class that provides the basic information for each recycling item. 
 
-#### 
+The primary UI State is a list of RecyclingItemUiState objects, held within a Mutable State. Many other functions within the app reference this UiState and the item list it contains.
 
-#### 
+In addition to the item counts and UI information, the LogRecyclablesViewModel also handles database read/writes (via the repository), as well as the logic that generates the data for the Stats page. This includes breaking down the items by category, estimating their weights, and generating the Carbon Offset estimate. 
 
-## Project Structure
+Separate Hilt ViewModels are used for Sign In and Sign Up screens. These ViewModels communicate with a Auth Repository to handle all Firebase authentication.
 
-## Included Files
-### 
+### Database Configuration
+The data layer consists of a NoSQL database provided by Google Cloud Firestore. A DAO and repository handle the database interactions.
 
-### 
+The Cloud Firestore databases consists of documents, which contain key-value pairs. These documents are held in collections and subcollections. As a rule, all Firestore databases alternate between collections, and documents (a collection cannot contain another collection, and a document cannot contain another document).
 
-### 
+The structure of the database for this project is shown below.
+
+![RecyclingTracker_DB_Graph](https://github.com/jaredbaca/RecyclingTracker/assets/110132943/7857e312-24ff-4fd8-b56f-818cd6ef4979)
 
 ## Future Work
+- Add badges and goals
+- Make bin information editable
+- Include a full history of user's previous subimssions
 
 ### Notes
 

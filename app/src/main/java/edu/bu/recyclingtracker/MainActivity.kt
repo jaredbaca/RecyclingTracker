@@ -161,6 +161,7 @@ fun RecyclingTrackerApp() {
                             .padding(start = 36.dp, top = 16.dp, bottom = 16.dp)
                             .clickable {
                                 loginViewModel.logoutUser()
+                                recyclablesViewModel.resetVMTotals()
                                 navController.navigate(Routes.LOGIN_SCREEN)
 //                            Log.d("Log Out", loginViewModel.currentUser.value?.email.toString())
                                 scope.launch { drawerState.apply { close() } }

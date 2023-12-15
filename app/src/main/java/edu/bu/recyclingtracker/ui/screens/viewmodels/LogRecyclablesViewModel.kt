@@ -44,6 +44,11 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         )
     }
 
+        fun resetVMTotals() {
+            totals.value = getItemNames().associateWith { 0 }.toMutableMap()
+            totalsByCategory.value = getTotalsByCategory()
+        }
+
     /*
     Decrements item count in ViewModel
      */

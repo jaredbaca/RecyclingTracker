@@ -27,7 +27,7 @@ fun RecyclingTrackerNavigationGraph(
     NavHost(navController = navController, startDestination = if(loginViewModel.currentUser.value == null) Routes.LOGIN_SCREEN else Routes.HOME_SCREEN) {
 
         composable(Routes.LOGIN_SCREEN) {
-            LoginScreen(navController)
+            LoginScreen(navController, recyclablesViewModel)
         }
 
         composable(Routes.HOME_SCREEN) {

@@ -2,9 +2,12 @@ package edu.bu.recyclingtracker.data
 
 import android.util.Log
 import androidx.compose.runtime.currentCompositionErrors
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.bu.recyclingtracker.authentication.LoginViewModel
@@ -21,19 +24,20 @@ Database Access Object that defines the implementation for functions interacting
  */
 class RecyclingTrackerDao(private val firestore: FirebaseFirestore, private val loginViewModel: LoginViewModel) {
 
-    val CURRENT_USER = loginViewModel.currentUser?.value?.email
+//    val CURRENT_USER= loginViewModel.currentUser.value
     // Using email to make it very obvious which user is which in the Firestore console.
     // Would likely switch to UID in a real world scenario.
-    val entriesCollectionReference = firestore.collection("users/${CURRENT_USER}/entries")
-    val totalsCollectionReference = firestore.collection("users/${CURRENT_USER}/totals")
+//    val entriesCollectionReference = firestore.collection("users/${CURRENT_USER?.email}/entries")
+//    val totalsCollectionReference = firestore.collection("users/${CURRENT_USER?.email}/totals")
 
     /*
     Adds a new entry to the Firestore DB
      */
     fun addEntry(entry: Entry) {
         try {
-            entriesCollectionReference.add(entry)
-            Log.d("Auth", "Current User in AddEntry: ${loginViewModel.currentUser?.value?.email}")
+//            entriesCollectionReference.add(entry)
+            firestore.collection("users/${loginViewModel.currentUser.value?.email}/entries").add(entry)
+            Log.d("Auth", "Current User in AddEntry: ${loginViewModel.currentUser.value?.email}")
         } catch (e: Exception) {
             Log.w(TAG, "Error adding user to db")
         }
@@ -56,7 +60,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore, private val 
                     updates[key].toString().toDouble())
             }
             // Replace existing totals in Firestore DB with newly updated totals
-            totalsCollectionReference.document("totals").set(newTotals)
+            firestore.collection("users/${loginViewModel.currentUser.value?.email}/totals").document("totals").set(newTotals)
             continuation.resume(Unit)
         } catch (e: Exception) {
             Log.w(TAG, "Error updating totals")
@@ -70,7 +74,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore, private val 
     suspend fun getTotals(): Map<String, Any> = suspendCoroutine { continuation ->
         try {
 
-            val documentRef = totalsCollectionReference.document("totals")
+            val documentRef = firestore.collection("users/${loginViewModel.currentUser.value?.email}/totals").document("totals")
 
             documentRef.get()
                 .addOnSuccessListener { document ->
@@ -80,7 +84,7 @@ class RecyclingTrackerDao(private val firestore: FirebaseFirestore, private val 
                         continuation.resume(totals)
                     } else {
                         Log.w(TAG, "Document not found")
-                        firestore.document("users/${CURRENT_USER}/totals/totals").set(emptyMap<String, Any>())
+                        firestore.document("users/${loginViewModel.currentUser.value?.email}/totals/totals").set(emptyMap<String, Any>())
                         continuation.resume(emptyMap())
                     }
                 }

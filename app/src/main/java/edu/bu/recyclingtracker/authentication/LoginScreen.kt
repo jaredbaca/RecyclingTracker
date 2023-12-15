@@ -29,12 +29,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import edu.bu.recyclingtracker.ui.navigation.Routes
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.theme.navBarColor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 // =================================== Custom Login Screen =======================================
@@ -45,7 +49,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, recyclablesViewModel: LogRecyclablesViewModel) {
 
     // ===================== Accessing ViewModels and setting state ====================
 
@@ -82,6 +86,7 @@ fun LoginScreen(navController: NavHostController) {
                 },
                 label = {Text("password")},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             // Login Button
@@ -123,6 +128,12 @@ fun LoginScreen(navController: NavHostController) {
                         loginViewModel.updateCurrentUser()
                         navController.navigate(Routes.HOME_SCREEN)
                     }
+                }
+                //Resetting ViewModel totals for new user
+                GlobalScope.async {
+                    recyclablesViewModel.updateTotals()
+                    recyclablesViewModel.totalsByCategory.value = recyclablesViewModel.getTotalsByCategory()
+                    recyclablesViewModel.weights = mutableStateOf(recyclablesViewModel.calculateWeights())
                 }
             }
 

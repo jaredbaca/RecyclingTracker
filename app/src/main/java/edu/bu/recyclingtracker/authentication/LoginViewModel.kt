@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.recyclingtracker.util.Resource
@@ -28,8 +29,17 @@ class LoginViewModel @Inject constructor(
     val _signInState = Channel<SignInState>()
     val signInState = _signInState.receiveAsFlow()
 
-    val currentUser = repository.currentUser
+    var currentUser = mutableStateOf(repository.currentUser)
     val currentUserMutable = mutableStateOf(repository.currentUser)
+
+    private val authListener = FirebaseAuth.AuthStateListener { auth ->
+        currentUser.value = auth.currentUser
+    }
+
+    // Updates Current User
+    init {
+        FirebaseAuth.getInstance().addAuthStateListener(authListener)
+    }
 
 
 
@@ -59,5 +69,13 @@ class LoginViewModel @Inject constructor(
 
     fun logoutUser() = viewModelScope.launch {
         repository.logoutUser()
+    }
+
+//    fun getCurrentUser(): FirebaseUser? {
+//        return repository.currentUser
+//    }
+
+    fun updateCurrentUser() {
+        currentUser?.value?.reload()
     }
 }

@@ -26,7 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -131,6 +133,7 @@ fun RecyclingTrackerApp() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+//    var currentUser by remember {loginViewModel.currentUser}
 
     // ========================= Scaffold Layout For All Screens ==============================
 
@@ -144,9 +147,9 @@ fun RecyclingTrackerApp() {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
                 
-                if(loginViewModel.currentUser != null) {
+                if(loginViewModel.currentUser.value != null) {
                     Text(text = "Welcome,", modifier = Modifier.padding(start = 36.dp, top = 16.dp), fontSize = 36.sp)
-                    Text(text = "${loginViewModel.currentUser?.email?.split("@")?.get(0)}",
+                    Text(text = "${loginViewModel.currentUser?.value?.email?.split("@")?.get(0)}",
                         modifier = Modifier
                             .padding(start = 36.dp, bottom = 32.dp)
                         , fontSize = 24.sp)

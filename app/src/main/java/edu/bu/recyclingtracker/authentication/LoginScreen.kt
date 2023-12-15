@@ -120,6 +120,7 @@ fun LoginScreen(navController: NavHostController) {
                     if(state.value?.isSuccess?.isNotEmpty() == true) {
                         val success = state.value?.isSuccess
                         Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+                        loginViewModel.updateCurrentUser()
                         navController.navigate(Routes.HOME_SCREEN)
                     }
                 }

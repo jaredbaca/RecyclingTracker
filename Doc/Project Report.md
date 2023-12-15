@@ -132,7 +132,7 @@ All essential requirements implemented. Authentication, navigation, and the Fire
 
 ### Early UI
 
-Current UI assets are placeholders and are intended only to test the underlying logic. Icons may be replaced with stock photos, and pie chart colors will be updated to reflect app design pallette.
+UI assets are placeholders and are intended only to test the underlying logic. Icons may be replaced with stock photos, and pie chart colors will be updated to reflect app design pallette.
 
 <img width="260" alt="Screen Shot 2023-11-24 at 3 19 23 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/b1e2f9a8-2067-4d16-bae9-9f1d76748192">
 <img width="256" alt="Screen Shot 2023-11-24 at 3 19 37 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/32daff66-8de3-4879-984d-c46a9d51c301">

@@ -25,11 +25,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
+import edu.bu.recyclingtracker.R
 import edu.bu.recyclingtracker.data.NavItem
 import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.navigation.Routes
@@ -69,9 +71,9 @@ fun bottomNavBar2(navController: NavController, viewModel: LogRecyclablesViewMod
     var badgeCount by remember { mutableStateOf(viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }) }
 
     var navItems = listOf<NavItem>(
-        NavItem("Home", Icons.Rounded.Home, Routes.HOME_SCREEN),
-        NavItem("Bin", Icons.Rounded.ShoppingBag, Routes.BIN_SUMMARY_SCREEN, badgeCount = viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }),
-        NavItem("Stats", Icons.Rounded.QueryStats, Routes.STATS_SCREEN)
+        NavItem(stringResource(R.string.home), Icons.Rounded.Home, Routes.HOME_SCREEN),
+        NavItem(stringResource(R.string.bin), Icons.Rounded.ShoppingBag, Routes.BIN_SUMMARY_SCREEN, badgeCount = viewModel.uiState.value.itemCounts.value.sumOf { it.quantity }),
+        NavItem(stringResource(R.string.stats), Icons.Rounded.QueryStats, Routes.STATS_SCREEN)
     )
 
     BottomNavigation(

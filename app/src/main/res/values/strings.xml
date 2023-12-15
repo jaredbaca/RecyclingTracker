@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">RecyclingTracker</string>
+
+    // Login Screen
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="or">or</string>
+    <string name="create_account">Create Account</string>
+
+    // Sign Up Screen
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="register">Register</string>
+    <string name="login_with_existing_account">Login with Existing Account</string>
+
+    // Scaffold and Navigation Bar
+    <string name="home">Home</string>
+    <string name="bin">Bin</string>
+    <string name="stats">Stats</string>
+
+    // Home Screen and Bin Summary
+    <string name="plastics">Plastics</string>
+    <string name="plastic">Plastic</string>
+    <string name="metals">Metals</string>
+    <string name="metal">Metal</string>
+    <string name="glass">Glass</string>
+    <string name="cardboard">Cardboard</string>
+
+    //Stats Page
+    <string name="categories">Categories</string>
+    <string name="item_breakdown">Item Breakdown</string>
+    <string name="impact">Impact</string>
+    <string name="you_ve_recycled">"You've recycled "</string>
+    <string name="so_far_this_year">"so far this year "</string>
+    <string name="that_s_the_equivalent_of">"That's the equivalent of "</string>
 </resources>

@@ -28,12 +28,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import edu.bu.recyclingtracker.R
 import edu.bu.recyclingtracker.ui.navigation.Routes
 import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.theme.navBarColor
@@ -68,14 +70,15 @@ fun LoginScreen(navController: NavHostController, recyclablesViewModel: LogRecyc
     ) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Sign In", fontSize = 36.sp, color = Color.LightGray)
+            Text(text = stringResource(R.string.sign_in), fontSize = 36.sp, color = Color.LightGray)
 
             // Email Field
-            OutlinedTextField(value = email,
+            OutlinedTextField(
+                value = email,
                 onValueChange = {
                     email = it
                 },
-                label = {Text("email")},
+                label = { Text(stringResource(R.string.email)) },
 //                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
             )
 
@@ -84,7 +87,7 @@ fun LoginScreen(navController: NavHostController, recyclablesViewModel: LogRecyc
                 onValueChange = {
                     password = it
                 },
-                label = {Text("password")},
+                label = {Text(stringResource(R.string.password))},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 visualTransformation = PasswordVisualTransformation()
             )
@@ -96,14 +99,14 @@ fun LoginScreen(navController: NavHostController, recyclablesViewModel: LogRecyc
                 onClick = {
                     loginViewModel.loginUser(email, password)
                 }) {
-                Text("Login")
+                Text(stringResource(R.string.login))
             }
 
             // Direct to Sign Up page
             Row {
-                Text(text = "or", modifier = Modifier.padding(bottom = 16.dp))
+                Text(text = stringResource(R.string.or), modifier = Modifier.padding(bottom = 16.dp))
             }
-            Text(text = "Create Account", modifier = Modifier.clickable {
+            Text(text = stringResource(R.string.create_account), modifier = Modifier.clickable {
                 navController.navigate(Routes.SIGNUP_SCREEN)
             })
 

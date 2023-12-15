@@ -31,12 +31,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import edu.bu.recyclingtracker.R
 import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.navigation.Routes
 import edu.bu.recyclingtracker.ui.theme.navBarColor
@@ -66,14 +68,15 @@ fun SignUpScreen(
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Text(text = "Sign Up", fontSize = 36.sp, color = Color.LightGray)
+            Text(text = stringResource(R.string.sign_up), fontSize = 36.sp, color = Color.LightGray)
 
             //Email
-            OutlinedTextField(value = email,
+            OutlinedTextField(
+                value = email,
                 onValueChange = {
                     email = it
                 },
-                label = {Text("email")},
+                label = { Text(stringResource(R.string.email)) },
             )
 
             //Password
@@ -81,7 +84,7 @@ fun SignUpScreen(
                 onValueChange = {
                     password = it
                 },
-                label = {Text("password")},
+                label = {Text(stringResource(R.string.password))},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 visualTransformation = PasswordVisualTransformation()
             )
@@ -93,7 +96,7 @@ fun SignUpScreen(
                     confirmPassword = it
                     passwordsMatch = it == password
                 },
-                label = {Text("confirm password")},
+                label = {Text(stringResource(R.string.confirm_password))},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 visualTransformation = PasswordVisualTransformation(),
                 colors = if(passwordsMatch) TextFieldDefaults.outlinedTextFieldColors() else
@@ -104,7 +107,7 @@ fun SignUpScreen(
             )
 
             if (!passwordsMatch) {
-                Text("Passwords do not match", color = Color.Red)
+                Text(stringResource(R.string.passwords_do_not_match), color = Color.Red)
             }
 //            loginField(label = "Confirm Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
 
@@ -118,13 +121,13 @@ fun SignUpScreen(
                             signUpViewModel.registerUser(email, password)
                         }
                 }) {
-                Text("Register")
+                Text(stringResource(R.string.register))
             }
 
             Row {
-                Text(text = "or", modifier = Modifier.padding(bottom = 16.dp))
+                Text(text = stringResource(id = R.string.or), modifier = Modifier.padding(bottom = 16.dp))
             }
-            Text(text = "Login with Existing Account", modifier = Modifier.clickable {
+            Text(text = stringResource(R.string.login_with_existing_account), modifier = Modifier.clickable {
                 navController.navigate(Routes.LOGIN_SCREEN)
             })
 

@@ -4,7 +4,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import edu.bu.recyclingtracker.R
 import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.ItemGrid
 import edu.bu.recyclingtracker.ui.theme.CardboardColor
@@ -25,32 +27,40 @@ fun HomeScreen(navController: NavController, viewModel: LogRecyclablesViewModel)
     val itemGrids: List<@Composable () -> Unit> = listOf(
         {
             ItemGrid(
-                "Plastics",
-                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == "Plastic" }),
+                stringResource(R.string.plastics),
+                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == stringResource(
+                    R.string.plastic
+                ) }),
                 viewModel,
                 color = PlasticColor
             )
         },
         {
             ItemGrid(
-                "Metals",
-                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == "Metal" }),
+                stringResource(R.string.metals),
+                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == stringResource(
+                    R.string.metal
+                ) }),
                 viewModel,
                 color = MetalColor
             )
         },
         {
             ItemGrid(
-                "Glass",
-                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == "Glass" }),
+                stringResource(R.string.glass),
+                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == stringResource(
+                    id = R.string.glass
+                ) }),
                 viewModel,
                 color = GlassColor
             )
         },
         {
             ItemGrid(
-                "Cardboard",
-                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == "Cardboard" }),
+                stringResource(R.string.cardboard),
+                recyclableItems = mutableStateOf(viewModel.uiState.value.itemCounts.value.filter { it.category == stringResource(
+                    id = R.string.cardboard
+                ) }),
                 viewModel,
                 color = CardboardColor
             )

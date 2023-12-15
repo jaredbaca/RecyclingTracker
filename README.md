@@ -3,7 +3,7 @@
 ##### Author: Jared Baca
 
 ## Overview
-The Recycling Tracker app allows users to log the items that they recycle on a weekly basis in order to measure the impact their recycling habits have on the environment. It allows users to view their recycling trends over time and gain valuable insights into the types of materials they are recycling.
+Recycling Tracker is an Android app that allows users to log the items that they recycle on a weekly basis in order to measure the impact their recycling habits have on the environment. It allows users to view their recycling trends over time and gain valuable insights into the types of materials they are recycling.
 
 <img width="243" alt="Register" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/77749b24-9199-4f75-a105-bd9e00f0813b">
 <img width="238" alt="Login" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/085b5e13-d2bf-4561-9258-11651be05366">

@@ -110,15 +110,13 @@ fun SignUpScreen(
 
             Button(modifier = Modifier
                 .padding(16.dp),
+
                 colors = ButtonDefaults.buttonColors(containerColor = navBarColor),
+                enabled = passwordsMatch,
                 onClick = {
-                    if(confirmPassword == password) {
                         scope.launch {
                             signUpViewModel.registerUser(email, password)
                         }
-                    } else {
-                        Toast.makeText(context, "Passwords Must Match", Toast.LENGTH_LONG).show()
-                    }
                 }) {
                 Text("Register")
             }

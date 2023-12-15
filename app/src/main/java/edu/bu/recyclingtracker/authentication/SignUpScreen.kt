@@ -33,10 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseAuth
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
-import edu.bu.recyclingtracker.ui.components.loginField
-import edu.bu.recyclingtracker.ui.screens.Routes
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
+import edu.bu.recyclingtracker.ui.navigation.Routes
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.launch
 

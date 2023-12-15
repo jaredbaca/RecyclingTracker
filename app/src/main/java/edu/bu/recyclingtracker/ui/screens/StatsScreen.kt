@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 //import edu.bu.recyclingtracker.data.navItems
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.BarGraph
 import edu.bu.recyclingtracker.ui.components.BarType
 import edu.bu.recyclingtracker.ui.components.CenteredDivider
@@ -34,7 +34,7 @@ import edu.bu.recyclingtracker.ui.components.weightText
 import edu.bu.recyclingtracker.ui.theme.PlasticColor
 import edu.bu.recyclingtracker.ui.theme.categoryColors
 
-/*
+/**
 Composable for User Stats page that displays item totals, category percentages, and environmental impact estimate.
  */
 
@@ -75,16 +75,6 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                         // Test Data
                         val vmTotals = viewModel.totals.value
                         val floatValue = mutableListOf<Float>()
-                        val labels = mutableListOf<String>(
-                            "Item 1",
-                            "Item 2",
-                            "Item 3",
-                            "Item 4",
-                            "Item 5",
-                            "Item 6",
-                            "Item 7",
-                            "Item 8"
-                        )
 
                         // List to hold item names
                         val itemsWithinCategory = mutableListOf<String>()
@@ -157,8 +147,9 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                         .padding(8.dp),
                         ) {
 
+                        // Currently only estimates plastic usage. Will be expanded.
                         impactText(text = "You've recycled ", color = Color.Gray)
-                        //Plastic
+
                         weightText(category = "Plastic", viewModel = viewModel, color = PlasticColor)
 
                         impactText(text = "so far this year ", color = Color.Gray)
@@ -183,8 +174,8 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
 
 
 
-            } // Lazy Column
-        } // Surface
+            }
+        }
 
 /*
 Utility function to convert list of Any to Floats for use in the Bar Graph bar data

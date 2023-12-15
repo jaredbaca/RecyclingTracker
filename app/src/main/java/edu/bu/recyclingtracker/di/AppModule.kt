@@ -9,6 +9,9 @@ import edu.bu.recyclingtracker.authentication.AuthRepository
 import edu.bu.recyclingtracker.authentication.AuthRepositoryImpl
 import javax.inject.Singleton
 
+/**
+ * Provides instances of Firebase Auth
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {

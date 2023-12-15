@@ -1,4 +1,4 @@
-package edu.bu.recyclingtracker.ui.screens
+package edu.bu.recyclingtracker.ui.navigation
 
 /*
 Routes for Navigation Graph destinations

@@ -17,10 +17,18 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+// ================================== Authentication Repository Implementation ============================
+
+/**
+ * Implements the functions that interact with Firebase Authentication
+ */
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
+    /*
+    Login User with email and password
+     */
     override val currentUser get() = firebaseAuth.currentUser
     override fun loginUser(email: String, password: String)
     : Flow<Resource<AuthResult>> {
@@ -34,6 +42,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    /*
+    Register user with email and password
+     */
     override fun registerUser(email: String, password: String): Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
@@ -45,6 +56,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    /*
+    Log out current user
+     */
     override fun logoutUser() {
         try {
             firebaseAuth.signOut()
@@ -53,15 +67,15 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-override fun getAuthState(viewModelScope: CoroutineScope) = callbackFlow {
-        val authStateListener = FirebaseAuth.AuthStateListener { auth ->
-            trySend(auth.currentUser == null)
-        }
-        firebaseAuth.addAuthStateListener(authStateListener)
-        awaitClose {
-            firebaseAuth.removeAuthStateListener(authStateListener)
-        }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), firebaseAuth.currentUser == null)
+    override fun getAuthState(viewModelScope: CoroutineScope) = callbackFlow {
+            val authStateListener = FirebaseAuth.AuthStateListener { auth ->
+                trySend(auth.currentUser == null)
+            }
+            firebaseAuth.addAuthStateListener(authStateListener)
+            awaitClose {
+                firebaseAuth.removeAuthStateListener(authStateListener)
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), firebaseAuth.currentUser == null)
 
 
 }

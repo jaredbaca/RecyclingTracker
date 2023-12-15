@@ -1,10 +1,9 @@
-package edu.bu.recyclingtracker.ui.viewmodels
+package edu.bu.recyclingtracker.ui.screens.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import edu.bu.recyclingtracker.data.RecyclingItemUiState
 import androidx.compose.runtime.State
 import edu.bu.recyclingtracker.data.Entry
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
@@ -12,9 +11,9 @@ import edu.bu.recyclingtracker.data.itemWeights
 import edu.bu.recyclingtracker.data.recyclables
 import java.util.Date
 
-/**
- * This ViewModel stores the current item counts for selected items and handles communication with the Firestore database
- */
+    /**
+    * This ViewModel stores the current item counts for selected items and handles communication with the Firestore database
+    */
 
 class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository) : ViewModel() {
     data class RecyclingPageUiState(
@@ -27,6 +26,59 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
     var weights: MutableState<MutableMap<String, Double>> = mutableStateOf( mutableMapOf())
 
 
+    // ================================= Updating ViewModel data and UI State =============================
+
+    /**
+     * This section contains functions for manipulating the data in the ViewModel and updating the UI
+     */
+
+    /*
+    Resets ViewModel item counts. Used after entry has been submitted to DB.
+     */
+    suspend fun resetCounts() {
+        var newItemCounts = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach { it.quantity = 0 }
+
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf( newItemCounts)
+        )
+    }
+
+    /*
+    Decrements item count in ViewModel
+     */
+    fun decrementCount(itemName:String) {
+        //Add exception here
+        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach {
+            if(it.name == itemName && it.quantity > 0)
+                it.quantity = it.quantity-1
+        }
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf( newItemCounts)
+        )
+    }
+
+    /*
+    Updates item count in ViewModel to a specified quantity
+     */
+    fun updateItemQuantity(itemName: String, newQuantity: String) {
+        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
+        newItemCounts.forEach {
+            if(it.name == itemName && newQuantity.toInt() >= 0)
+                it.quantity = newQuantity.toInt()
+        }
+        uiState.value = uiState.value.copy(
+            itemCounts = mutableStateOf(newItemCounts)
+        )
+    }
+
+
+    // ================================== Firestore Database Interactions ==============================================
+
+    /**
+        The functions below utilize the Recycling Tracker Repository to interact with the Firestore Database
+     */
     /*
      * Updates item totals held in ViewModel with totals from Firestore DB
     */
@@ -64,6 +116,14 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         return repository.getTotals()
     }
 
+    // ================================= Supplying Data to the Stats Page ======================================
+
+    /**
+     * This functions below provide internal calculations for data contained in the presentation layer
+     * on the stats page. Category percentages, item breakdowns, etc.
+     */
+
+
     /*
      Returns a mutable map containing the item totals broken down by category: Plastic, Glass, Cardboard, Metal
      */
@@ -84,18 +144,6 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
         Log.d("category totals", categoryTotals.toString())
 
         return categoryTotals
-    }
-
-    /*
-    Resets ViewModel item counts. Used after entry has been submitted to DB.
-     */
-    suspend fun resetCounts() {
-        var newItemCounts = uiState.value.itemCounts.value.toMutableList()
-        newItemCounts.forEach { it.quantity = 0 }
-
-        uiState.value = uiState.value.copy(
-            itemCounts = mutableStateOf( newItemCounts)
-        )
     }
 
     /*
@@ -123,37 +171,8 @@ class LogRecyclablesViewModel(private val repository: RecyclingTrackerRepository
     }
 
     /*
-    Decrements item count in ViewModel
-     */
-    fun decrementCount(itemName:String) {
-        //Add exception here
-        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
-        newItemCounts.forEach {
-            if(it.name == itemName && it.quantity > 0)
-                it.quantity = it.quantity-1
-        }
-        uiState.value = uiState.value.copy(
-            itemCounts = mutableStateOf( newItemCounts)
-        )
-    }
-
-    /*
-    Updates item count in ViewModel to a specified quantity
-     */
-    fun updateItemQuantity(itemName: String, newQuantity: String) {
-        val newItemCounts: MutableList<RecyclingItemUiState> = uiState.value.itemCounts.value.toMutableList()
-        newItemCounts.forEach {
-            if(it.name == itemName && newQuantity.toInt() >= 0)
-                it.quantity = newQuantity.toInt()
-        }
-        uiState.value = uiState.value.copy(
-            itemCounts = mutableStateOf(newItemCounts)
-        )
-    }
-
-    /*
-    Utility function to convert grams to pounds for item weight calculations
-     */
+   Utility function to convert grams to pounds for item weight calculations
+    */
     fun gramsToPounds(grams: Double): Double {
         val poundsPerKilogram = 2.20462
         return grams / 1000 * poundsPerKilogram

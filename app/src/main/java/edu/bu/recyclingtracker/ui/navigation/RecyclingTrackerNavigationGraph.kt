@@ -1,4 +1,4 @@
-package edu.bu.recyclingtracker.ui.screens
+package edu.bu.recyclingtracker.ui.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -6,15 +6,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.google.firebase.auth.FirebaseAuth
 import edu.bu.recyclingtracker.authentication.LoginScreen
 import edu.bu.recyclingtracker.authentication.LoginViewModel
 import edu.bu.recyclingtracker.authentication.SignUpScreen
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
+import edu.bu.recyclingtracker.ui.screens.BinSummaryScreen
+import edu.bu.recyclingtracker.ui.screens.HomeScreen
+import edu.bu.recyclingtracker.ui.screens.StatsScreen
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 
-/*
-Navigation Graph used in the main RecyclingTracker App composable. Contains composables for all screens.
- */
+
+// ================================ Recycling Tracker Navigation Graph ===============================
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

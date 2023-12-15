@@ -21,8 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import edu.bu.recyclingtracker.data.RecyclingItemUiState
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
+import edu.bu.recyclingtracker.ui.screens.viewmodels.RecyclingItemUiState
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 
 /*
 This composable creates the item card that displays each recycling item on the home screen.
@@ -31,13 +31,13 @@ Users click on the item card to add recyclables to their current Recycling Bin
 @Composable
 fun ItemCard(
 //            image:Int?,
-             selected:Boolean,
-             name:String,
-             itemUiState: RecyclingItemUiState,
-             viewModel: LogRecyclablesViewModel,
-             index: Int,
-             counterVisible: Boolean,
-             color: Color
+    selected:Boolean,
+    name:String,
+    itemUiState: RecyclingItemUiState,
+    viewModel: LogRecyclablesViewModel,
+    index: Int,
+    counterVisible: Boolean,
+    color: Color
              )
 {
     Box(Modifier

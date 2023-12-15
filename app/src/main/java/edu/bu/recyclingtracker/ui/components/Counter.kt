@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import edu.bu.recyclingtracker.data.RecyclingItemUiState
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
+import edu.bu.recyclingtracker.ui.screens.viewmodels.RecyclingItemUiState
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 
 /*
 This composable provides the counter component that is part of the item card

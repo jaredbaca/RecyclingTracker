@@ -8,15 +8,13 @@ import edu.bu.recyclingtracker.util.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-
+// =============================== Authentication Repository Interface =============================
 interface AuthRepository {
 
     val currentUser:FirebaseUser?
     fun loginUser(email: String, password: String): Flow<Resource<AuthResult>>
     fun registerUser(email: String, password: String): Flow<Resource<AuthResult>>
-
     fun logoutUser()
-
     fun getAuthState(viewModelScope: CoroutineScope): StateFlow<Boolean>
 
 }

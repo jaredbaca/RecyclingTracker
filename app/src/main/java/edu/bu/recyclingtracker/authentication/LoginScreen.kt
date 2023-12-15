@@ -1,6 +1,5 @@
 package edu.bu.recyclingtracker.authentication
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,24 +29,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseAuth
-import edu.bu.recyclingtracker.ui.components.loginField
-import edu.bu.recyclingtracker.ui.screens.Routes
+import edu.bu.recyclingtracker.ui.navigation.Routes
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.launch
 
-/*
-This is a custom login screen intended for use with Firebase Auth
+// =================================== Custom Login Screen =======================================
+
+/**
+ * Uses the AuthRepository to perform basic login/logout functions
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavHostController) {
+
+    // ===================== Accessing ViewModels and setting state ====================
 
     var loginViewModel: LoginViewModel = hiltViewModel()
     var email by rememberSaveable { mutableStateOf("") }
@@ -56,6 +56,7 @@ fun LoginScreen(navController: NavHostController) {
     val state = loginViewModel.signInState.collectAsState(initial = null)
     val context = LocalContext.current
 
+    // =================================== Login Page UI ===============================
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -64,6 +65,8 @@ fun LoginScreen(navController: NavHostController) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Sign In", fontSize = 36.sp, color = Color.LightGray)
+
+            // Email Field
             OutlinedTextField(value = email,
                 onValueChange = {
                     email = it
@@ -72,6 +75,7 @@ fun LoginScreen(navController: NavHostController) {
 //                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
             )
 
+            // Password Field
             OutlinedTextField(value = password,
                 onValueChange = {
                     password = it
@@ -80,7 +84,7 @@ fun LoginScreen(navController: NavHostController) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )
 
-//            loginField(label = "Password", keyboardType = KeyboardOptions(keyboardType = KeyboardType.Password))
+            // Login Button
             Button(modifier = Modifier
                 .padding(16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = navBarColor),
@@ -90,6 +94,7 @@ fun LoginScreen(navController: NavHostController) {
                 Text("Login")
             }
 
+            // Direct to Sign Up page
             Row {
                 Text(text = "or", modifier = Modifier.padding(bottom = 16.dp))
             }
@@ -97,6 +102,7 @@ fun LoginScreen(navController: NavHostController) {
                 navController.navigate(Routes.SIGNUP_SCREEN)
             })
 
+            // Loading indicator
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
@@ -106,6 +112,9 @@ fun LoginScreen(navController: NavHostController) {
                 }
             }
 
+        // ============================ Perform Firebase Auth =====================================
+
+            // Successful Login - Provide Toast Message saying login successful and navigate Home
             LaunchedEffect(key1 = state.value?.isSuccess ) {
                 scope.launch {
                     if(state.value?.isSuccess?.isNotEmpty() == true) {
@@ -116,6 +125,7 @@ fun LoginScreen(navController: NavHostController) {
                 }
             }
 
+            // Loading
             LaunchedEffect(key1 = state.value?.isError ) {
                 scope.launch {
                     if(state.value?.isError?.isNotEmpty() == true) {

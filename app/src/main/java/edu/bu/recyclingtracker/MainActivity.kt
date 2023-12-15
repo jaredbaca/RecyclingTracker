@@ -1,13 +1,11 @@
 package edu.bu.recyclingtracker
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -26,13 +24,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -43,39 +37,42 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.firestoreSettings
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bu.recyclingtracker.authentication.LoginViewModel
 import edu.bu.recyclingtracker.data.RecyclingTrackerRepository
 import edu.bu.recyclingtracker.data.RecyclingTrackerDao
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.AppToolbar
 import edu.bu.recyclingtracker.ui.components.bottomNavBar2
 import edu.bu.recyclingtracker.ui.components.drawerItem
 //import edu.bu.recyclingtracker.ui.screens.LogRecyclablesScreen
-import edu.bu.recyclingtracker.ui.screens.RecyclingTrackerNavigationGraph
-import edu.bu.recyclingtracker.ui.screens.Routes
+import edu.bu.recyclingtracker.ui.navigation.RecyclingTrackerNavigationGraph
+import edu.bu.recyclingtracker.ui.navigation.Routes
 import edu.bu.recyclingtracker.ui.theme.RecyclingTrackerTheme
 import edu.bu.recyclingtracker.ui.theme.navBarColor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+
+/**
+ * The Recycling Tracker App allows the user to track their personal recycling activity,
+ * view trends and data about their activity, and estimate the environmental impact
+ * of their recycling habits.
+ *
+ * This app is built with Jetpack Compose and follows an MVVM architecture.
+ * It uses a single activity with Composables for individual screens.
+ */
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-//    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             RecyclingTrackerTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -87,16 +84,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/*
-This is the top level composable for the Recycling Tracker app
- */
+
+    // ========================== Top Level RecyclingTrackerApp Composable ===================
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecyclingTrackerApp() {
 
-    // Here we create the dependencies that will be passed further down the stack
+    // ========================== Instantiating Firestore Database ============================
 
-    // Instantiating Firestore DB
+    // Firestore Database
     val db = Firebase.firestore
 
     db.firestoreSettings = firestoreSettings {
@@ -105,18 +102,20 @@ fun RecyclingTrackerApp() {
     //Using emulator for testing mode
 //    db.useEmulator("10.0.2.2", 8080)
 
+    // ========================= Creating ViewModels ==========================================
+
+    // Login ViewModel (Hilt)
     val loginViewModel: LoginViewModel = hiltViewModel()
-//    val currentUser by loginViewModel.currentUser.observeAsState()
-//    val currentUser by loginViewModel.currentUser
 
-
-    // Create Repository object
+    // Database Repository
     var recyclingTrackerRepository = RecyclingTrackerRepository(RecyclingTrackerDao(db, loginViewModel))
 
-    // Create view model here so that it can utilize the repository
-    val recyclablesViewModel: LogRecyclablesViewModel = viewModel {LogRecyclablesViewModel(recyclingTrackerRepository)}
+    // Item Repository (used to hold item counts for the UI and handles Firestore access
+    val recyclablesViewModel: LogRecyclablesViewModel = viewModel { LogRecyclablesViewModel(recyclingTrackerRepository) }
 
-    // Retrieve initial totals from Firestore to display on stats page
+    // ========================= Initializing Data From Firestore =============================
+
+    // This data is retrieved early so the stats page has data to display
     LaunchedEffect(true) {
         GlobalScope.async {
             recyclablesViewModel.updateTotals()
@@ -125,13 +124,15 @@ fun RecyclingTrackerApp() {
         }
     }
 
+    // ========================= Navigation and Scaffold States ================================
 
-    // Instantiating the nav controller and scaffold component states
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    // ========================= Scaffold Layout For All Screens ==============================
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -142,10 +143,6 @@ fun RecyclingTrackerApp() {
                 IconButton(onClick = { scope.launch { drawerState.apply { close() } } }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
-//                if(loginViewModel.currentUser == null) {
-//                    drawerItem(name = "Login", route = Routes.LOGIN_SCREEN, navController = navController, scope, drawerState)
-//                }
-
                 
                 if(loginViewModel.currentUser != null) {
                     Text(text = "Welcome,", modifier = Modifier.padding(start = 36.dp, top = 16.dp), fontSize = 36.sp)
@@ -172,6 +169,7 @@ fun RecyclingTrackerApp() {
         },
     ) {
 
+        // Elements of the Scaffold Layout can be found in the scaffoldLayout.kt file
         Scaffold(
             topBar = {
                 AppToolbar(toolbarTitle = "", scope, drawerState)

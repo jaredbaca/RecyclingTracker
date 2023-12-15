@@ -1,10 +1,11 @@
-package edu.bu.recyclingtracker.data
+package edu.bu.recyclingtracker.ui.screens.viewmodels
 
 import android.graphics.drawable.Drawable
 
-/*
+/**
 Data class to hold the uiState information for each recyclable item
  */
+
 data class RecyclingItemUiState(
     val name: String,
     val category: String,

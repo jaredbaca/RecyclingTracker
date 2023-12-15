@@ -9,7 +9,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,8 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import edu.bu.recyclingtracker.ui.LogRecyclablesViewModel
-import edu.bu.recyclingtracker.ui.theme.PlasticColor
+import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

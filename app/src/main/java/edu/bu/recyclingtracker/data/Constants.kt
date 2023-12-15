@@ -2,6 +2,7 @@ package edu.bu.recyclingtracker.data
 
 import androidx.compose.runtime.mutableStateOf
 import edu.bu.recyclingtracker.R
+import edu.bu.recyclingtracker.ui.screens.viewmodels.RecyclingItemUiState
 
 /*
 List of RecyclingItemUiState objects for each recyclable item.

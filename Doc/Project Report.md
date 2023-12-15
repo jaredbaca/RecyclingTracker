@@ -116,11 +116,6 @@ All essential requirements implemented. Authentication, navigation, and the Fire
 
 ## Design and Implementation
 
-- App will use a single activity with composables and use ViewModel to manage state
-- IAM will be handled using Firebase
-- User profile data will be stored in Google Cloud Firestore, a NoSQL database
-- One of the desired features is to use location services to show the user the average carbon footprint in their area and how they compare
-
 ### Wireframes
 
 ![image](https://github.com/CS683/project-jared-baca/assets/110132943/f2119d09-961d-467e-9c50-0908935ca691)
@@ -179,10 +174,7 @@ The structure of the database for this project is shown below.
 The UI is built with Jetpack Compose. It uses the Scaffold layout with bottom navigation and a navigation drawer. Each screen makes use of a Lazy Column for scrollability. Currently there is not a dark mode theme, but that will be added in future iterations. 
 
 ## Project Structure
-
-<img width="521" alt="Screen Shot 2023-11-24 at 4 07 03 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/a4beafe5-4ffa-44dc-90fd-49ae9d89fee0">
-
-
+<img width="409" alt="Screen Shot 2023-12-14 at 9 50 48 PM" src="https://github.com/jaredbaca/RecyclingTracker/assets/110132943/050aef39-f358-4f88-88d8-31710d6acaa6">
 
     
 ## Timeline
@@ -192,7 +184,7 @@ The UI is built with Jetpack Compose. It uses the Scaffold layout with bottom na
 |1|- UI Wireframes - Implement calculator logic - Prototype of the Recycle Items page UI using composables | Main Activity| | | |
 |2|- Set up database - Log one activity type |Date/Time | | |
 |3|- Log all activity types - Create charts for summaries and trends | | | |
-
+|Final|- Implement full data flow: account creation, authentication, database integration. Provide full documentation and live demo.
 
 ## Future Work (Optional)
 - Add desirable features such as badges
@@ -201,7 +193,7 @@ The UI is built with Jetpack Compose. It uses the Scaffold layout with bottom na
 
     
 ## Project Demo Links
-
+Demo will happen live in class
 
 
 ## References

@@ -179,10 +179,10 @@ The UI is built with Jetpack Compose. It uses the Scaffold layout with bottom na
     
 ## Timeline
 
-|Iteration | Application Requirements (Essential/Desirable/Optional) | Android Components and Features|
+|Iteration | Application Requirements (Essential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks | member 2 contribution/tasks
 |---|---|---|---|---|
-|1|- UI Wireframes - Implement calculator logic - Prototype of the Recycle Items page UI using composables | Main Activity, Jetpack Compose| |
-|2|- Set up database - Log one activity type |Date/Time |
+|1|- UI Wireframes - Implement calculator logic - Prototype of the Recycle Items page UI using composables | Main Activity, Jetpack Compose| | | |
+|2|- Set up database - Log one activity type |Date/Time | | | |
 |3|- Log all activity types - Create charts for summaries and trends | | | |
 |Final|- Implement full data flow: account creation, authentication, database integration. Provide full documentation and live demo.
 

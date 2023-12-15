@@ -213,6 +213,6 @@ Demo will happen live in class
 [Department of Environmental Protection - Montgomery County, Maryland](https://www.montgomerycountymd.gov/sws/footprint/)
 <br>[Environmental Protection Agency - Greenhouse Gas Equivalencies Calculator](https://www.epa.gov/energy/greenhouse-gas-equivalencies-calculator)
 <br>[Environmental Protection Agency - WARM Waste Reduction Model](https://www.epa.gov/warm/documentation-waste-reduction-model-warm)
-<br?[Greenhouse Gas Reductions Calculator - StopWaste.org](https://www.stopwaste.org/at-work/reduce-and-reuse/recycling-business-waste/recycling-climate-protection/greenhouse-gas)
+<br>[Greenhouse Gas Reductions Calculator - StopWaste.org](https://www.stopwaste.org/at-work/reduce-and-reuse/recycling-business-waste/recycling-climate-protection/greenhouse-gas)
 <br>[Earthday.org Plastic Pollution Calculator](https://www.earthday.org/plastic-pollution-calculator-2/)
 <br>[Environmental Impact Calculators - California State University](https://www.csusm.edu/sustainability/takeaction/knowurimpact.html)

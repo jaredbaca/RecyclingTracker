@@ -24,7 +24,7 @@ fun RecyclingTrackerNavigationGraph(
     recyclablesViewModel: LogRecyclablesViewModel,
 ) {
     val loginViewModel: LoginViewModel = hiltViewModel()
-    NavHost(navController = navController, startDestination = if(loginViewModel.currentUser == null) Routes.LOGIN_SCREEN else Routes.HOME_SCREEN) {
+    NavHost(navController = navController, startDestination = if(loginViewModel.currentUser.value == null) Routes.LOGIN_SCREEN else Routes.HOME_SCREEN) {
 
         composable(Routes.LOGIN_SCREEN) {
             LoginScreen(navController)

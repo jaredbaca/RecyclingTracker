@@ -77,5 +77,4 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), firebaseAuth.currentUser == null)
 
-
 }

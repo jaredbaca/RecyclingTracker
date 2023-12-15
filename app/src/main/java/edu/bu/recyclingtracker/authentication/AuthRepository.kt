@@ -16,5 +16,4 @@ interface AuthRepository {
     fun registerUser(email: String, password: String): Flow<Resource<AuthResult>>
     fun logoutUser()
     fun getAuthState(viewModelScope: CoroutineScope): StateFlow<Boolean>
-
 }

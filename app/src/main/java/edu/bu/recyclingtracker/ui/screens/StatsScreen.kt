@@ -18,10 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import edu.bu.recyclingtracker.R
 //import edu.bu.recyclingtracker.data.navItems
 import edu.bu.recyclingtracker.ui.screens.viewmodels.LogRecyclablesViewModel
 import edu.bu.recyclingtracker.ui.components.BarGraph
@@ -43,7 +45,7 @@ Composable for User Stats page that displays item totals, category percentages, 
 fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel) {
             LazyColumn {
                 item {
-                    headerText(text = "Categories")
+                    headerText(text = stringResource(R.string.categories))
                     CenteredDivider(paddingValue = 128)
                 }
 
@@ -55,7 +57,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                     Spacer(modifier = Modifier.height(48.dp))
                 }
                 item {
-                    headerText(text = "Item Breakdown")
+                    headerText(text = stringResource(R.string.item_breakdown))
                     CenteredDivider(paddingValue = 128)
                 }
 
@@ -137,7 +139,7 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
 
                 // Environmental Impact Estimate
                 item {
-                    headerText(text = "Impact")
+                    headerText(text = stringResource(R.string.impact))
                     CenteredDivider(paddingValue = 128)
                 }
 
@@ -148,15 +150,15 @@ fun StatsScreen(navController: NavController, viewModel: LogRecyclablesViewModel
                         ) {
 
                         // Currently only estimates plastic usage. Will be expanded.
-                        impactText(text = "You've recycled ", color = Color.Gray)
+                        impactText(text = stringResource(R.string.you_ve_recycled), color = Color.Gray)
 
-                        weightText(category = "Plastic", viewModel = viewModel, color = PlasticColor)
+                        weightText(category = stringResource(id =R.string.plastic), viewModel = viewModel, color = PlasticColor)
 
-                        impactText(text = "so far this year ", color = Color.Gray)
+                        impactText(text = stringResource(R.string.so_far_this_year), color = Color.Gray)
                         
                         CenteredDivider(paddingValue = 256)
 
-                        impactText(text = "That's the equivalent of ", color = Color.Gray)
+                        impactText(text = stringResource(R.string.that_s_the_equivalent_of), color = Color.Gray)
 
                         // Calculate total CO2
                         Text("${

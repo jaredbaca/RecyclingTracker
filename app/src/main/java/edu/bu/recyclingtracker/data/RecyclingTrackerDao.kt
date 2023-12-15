@@ -24,12 +24,6 @@ Database Access Object that defines the implementation for functions interacting
  */
 class RecyclingTrackerDao(private val firestore: FirebaseFirestore, private val loginViewModel: LoginViewModel) {
 
-//    val CURRENT_USER= loginViewModel.currentUser.value
-    // Using email to make it very obvious which user is which in the Firestore console.
-    // Would likely switch to UID in a real world scenario.
-//    val entriesCollectionReference = firestore.collection("users/${CURRENT_USER?.email}/entries")
-//    val totalsCollectionReference = firestore.collection("users/${CURRENT_USER?.email}/totals")
-
     /*
     Adds a new entry to the Firestore DB
      */

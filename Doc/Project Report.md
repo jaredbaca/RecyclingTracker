@@ -13,15 +13,7 @@ There are several apps that tackle a similar issue, each from a slightly differe
 
 ## Updates in Current Iteration
 
-The fundamental logic for the app has mostly been implemented in this sprint. The updates include the following:
-
-- Added Recyclables Screen for logging individual items, Recycling Bin screen which functions like a shopping cart to store currently selected recyclables, and a Stats screen to display lifetime totals. These were implemented using Jetpack Compose and a Scaffold layout with bottom navigation. It currently uses placeholder icons for each item. UI will be fleshed out and designed in future iteration.
-
-- The Bin Summary page uses a floating action button for submitting current bin to the Firestore database. Each entry contains a map of items and their quanitites, along with a date stamp.
-
-- Implemented a ViewModel to store current item counts, as well as to handle database access.
-
-- Implemented Cloud Firestore database to track entries and totals. Project data layer contains a DAO and Repository, which are used by the ViewModel to access the database using coroutines in Android. More detailed information in the Database Structure section below.
+All essential requirements implemented. Authentication, navigation, and the Firestore database are functional, and the Stats page has basic information. More can be added in future iterations. 
 
 
 ## Requirement Analysis and Testing 
@@ -183,6 +175,8 @@ The structure of the database for this project is shown below.
 <img width="1149" alt="Screen Shot 2023-11-24 at 3 20 26 PM" src="https://github.com/CS683/project-jared-baca/assets/110132943/d1a28235-9809-4b1a-954f-5493d6b6f2c8">
 
 ### UI
+
+The UI is built with Jetpack Compose. It uses the Scaffold layout with bottom navigation and a navigation drawer. Each screen makes use of a Lazy Column for scrollability. Currently there is not a dark mode theme, but that will be added in future iterations. 
 
 ## Project Structure
 
